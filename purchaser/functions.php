@@ -127,6 +127,12 @@
             return $reg;
         }
 
+        #update
+        public function update_order_status($id,$order_status) {
+            $update_order_status = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' WHERE orders.id='$id'");
+            return $update_order_status;
+        }
+
     }
 
 ?>

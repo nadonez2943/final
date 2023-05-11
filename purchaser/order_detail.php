@@ -370,7 +370,6 @@
                                                         break;
                                                     case 1:
                                                         echo "<p>ร้านค้ารับคำสั่งซื้อ</p>";
-                                                        echo '<p><a class="text text-danger" href="payment.php?id='.$Allord['id'].'">ชำระเงิน</a></p>';
                                                         break;
                                                     case 2:
                                                         echo "อยู่ระหว่างเตรียมสินค้า";
@@ -393,17 +392,8 @@
                                             <input hidden type="number" id="st" value="<?=$Allord['order_status']?>">
                                             <input hidden type="number" id="id" value="<?=$Allord['id']?>">
                                         </div>
-                                        <div class="row mt-3 justify-content-center">
-                                            <div class="row">
-                                                <a class="text-decoration-none" href="order_detail.php?id=<?=$Allord['id']?>">
-                                                    <button type="button" style="width:100%; height:60; font-size:17px;"class="btn btn-primary">ตอบรับคำสั่งซื้อ</button>
-                                                </a>
-                                            </div>
-                                            <div class="row mt-1">
-                                                <a class="text-decoration-none" href="delete.php?user_id=<?=$Allord['id']?>">   
-                                                    <button type="button" style="width:100%; height:60; font-size:17px;" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button>
-                                                </a>
-                                            </div>
+                                        <div class="row mt-3 justify-content-center" >
+                                            <div id="oparetion"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -495,54 +485,6 @@
 	<script src="js/active.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script>
-        $(document).ready(function() {
-        sendRequest();
-
-        function sendRequest() {
-            var st = $('#st').val();
-            var id = parseInt($('#id').val());
-            $.ajax({
-            type: 'POST',
-            url: 'checkst.php',
-            data: { id: id }, // Sending data as an object
-            success: function(data) {
-                if (data != st) {
-        switch (parseInt(data)) { // Ensure data is parsed as an integer
-        case 0:
-            $('#status').text("รอการตอบรับ");
-            break;
-        case 1:
-            $('#status').text("รอลูกค้าชำระเงิน และยืนยันคำสั่งซื้อ");
-            break;
-        case 2:
-            $('#status').text("เตรียมสินค้า");
-            break;
-        case 3:
-            $('#status').text("ขนส่งสินค้า");
-            break;
-        case 4:
-            $('#status').text("ส่งสินค้าแล้ว");
-            break;
-        case 5:
-            $('#status').text("คำสั่งซื้อเสร็จสิ้น");
-            break;
-        case 6:
-            $('#status').text("คำสั่งซื้อถูกยกเลิก");
-            break;
-        }
-        $('#st').val(data);
-    }
-    },
-            complete: function() {
-                // Schedule the next request when the current one is complete
-                setTimeout(sendRequest, 5000); // Using setTimeout instead of setInterval
-            }
-            });
-        }
-        });
-
-    </script>
 	<script>
 		$(document).ready(function() {
             var quant= $('#quant').val();
@@ -574,7 +516,7 @@
 	</script>
 </body>
 </html>
-
+<?php include('script.php');?>
 <?php 
     }
 ?>
