@@ -139,7 +139,6 @@
                     <div class="container px-4 px-lg-5 mt-5">
                         <div calss="row">
                             <div class="col-md-4"><h1 class="mt-4">จัดการสินค้า</h1></div>
-                            <div class="col-md-4" text-align="right">เพิ่มสินค้า</div>
                         </div>
                         
                         <hr>
@@ -218,9 +217,6 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

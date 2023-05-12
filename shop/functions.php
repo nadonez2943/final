@@ -1,5 +1,4 @@
 <?php 
-  
     define('DB_SERVER', 'localhost'); // Your hostname
     define('DB_USER', 'root'); // Database Username
     define('DB_PASS', ''); // Database Password
@@ -39,10 +38,16 @@
             $pro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE products.pro_id = '$pro_id' ORDER BY products.pro_id ");
             return $pro;
         }
-        public function MyProduct($user_id) {
-            $MyPro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE shop.user_id = '$user_id' ORDER BY products.pro_id ");
+        public function MyProduct($shop_id) {
+            $MyPro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE shop.shop_id = '$shop_id' ORDER BY products.pro_id ");
             return $MyPro;
         }
+        public function products($pro_id) {
+            $pro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id=shop.shop_id LEFT JOIN catagory ON products.cat_id=catagory.id WHERE pro_id='$pro_id' ");
+            return $pro;
+        }
+
+
         public function insertProduct($shop_id, $cat_id, $pro_name, $pro_price, $pro_amount, $pro_detail, $pro_send, $fileName) {
             $insertProduct = mysqli_query($this->dbcon, "INSERT INTO products(shop_id, cat_id, pro_name, pro_price, pro_amount, pro_detail, pro_point, add_date, update_date, pro_status, pro_send, pro_img ) VALUES( '$shop_id', '$cat_id', '$pro_name', '$pro_price', '$pro_amount', '$pro_detail', '5', NOW(), NOW(), '1', '$pro_send', '$fileName' )" );
             return $insertProduct;
@@ -70,16 +75,16 @@
         }
 
         #order
-        public function order($ord_id) {
-            $order = mysqli_query($this->dbcon, "SELECT * FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.id = '$ord_id'");
+        public function order($ord_id,$shop_id) {
+            $order = mysqli_query($this->dbcon, "SELECT * FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.id = '$ord_id' AND shop.shop_id = '$shop_id'");
             return $order;
         }
-        public function orderDetail($ord_id) {
-            $order = mysqli_query($this->dbcon, "SELECT * FROM orders WHERE orders.ord_id = '$ord_id'");
-            return $order;
+        public function allorder($shop_id) {
+            $allorder = mysqli_query($this->dbcon, "SELECT * FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE shop.shop_id = '$shop_id'");
+            return $allorder;
         }
-        public function orders($order_status) {
-            $ord = mysqli_query($this->dbcon, "SELECT * FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.order_status = '$order_status'");
+        public function orders($order_status,$shop_id) {
+            $ord = mysqli_query($this->dbcon, "SELECT * FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.order_status = '$order_status' AND shop.shop_id = '$shop_id'");
             return $ord;
         }
         public function checkst($id) {
@@ -91,6 +96,10 @@
         public function update_order_status($id,$order_status) {
             $update_order_status = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' WHERE orders.id='$id'");
             return $update_order_status;
+        }
+        public function update_pro_status($st_full,$pro_id) {
+            $update_pro_status = mysqli_query($this->dbcon, "UPDATE products SET pro_status = '$st_full' WHERE products.pro_id='$pro_id'");
+            return $update_pro_status;
         }
     }
 

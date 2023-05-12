@@ -22,47 +22,46 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <style>
-
-            /* Style the tab */
-            .tab {
-            overflow: hidden;
-            margin : 14px 16px;
-            border: 1px solid #ccc;
-            border-radius: 10px ;
-            background-color: #f1f1f1;
+            .switch {
+                width: 50px;
+                height: 30px;
+                display: flex;
+                position: relative;
             }
-
-            /* Style the buttons inside the tab */
-            .tab button {
-            background-color: inherit;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            transition: 0.3s;
-            font-size: 17px;
+            .chk {
+                width: 0;
+                height: 0;
+                opacity: 0;
             }
-
-            /* Change background color of buttons on hover */
-            .tab button:hover {
-            background-color: #ddd;
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: #adadad;
+                transition: .5s ease-in-out;
+                border-radius: 50px;
             }
-
-            /* Create an active/current tablink class */
-            .tab button.active {
-            background-color: #ccc;
+            .slider:before {
+                content: "";
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                top: 5px;
+                left: 5px;
+                background: #fff;
+                border-radius: 50%;
+                transition: 500ms ease-in-out;
             }
-
-            /* Style the tab content */
-            .tabcontent {
-            display: none;
-            padding: 6px 12px;
-            background-color: #fff;
-            /* border: 1px solid #ccc; */
-            border: none;
-            border-top: none;
+            .chk:checked + .slider {
+                background: #198754;
+            }
+            .chk:checked + .slider:before {
+                transform: translateX(20px);
             }
         </style>
     </head>
@@ -144,104 +143,81 @@
 
                 <main>
                 <div class="container px-4 px-lg-5 mt-4">
-                        <h1 class="mt-4">จัดการสินค้า</h1>
-                        <!-- <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">สำหรับคนในชุมชน กรุณาตรวจสอบข้อมูลของผู้สมัครว่าเป็นจริงหรือไม่</li>
-                        </ol> -->
-                        <hr>
-                        <div class="card">
-                        <div class="tab">
-                            <button class="tablinks" onclick="openCity(event, 'all')" id="defaultOpen">รายงานปัญหาสินค้าทั้งหมด</button>
-                            <button class="tablinks" onclick="openCity(event, 'noread')">รายงานปัญหาสินค้าที่ยังไม่ได้อ่าน</button>
-                            <button class="tablinks" onclick="openCity(event, 'read')">รายงานปัญหาสินค้าที่อ่านแล้ว</button>
+                        <div calss="row">
+                            <div class="col-md-4"><h1>จัดการสินค้า</h1></div>
                         </div>
-
-                        <div id="all" class="tabcontent">
+                        
+                        <hr>
+                        <div class="card mt-4 mb-4">
                             <div class="card-body">
-                                <table id="allTable">
+                            <table id="datatablesSimple">
                                     <thead>
                                         <tr>
+                                            <th>ชื่อ</th>
                                             <th>รูปสินค้า</th>
-                                            <th>สินค้า</th>
-                                            <th>ผู้รายงาน</th>
+                                            <th>ราคา</th>
+                                            <th>คลัง</th>
                                             <th>เวลา</th>
+                                            <th>สถานะ</th>
                                             <th>การทำงาน</th>
+                                            <!--<th>ลบสินค้า</th>-->
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>ชื่อ</th>
                                             <th>รูปสินค้า</th>
-                                            <th>สินค้า</th>
-                                            <th>ผู้รายงาน</th>
+                                            <th>ราคา</th>
+                                            <th>คลัง</th>
                                             <th>เวลา</th>
+                                            <th>สถานะ</th>
                                             <th>การทำงาน</th>
+                                            <!--<th>ลบสินค้า</th>-->
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                    <?php
+                                        $allpro = $sql->MyProduct($_SESSION['shop_id']);
+                                        while($Allpro=mysqli_fetch_array($allpro)){
+                                    ?>
                                         <tr>
-                                            <th><a href="productdetails.php?pro_id=<?=$Cart['pro_id']?>"><img src="\roengrang\img/<?=$Cart['pro_img']?>"></a></th>
-                                            <th><a href="productdetails.php?pro_id=<?=$Cart['pro_id']?>"><?=$Cart['pro_name']?></a></th>
+                                            <td><?=$Allpro['pro_name']?></td>
+                                            <td><img src="\roengrang\img/<?=$Allpro['pro_img']?>" style="width: 75px;hieght: 75px;"  /></td>
+                                            <td><?=$Allpro['pro_price']?> บาท</td>
+                                            <td><?=$Allpro['pro_amount']?></td>
+                                            <td>
+                                                <div>เวลาสร้างสินค้า</div>
+                                                <div><?=$Allpro['add_date']?></div>
+                                                <div>เวลาแก้ไขสินค้า</div>
+                                                <div>2011/04/25</div>
+                                            </td>
+                                            <td>
+                                                <label class="switch">
+                                                    <input type="checkbox" class="chk" id="id_chk<?=$Allpro['pro_id']?>" onclick="status(<?=$Allpro['pro_id']?>,<?=$Allpro['pro_status']?>)" <?php echo($Allpro['pro_status'] != 0)?'checked':''; ?>>
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                            <a class="text-decoration-none" href="product_detail.php?pro_id=<?=$Allpro['pro_id']?>">
+                                                <button type="button" style="width:130px; height:60; font-size:17px;"class="btn btn-outline-primary">ดูเพิ่มเติม</button></a>
+
+                                                <a class="text-decoration-none" href="editproduct.php?pro_id=<?=$Allpro['pro_id']?>">
+                                                <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-primary">แก้ไขสินค้า</button></a>
+          
+                                                <a class="text-decoration-none" href="delete.php?pro_id=<?=$Allpro['pro_id']?>&what=products">   
+                                                    <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ลบสินค้า</button></a>
+                                                
+                                            </td>
                                         </tr>
+                                    <?php
+                                        }
+                                    ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-
-                        <div id="noread" class="tabcontent">
-                            <div class="card-body">
-                                <table id="noTable">
-                                    <thead>
-                                        <tr>
-                                            <th>รูปสินค้า</th>
-                                            <th>สินค้า</th>
-                                            <th>ผู้รายงาน</th>
-                                            <th>เวลา</th>
-                                            <th>การทำงาน</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>รูปสินค้า</th>
-                                            <th>สินค้า</th>
-                                            <th>ผู้รายงาน</th>
-                                            <th>เวลา</th>
-                                            <th>การทำงาน</th>
-                                        </tr>
-                                    </tfoot>
-                                    
-                                </table>
-                            </div>
-                        </div>
-
-                        <div id="read" class="tabcontent">
-                            <div class="card-body">
-                                <table id="readTable">
-                                    <thead>
-                                        <tr>
-                                            <th>รูปสินค้า</th>
-                                            <th>สินค้า</th>
-                                            <th>ผู้รายงาน</th>
-                                            <th>เวลา</th>
-                                            <th>การทำงาน</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>รูปสินค้า</th>
-                                            <th>สินค้า</th>
-                                            <th>ผู้รายงาน</th>
-                                            <th>เวลา</th>
-                                            <th>การทำงาน</th>
-                                        </tr>
-                                    </tfoot>
-                                    
-                                </table>
-                            </div>
-                        </div>
-
+                                           
                     </div>
-
-                </div>
                 </main>
 
                 <footer class="py-4 bg-light mt-auto">
@@ -297,11 +273,23 @@
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            function status(pro_id,pro_status) {
+                var pro_id,pro_status;
+                //console.log(pro_id+" "+pro_status);
+                $("#id_chk"+pro_id).change();
+                $.ajax({
+                    method: 'POST',
+                    url: 'update_pro_status.php',
+                    data: {
+                        pro_id: pro_id
+                    },
+                });
+            }
+        </script>
     </body>
 </html>
 

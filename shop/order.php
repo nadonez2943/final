@@ -152,10 +152,13 @@
                         <div class="card">
                         <div class="tab">
                             <button class="tablinks" onclick="openCity(event, 'new')" id="defaultOpen">คำสั่งซื้อใหม่</button>
-                            <button class="tablinks" onclick="openCity(event, 'doing')">คำสั่งซื้อที่กำลังดำเนินการ</button>
-                            <button class="tablinks" onclick="openCity(event, 'ship')">คำสั่งซื้อที่กำลังส่ง</button>
+                            <button class="tablinks" onclick="openCity(event, 'doing')">รอลูกค้าชำระเงิน</button>
+                            <button class="tablinks" onclick="openCity(event, 'prepare')">เตรียมสินค้า</button>
+                            <button class="tablinks" onclick="openCity(event, 'ship')">อยู่ละหว่างขนส่ง</button>
+                            <button class="tablinks" onclick="openCity(event, 'shiped')">คำสั่งซื้อที่ส่งแล้ว</button>
                             <button class="tablinks" onclick="openCity(event, 'success')">คำสั่งซื้อที่สำเร็จ</button>
                             <button class="tablinks" onclick="openCity(event, 'cancle')">คำสั่งซื้อที่ยกเลิก</button>
+                            <button class="tablinks" onclick="openCity(event, 'all')" >คำสั่งซื้อทั้งหมด</button>
                         </div>
 
                         <div id="new" class="tabcontent">
@@ -183,9 +186,13 @@
                                             <th>การทำงาน</th>
                                         </tr>
                                     </tfoot>
+                                    <?php 
+                                            $allord = $sql->orders(0,$_SESSION['shop_id']);
+                                            $numnew=mysqli_num_rows($allord);
+                                    ?>
+                                    <input hidden type="number" id="numnew" value="<?=$numnew?>">
                                     <tbody>
                                     <?php 
-                                            $allord = $sql->orders(0);
                                             while($Allord=mysqli_fetch_array($allord)){
                                     ?>
                                         <tr>
@@ -258,12 +265,14 @@
                         <div id="doing" class="tabcontent">
                             <div class="card-body">
                                 <table id="doingTable">
-                                    <thead>
+                                <thead>
                                         <tr>
                                             <th>รูปสินค้า</th>
                                             <th>สินค้า</th>
-                                            <th>ผู้รายงาน</th>
-                                            <th>เวลา</th>
+                                            <th>ราคา</th>
+                                            <th>การจัดส่ง</th> 
+                                            <th>ราคารวม</th>
+                                            <th>สถานะ</th>
                                             <th>การทำงาน</th>
                                         </tr>
                                     </thead>
@@ -271,12 +280,186 @@
                                         <tr>
                                             <th>รูปสินค้า</th>
                                             <th>สินค้า</th>
-                                            <th>ผู้รายงาน</th>
-                                            <th>เวลา</th>
+                                            <th>ราคา</th>
+                                            <th>การจัดส่ง</th> 
+                                            <th>ราคารวม</th>
+                                            <th>สถานะ</th>
                                             <th>การทำงาน</th>
                                         </tr>
                                     </tfoot>
-                                    
+                                    <?php 
+                                            $allord = $sql->orders(1,$_SESSION['shop_id']);
+                                            $numdoing=mysqli_num_rows($allord);
+                                    ?>
+                                    <input hidden type="number" id="numdoing" value="<?=$numdoing?>">
+                                    <tbody>
+                                    <?php 
+                                            while($Allord=mysqli_fetch_array($allord)){
+                                    ?>
+                                        <tr>
+                                            <td><a href="order_detail.php?id=<?=$Allord['id']?>"><img src="\roengrang\img/<?=$Allord['pro_img']?>" style="width: 96px;hieght: 96px;"></a></td>
+                                            <td>
+                                                <p><a class="text-dark text-decoration-none" href="order_detail.php?id=<?=$Allord['id']?>"><?=$Allord['pro_name']?></a></p>
+                                                <p><?=$Allord['shop_name']?></p>
+                                            </td>
+                                            <td>
+                                                <p><?=$Allord['pro_price']?> บาท</p>
+                                                <p>x <?=$Allord['ord_amount']?></p>
+                                            </td>
+                                            
+                                            <td>
+                                                <p>นอกชุมชน</p>
+                                                <p><?=$Allord['sent_price']?> บาท</p>
+                                            </td>
+                                            <td><?=$Allord['total_price']?></span></td>
+                                            <td>
+                                                <p>
+                                                <?php
+                                                    switch ($Allord['order_status']) {
+                                                        case 0:
+                                                            echo "ส่งคำสั่งซื้อแล้ว";
+                                                            break;
+                                                        case 1:
+                                                            echo "<p>ร้านค้ารับคำสั่งซื้อ</p>";
+                                                            echo '<p><a class="text text-danger" href="payment.php?id='.$Allord['id'].'">ชำระเงิน</a></p>';
+                                                            break;
+                                                        case 2:
+                                                            echo "อยู่ระหว่างเตรียมสินค้า";
+                                                            break;
+                                                        case 3:
+                                                            echo "อยู่ระหว่างขนส่ง";
+                                                            break;
+                                                        case 4:
+                                                            echo "ส่งสินค้าแล้ว";
+                                                            break;
+                                                        case 5:
+                                                            echo "คำสั่งซื้อเสร็จสิ้น";
+                                                            break;
+                                                        case 6:
+                                                            echo "ยกเลิก";
+                                                            break;
+                                                    }
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <div class="row">
+                                                    <a class="text-decoration-none" href="order_detail.php?id=<?=$Allord['id']?>">
+                                                        <button type="button" style="width:130px; height:60; font-size:17px;"class="btn btn-outline-primary">ดูเพิ่มเติม</button>
+                                                    </a>
+                                                </div>
+                                                <div class="row mt-1">
+                                                    <a class="text-decoration-none" href="delete.php?user_id=<?=$Allord['id']?>">   
+                                                        <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ยกเลิก</button>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="prepare" class="tabcontent">
+                            <div class="card-body">
+                                <table id="prepareTable">
+                                <thead>
+                                        <tr>
+                                            <th>รูปสินค้า</th>
+                                            <th>สินค้า</th>
+                                            <th>ราคา</th>
+                                            <th>การจัดส่ง</th> 
+                                            <th>ราคารวม</th>
+                                            <th>สถานะ</th>
+                                            <th>การทำงาน</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>รูปสินค้า</th>
+                                            <th>สินค้า</th>
+                                            <th>ราคา</th>
+                                            <th>การจัดส่ง</th> 
+                                            <th>ราคารวม</th>
+                                            <th>สถานะ</th>
+                                            <th>การทำงาน</th>
+                                        </tr>
+                                    </tfoot>
+                                    <?php 
+                                            $allord = $sql->orders(2,$_SESSION['shop_id']);
+                                            $numprepare=mysqli_num_rows($allord);
+                                    ?>
+                                    <input hidden type="number" id="numprepare" value="<?=$numprepare?>">
+                                    <tbody>
+                                    <?php 
+                                            while($Allord=mysqli_fetch_array($allord)){
+                                    ?>
+                                        <tr>
+                                            <td><a href="order_detail.php?id=<?=$Allord['id']?>"><img src="\roengrang\img/<?=$Allord['pro_img']?>" style="width: 96px;hieght: 96px;"></a></td>
+                                            <td>
+                                                <p><a class="text-dark text-decoration-none" href="order_detail.php?id=<?=$Allord['id']?>"><?=$Allord['pro_name']?></a></p>
+                                                <p><?=$Allord['shop_name']?></p>
+                                            </td>
+                                            <td>
+                                                <p><?=$Allord['pro_price']?> บาท</p>
+                                                <p>x <?=$Allord['ord_amount']?></p>
+                                            </td>
+                                            
+                                            <td>
+                                                <p>นอกชุมชน</p>
+                                                <p><?=$Allord['sent_price']?> บาท</p>
+                                            </td>
+                                            <td><?=$Allord['total_price']?></span></td>
+                                            <td>
+                                                <p>
+                                                <?php
+                                                    switch ($Allord['order_status']) {
+                                                        case 0:
+                                                            echo "ส่งคำสั่งซื้อแล้ว";
+                                                            break;
+                                                        case 1:
+                                                            echo "<p>ร้านค้ารับคำสั่งซื้อ</p>";
+                                                            echo '<p><a class="text text-danger" href="payment.php?id='.$Allord['id'].'">ชำระเงิน</a></p>';
+                                                            break;
+                                                        case 2:
+                                                            echo "อยู่ระหว่างเตรียมสินค้า";
+                                                            break;
+                                                        case 3:
+                                                            echo "อยู่ระหว่างขนส่ง";
+                                                            break;
+                                                        case 4:
+                                                            echo "ส่งสินค้าแล้ว";
+                                                            break;
+                                                        case 5:
+                                                            echo "คำสั่งซื้อเสร็จสิ้น";
+                                                            break;
+                                                        case 6:
+                                                            echo "ยกเลิก";
+                                                            break;
+                                                    }
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <div class="row">
+                                                    <a class="text-decoration-none" href="order_detail.php?id=<?=$Allord['id']?>">
+                                                        <button type="button" style="width:130px; height:60; font-size:17px;"class="btn btn-outline-primary">ดูเพิ่มเติม</button>
+                                                    </a>
+                                                </div>
+                                                <div class="row mt-1">
+                                                    <a class="text-decoration-none" href="delete.php?user_id=<?=$Allord['id']?>">   
+                                                        <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ยกเลิก</button>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    ?>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -284,12 +467,14 @@
                         <div id="ship" class="tabcontent">
                             <div class="card-body">
                                 <table id="shipTable">
-                                    <thead>
+                                <thead>
                                         <tr>
                                             <th>รูปสินค้า</th>
                                             <th>สินค้า</th>
-                                            <th>ผู้รายงาน</th>
-                                            <th>เวลา</th>
+                                            <th>ราคา</th>
+                                            <th>การจัดส่ง</th> 
+                                            <th>ราคารวม</th>
+                                            <th>สถานะ</th>
                                             <th>การทำงาน</th>
                                         </tr>
                                     </thead>
@@ -297,12 +482,186 @@
                                         <tr>
                                             <th>รูปสินค้า</th>
                                             <th>สินค้า</th>
-                                            <th>ผู้รายงาน</th>
-                                            <th>เวลา</th>
+                                            <th>ราคา</th>
+                                            <th>การจัดส่ง</th> 
+                                            <th>ราคารวม</th>
+                                            <th>สถานะ</th>
                                             <th>การทำงาน</th>
                                         </tr>
                                     </tfoot>
-                                    
+                                    <?php 
+                                            $allord = $sql->orders(3,$_SESSION['shop_id']);
+                                            $numship=mysqli_num_rows($allord);
+                                    ?>
+                                    <input hidden type="number" id="numship" value="<?=$numship?>">
+                                    <tbody>
+                                    <?php 
+                                            while($Allord=mysqli_fetch_array($allord)){
+                                    ?>
+                                        <tr>
+                                            <td><a href="order_detail.php?id=<?=$Allord['id']?>"><img src="\roengrang\img/<?=$Allord['pro_img']?>" style="width: 96px;hieght: 96px;"></a></td>
+                                            <td>
+                                                <p><a class="text-dark text-decoration-none" href="order_detail.php?id=<?=$Allord['id']?>"><?=$Allord['pro_name']?></a></p>
+                                                <p><?=$Allord['shop_name']?></p>
+                                            </td>
+                                            <td>
+                                                <p><?=$Allord['pro_price']?> บาท</p>
+                                                <p>x <?=$Allord['ord_amount']?></p>
+                                            </td>
+                                            
+                                            <td>
+                                                <p>นอกชุมชน</p>
+                                                <p><?=$Allord['sent_price']?> บาท</p>
+                                            </td>
+                                            <td><?=$Allord['total_price']?></span></td>
+                                            <td>
+                                                <p>
+                                                <?php
+                                                    switch ($Allord['order_status']) {
+                                                        case 0:
+                                                            echo "ส่งคำสั่งซื้อแล้ว";
+                                                            break;
+                                                        case 1:
+                                                            echo "<p>ร้านค้ารับคำสั่งซื้อ</p>";
+                                                            echo '<p><a class="text text-danger" href="payment.php?id='.$Allord['id'].'">ชำระเงิน</a></p>';
+                                                            break;
+                                                        case 2:
+                                                            echo "อยู่ระหว่างเตรียมสินค้า";
+                                                            break;
+                                                        case 3:
+                                                            echo "อยู่ระหว่างขนส่ง";
+                                                            break;
+                                                        case 4:
+                                                            echo "ส่งสินค้าแล้ว";
+                                                            break;
+                                                        case 5:
+                                                            echo "คำสั่งซื้อเสร็จสิ้น";
+                                                            break;
+                                                        case 6:
+                                                            echo "ยกเลิก";
+                                                            break;
+                                                    }
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <div class="row">
+                                                    <a class="text-decoration-none" href="order_detail.php?id=<?=$Allord['id']?>">
+                                                        <button type="button" style="width:130px; height:60; font-size:17px;"class="btn btn-outline-primary">ดูเพิ่มเติม</button>
+                                                    </a>
+                                                </div>
+                                                <div class="row mt-1">
+                                                    <a class="text-decoration-none" href="delete.php?user_id=<?=$Allord['id']?>">   
+                                                        <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ยกเลิก</button>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="shiped" class="tabcontent">
+                            <div class="card-body">
+                                <table id="shipedTable">
+                                <thead>
+                                        <tr>
+                                            <th>รูปสินค้า</th>
+                                            <th>สินค้า</th>
+                                            <th>ราคา</th>
+                                            <th>การจัดส่ง</th> 
+                                            <th>ราคารวม</th>
+                                            <th>สถานะ</th>
+                                            <th>การทำงาน</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>รูปสินค้า</th>
+                                            <th>สินค้า</th>
+                                            <th>ราคา</th>
+                                            <th>การจัดส่ง</th> 
+                                            <th>ราคารวม</th>
+                                            <th>สถานะ</th>
+                                            <th>การทำงาน</th>
+                                        </tr>
+                                    </tfoot>
+                                    <?php 
+                                            $allord = $sql->orders(4,$_SESSION['shop_id']);
+                                            $numshiped=mysqli_num_rows($allord);
+                                    ?>
+                                    <input hidden type="number" id="numshiped" value="<?=$numshiped?>">
+                                    <tbody>
+                                    <?php 
+                                            while($Allord=mysqli_fetch_array($allord)){
+                                    ?>
+                                        <tr>
+                                            <td><a href="order_detail.php?id=<?=$Allord['id']?>"><img src="\roengrang\img/<?=$Allord['pro_img']?>" style="width: 96px;hieght: 96px;"></a></td>
+                                            <td>
+                                                <p><a class="text-dark text-decoration-none" href="order_detail.php?id=<?=$Allord['id']?>"><?=$Allord['pro_name']?></a></p>
+                                                <p><?=$Allord['shop_name']?></p>
+                                            </td>
+                                            <td>
+                                                <p><?=$Allord['pro_price']?> บาท</p>
+                                                <p>x <?=$Allord['ord_amount']?></p>
+                                            </td>
+                                            
+                                            <td>
+                                                <p>นอกชุมชน</p>
+                                                <p><?=$Allord['sent_price']?> บาท</p>
+                                            </td>
+                                            <td><?=$Allord['total_price']?></span></td>
+                                            <td>
+                                                <p>
+                                                <?php
+                                                    switch ($Allord['order_status']) {
+                                                        case 0:
+                                                            echo "ส่งคำสั่งซื้อแล้ว";
+                                                            break;
+                                                        case 1:
+                                                            echo "<p>ร้านค้ารับคำสั่งซื้อ</p>";
+                                                            echo '<p><a class="text text-danger" href="payment.php?id='.$Allord['id'].'">ชำระเงิน</a></p>';
+                                                            break;
+                                                        case 2:
+                                                            echo "อยู่ระหว่างเตรียมสินค้า";
+                                                            break;
+                                                        case 3:
+                                                            echo "อยู่ระหว่างขนส่ง";
+                                                            break;
+                                                        case 4:
+                                                            echo "ส่งสินค้าแล้ว";
+                                                            break;
+                                                        case 5:
+                                                            echo "คำสั่งซื้อเสร็จสิ้น";
+                                                            break;
+                                                        case 6:
+                                                            echo "ยกเลิก";
+                                                            break;
+                                                    }
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <div class="row">
+                                                    <a class="text-decoration-none" href="order_detail.php?id=<?=$Allord['id']?>">
+                                                        <button type="button" style="width:130px; height:60; font-size:17px;"class="btn btn-outline-primary">ดูเพิ่มเติม</button>
+                                                    </a>
+                                                </div>
+                                                <div class="row mt-1">
+                                                    <a class="text-decoration-none" href="delete.php?user_id=<?=$Allord['id']?>">   
+                                                        <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ยกเลิก</button>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    ?>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -310,12 +669,14 @@
                         <div id="success" class="tabcontent">
                             <div class="card-body">
                                 <table id="successTable">
-                                    <thead>
+                                <thead>
                                         <tr>
                                             <th>รูปสินค้า</th>
                                             <th>สินค้า</th>
-                                            <th>ผู้รายงาน</th>
-                                            <th>เวลา</th>
+                                            <th>ราคา</th>
+                                            <th>การจัดส่ง</th> 
+                                            <th>ราคารวม</th>
+                                            <th>สถานะ</th>
                                             <th>การทำงาน</th>
                                         </tr>
                                     </thead>
@@ -323,12 +684,85 @@
                                         <tr>
                                             <th>รูปสินค้า</th>
                                             <th>สินค้า</th>
-                                            <th>ผู้รายงาน</th>
-                                            <th>เวลา</th>
+                                            <th>ราคา</th>
+                                            <th>การจัดส่ง</th> 
+                                            <th>ราคารวม</th>
+                                            <th>สถานะ</th>
                                             <th>การทำงาน</th>
                                         </tr>
                                     </tfoot>
-                                    
+                                    <?php 
+                                            $allord = $sql->orders(5,$_SESSION['shop_id']);
+                                            $numsuccess=mysqli_num_rows($allord);
+                                    ?>
+                                    <input hidden type="number" id="numsuccess" value="<?=$numsuccess?>">
+                                    <tbody>
+                                    <?php 
+                                            while($Allord=mysqli_fetch_array($allord)){
+                                    ?>
+                                        <tr>
+                                            <td><a href="order_detail.php?id=<?=$Allord['id']?>"><img src="\roengrang\img/<?=$Allord['pro_img']?>" style="width: 96px;hieght: 96px;"></a></td>
+                                            <td>
+                                                <p><a class="text-dark text-decoration-none" href="order_detail.php?id=<?=$Allord['id']?>"><?=$Allord['pro_name']?></a></p>
+                                                <p><?=$Allord['shop_name']?></p>
+                                            </td>
+                                            <td>
+                                                <p><?=$Allord['pro_price']?> บาท</p>
+                                                <p>x <?=$Allord['ord_amount']?></p>
+                                            </td>
+                                            
+                                            <td>
+                                                <p>นอกชุมชน</p>
+                                                <p><?=$Allord['sent_price']?> บาท</p>
+                                            </td>
+                                            <td><?=$Allord['total_price']?></span></td>
+                                            <td>
+                                                <p>
+                                                <?php
+                                                    switch ($Allord['order_status']) {
+                                                        case 0:
+                                                            echo "ส่งคำสั่งซื้อแล้ว";
+                                                            break;
+                                                        case 1:
+                                                            echo "<p>ร้านค้ารับคำสั่งซื้อ</p>";
+                                                            echo '<p><a class="text text-danger" href="payment.php?id='.$Allord['id'].'">ชำระเงิน</a></p>';
+                                                            break;
+                                                        case 2:
+                                                            echo "อยู่ระหว่างเตรียมสินค้า";
+                                                            break;
+                                                        case 3:
+                                                            echo "อยู่ระหว่างขนส่ง";
+                                                            break;
+                                                        case 4:
+                                                            echo "ส่งสินค้าแล้ว";
+                                                            break;
+                                                        case 5:
+                                                            echo "คำสั่งซื้อเสร็จสิ้น";
+                                                            break;
+                                                        case 6:
+                                                            echo "ยกเลิก";
+                                                            break;
+                                                    }
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <div class="row">
+                                                    <a class="text-decoration-none" href="order_detail.php?id=<?=$Allord['id']?>">
+                                                        <button type="button" style="width:130px; height:60; font-size:17px;"class="btn btn-outline-primary">ดูเพิ่มเติม</button>
+                                                    </a>
+                                                </div>
+                                                <div class="row mt-1">
+                                                    <a class="text-decoration-none" href="delete.php?user_id=<?=$Allord['id']?>">   
+                                                        <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ยกเลิก</button>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    ?>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -336,12 +770,14 @@
                         <div id="cancle" class="tabcontent">
                             <div class="card-body">
                                 <table id="cancleTable">
-                                    <thead>
+                                <thead>
                                         <tr>
                                             <th>รูปสินค้า</th>
                                             <th>สินค้า</th>
-                                            <th>ผู้รายงาน</th>
-                                            <th>เวลา</th>
+                                            <th>ราคา</th>
+                                            <th>การจัดส่ง</th> 
+                                            <th>ราคารวม</th>
+                                            <th>สถานะ</th>
                                             <th>การทำงาน</th>
                                         </tr>
                                     </thead>
@@ -349,12 +785,186 @@
                                         <tr>
                                             <th>รูปสินค้า</th>
                                             <th>สินค้า</th>
-                                            <th>ผู้รายงาน</th>
-                                            <th>เวลา</th>
+                                            <th>ราคา</th>
+                                            <th>การจัดส่ง</th> 
+                                            <th>ราคารวม</th>
+                                            <th>สถานะ</th>
                                             <th>การทำงาน</th>
                                         </tr>
                                     </tfoot>
-                                    
+                                    <?php 
+                                            $allord = $sql->orders(6,$_SESSION['shop_id']);
+                                            $numcancle=mysqli_num_rows($allord);
+                                    ?>
+                                    <input hidden type="number" id="numcancle" value="<?=$numcancle?>">
+                                    <tbody>
+                                    <?php 
+                                            while($Allord=mysqli_fetch_array($allord)){
+                                    ?>
+                                        <tr>
+                                            <td><a href="order_detail.php?id=<?=$Allord['id']?>"><img src="\roengrang\img/<?=$Allord['pro_img']?>" style="width: 96px;hieght: 96px;"></a></td>
+                                            <td>
+                                                <p><a class="text-dark text-decoration-none" href="order_detail.php?id=<?=$Allord['id']?>"><?=$Allord['pro_name']?></a></p>
+                                                <p><?=$Allord['shop_name']?></p>
+                                            </td>
+                                            <td>
+                                                <p><?=$Allord['pro_price']?> บาท</p>
+                                                <p>x <?=$Allord['ord_amount']?></p>
+                                            </td>
+                                            
+                                            <td>
+                                                <p>นอกชุมชน</p>
+                                                <p><?=$Allord['sent_price']?> บาท</p>
+                                            </td>
+                                            <td><?=$Allord['total_price']?></span></td>
+                                            <td>
+                                                <p>
+                                                <?php
+                                                    switch ($Allord['order_status']) {
+                                                        case 0:
+                                                            echo "ส่งคำสั่งซื้อแล้ว";
+                                                            break;
+                                                        case 1:
+                                                            echo "<p>ร้านค้ารับคำสั่งซื้อ</p>";
+                                                            echo '<p><a class="text text-danger" href="payment.php?id='.$Allord['id'].'">ชำระเงิน</a></p>';
+                                                            break;
+                                                        case 2:
+                                                            echo "อยู่ระหว่างเตรียมสินค้า";
+                                                            break;
+                                                        case 3:
+                                                            echo "อยู่ระหว่างขนส่ง";
+                                                            break;
+                                                        case 4:
+                                                            echo "ส่งสินค้าแล้ว";
+                                                            break;
+                                                        case 5:
+                                                            echo "คำสั่งซื้อเสร็จสิ้น";
+                                                            break;
+                                                        case 6:
+                                                            echo "ยกเลิก";
+                                                            break;
+                                                    }
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <div class="row">
+                                                    <a class="text-decoration-none" href="order_detail.php?id=<?=$Allord['id']?>">
+                                                        <button type="button" style="width:130px; height:60; font-size:17px;"class="btn btn-outline-primary">ดูเพิ่มเติม</button>
+                                                    </a>
+                                                </div>
+                                                <div class="row mt-1">
+                                                    <a class="text-decoration-none" href="delete.php?user_id=<?=$Allord['id']?>">   
+                                                        <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ยกเลิก</button>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="all" class="tabcontent">
+                            <div class="card-body">
+                                <table id="allTable">
+                                <thead>
+                                        <tr>
+                                            <th>รูปสินค้า</th>
+                                            <th>สินค้า</th>
+                                            <th>ราคา</th>
+                                            <th>การจัดส่ง</th> 
+                                            <th>ราคารวม</th>
+                                            <th>สถานะ</th>
+                                            <th>การทำงาน</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>รูปสินค้า</th>
+                                            <th>สินค้า</th>
+                                            <th>ราคา</th>
+                                            <th>การจัดส่ง</th> 
+                                            <th>ราคารวม</th>
+                                            <th>สถานะ</th>
+                                            <th>การทำงาน</th>
+                                        </tr>
+                                    </tfoot>
+                                    <?php 
+                                            $allord = $sql->allorder($_SESSION['shop_id']);
+                                            $numall=mysqli_num_rows($allord);
+                                    ?>
+                                    <input hidden type="number" id="numall" value="<?=$numall?>">
+                                    <tbody>
+                                    <?php 
+                                            while($Allord=mysqli_fetch_array($allord)){
+                                    ?>
+                                        <tr>
+                                            <td><a href="order_detail.php?id=<?=$Allord['id']?>"><img src="\roengrang\img/<?=$Allord['pro_img']?>" style="width: 96px;hieght: 96px;"></a></td>
+                                            <td>
+                                                <p><a class="text-dark text-decoration-none" href="order_detail.php?id=<?=$Allord['id']?>"><?=$Allord['pro_name']?></a></p>
+                                                <p><?=$Allord['shop_name']?></p>
+                                            </td>
+                                            <td>
+                                                <p><?=$Allord['pro_price']?> บาท</p>
+                                                <p>x <?=$Allord['ord_amount']?></p>
+                                            </td>
+                                            
+                                            <td>
+                                                <p>นอกชุมชน</p>
+                                                <p><?=$Allord['sent_price']?> บาท</p>
+                                            </td>
+                                            <td><?=$Allord['total_price']?></span></td>
+                                            <td>
+                                                <p>
+                                                <?php
+                                                    switch ($Allord['order_status']) {
+                                                        case 0:
+                                                            echo "ส่งคำสั่งซื้อแล้ว";
+                                                            break;
+                                                        case 1:
+                                                            echo "<p>ร้านค้ารับคำสั่งซื้อ</p>";
+                                                            echo '<p><a class="text text-danger" href="payment.php?id='.$Allord['id'].'">ชำระเงิน</a></p>';
+                                                            break;
+                                                        case 2:
+                                                            echo "อยู่ระหว่างเตรียมสินค้า";
+                                                            break;
+                                                        case 3:
+                                                            echo "อยู่ระหว่างขนส่ง";
+                                                            break;
+                                                        case 4:
+                                                            echo "ส่งสินค้าแล้ว";
+                                                            break;
+                                                        case 5:
+                                                            echo "คำสั่งซื้อเสร็จสิ้น";
+                                                            break;
+                                                        case 6:
+                                                            echo "ยกเลิก";
+                                                            break;
+                                                    }
+                                                    ?>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <div class="row">
+                                                    <a class="text-decoration-none" href="order_detail.php?id=<?=$Allord['id']?>">
+                                                        <button type="button" style="width:130px; height:60; font-size:17px;"class="btn btn-outline-primary">ดูเพิ่มเติม</button>
+                                                    </a>
+                                                </div>
+                                                <div class="row mt-1">
+                                                    <a class="text-decoration-none" href="delete.php?user_id=<?=$Allord['id']?>">   
+                                                        <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ยกเลิก</button>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    ?>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -390,9 +1000,17 @@
                 if (doingTable) {
                     new simpleDatatables.DataTable(doingTable);
                 }
+                const prepareTable = document.getElementById('prepareTable');
+                if (prepareTable) {
+                    new simpleDatatables.DataTable(prepareTable);
+                }
                 const shipTable = document.getElementById('shipTable');
                 if (shipTable) {
                     new simpleDatatables.DataTable(shipTable);
+                }
+                const shipedTable = document.getElementById('shipedTable');
+                if (shipedTable) {
+                    new simpleDatatables.DataTable(shipedTable);
                 }
                 const successTable = document.getElementById('successTable');
                 if (successTable) {
@@ -401,6 +1019,10 @@
                 const cancleTable = document.getElementById('cancleTable');
                 if (cancleTable) {
                     new simpleDatatables.DataTable(cancleTable);
+                }
+                const allTable = document.getElementById('allTable');
+                if (allTable) {
+                    new simpleDatatables.DataTable(allTable);
                 }
             });
 
@@ -425,14 +1047,13 @@
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
     </body>
 </html>
-
+<?php include('script.php');?>
 <?php 
       }
             else{
