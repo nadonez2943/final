@@ -146,7 +146,7 @@
 
                     <div class="container px-4 px-lg-5 mt-5">
                     <?php
-                        $allord = $sql->order($_GET['id']);
+                        $allord = $sql->order($_GET['id'],$_SESSION['shop_id']);
                         $Allord=mysqli_fetch_array($allord);
                     ?>
                     <h3 class="mt-4">คำสั่งซื้อที่ #<?=$Allord['id']?></h3>

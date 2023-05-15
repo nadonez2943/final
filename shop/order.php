@@ -1053,7 +1053,7 @@
         <script src="http://code.jquery.com/jquery-latest.js"></script>
     </body>
 </html>
-<?php include('script.php');?>
+<?php include('scriptcheck.php');?>
 <?php 
       }
             else{
