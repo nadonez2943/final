@@ -1,5 +1,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+    
     $(document).ready(function() {
 
         sendRequest();
@@ -79,7 +80,7 @@
                 },
                 complete: function() {
                     // Schedule the next request when the current one is complete
-                    setTimeout(sendRequest, 5000); // Using setTimeout instead of setInterval
+                    setTimeout(sendRequest, 15000); // Using setTimeout instead of setInterval
                 }
             });
         }

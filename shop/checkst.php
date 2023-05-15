@@ -16,10 +16,10 @@
         $num = mysqli_num_rows($order_status);
 
         if ($num > 0) {
-            echo $st['order_status'];
-        } else {
-            echo "<script>alert('fff');</script>";
-        }
+            if($order_status==$st['order_status']){
+                 echo $st['order_status'];
+            }
+        } 
     }
 
     
