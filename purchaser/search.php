@@ -261,35 +261,60 @@
 							<div class="tab-single">
 								<div class="row">
 									<?php
-										$allpro = $sql->allproduct();
-										while($Allpro=mysqli_fetch_array($allpro)){
+                                    if($_GET['search']==""){
+                                        if($_GET['cat']==0){
+                                            $pro = $sql->allproduct();
+                                        }else{
+                                            $pro = $sql->productcat($_GET['cat']);
+                                        }
+                                    }else{
+                                        if($_GET['cat']==0){
+                                            $pro = $sql->searchproduct($_GET['search']);
+                                        }else{
+                                            $pro = $sql->searchproductcat($_GET['cat'],$_GET['search']);
+                                        }
+                                    }
+                                    $row = mysqli_fetch_row($pro);
+                                    if($row>=1){
+                                        while($Searchpro=mysqli_fetch_array($pro)){
 									?>
 										<div class="col-xl-3 col-lg-4 col-md-3">
 											<div class="single-product">
 												<div class="product-img">
 													<a href="product-details.php">
-														<img class="default-img" src="\roengrang\img/<?=$Allpro['pro_img']?>"  width="auto" height="200px" >
-														<img class="hover-img" src="\roengrang\img/<?=$Allpro['pro_img']?>" width="auto" height="200px" >
+														<img class="default-img" src="\roengrang\img/<?=$Searchpro['pro_img']?>"  width="auto" height="200px" >
+														<img class="hover-img" src="\roengrang\img/<?=$Searchpro['pro_img']?>" width="auto" height="200px" >
 													</a>
 													<div class="button-head">
 														<div class="product-action">
 															<a title="Wishlist" href="#"><i class=" ti-heart "></i><span>ถูกใจสินค้า</span></a>
 														</div>
 														<div class="product-action-2">
-															<a title="Add to cart" href="addcart.php?pro_id=<?=$Allpro['pro_id']?>">เพิ่มลงในตะกร้า</a>
+															<a title="Add to cart" href="addcart.php?pro_id=<?=$Searchpro['pro_id']?>">เพิ่มลงในตะกร้า</a>
 														</div>
 													</div>
 												</div>
 												<div class="product-content">
-													<h3><a href="productdetails.php"><?=$Allpro['pro_name']?></a></h3>
+													<h3><a href="productdetails.php"><?=$Searchpro['pro_name']?></a></h3>
 													<div class="product-price">
-														<span><?=$Allpro['pro_price']?> บาท</span>
+														<span><?=$Searchpro['pro_price']?> บาท</span>
 													</div>
 												</div>
 											</div>
 										</div>
 									<?php
 										}
+                                    }else{
+									?>
+                                        <div class="col-12 mt-5">
+											<center>
+                                                <div class="m-5">
+                                                    <h3>...ไม่พบรายการที่ค้นหา...</h3>
+                                                </div>
+                                            </center>
+										</div>
+                                    <?php
+                                    }
 									?>
 								</div>
 							</div>

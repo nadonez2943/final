@@ -143,8 +143,11 @@
 
                 <main>
                 <div class="container px-4 px-lg-5 mt-4">
-                        <div calss="row">
-                            <div class="col-md-4"><h1>จัดการสินค้า</h1></div>
+                        <div class="row">
+                            <div class="col-6"><h1>จัดการสินค้า</h1></div>
+                            <div class="col-6 d-flex justify-content-end ">
+                                <button class="btn btn-outline-primary"><a class="text text-decoration-none" href="addproduct.php">เพิ่มสินค้า</a></button>
+                            </div>
                         </div>
                         
                         <hr>
@@ -182,7 +185,7 @@
                                     ?>
                                         <tr>
                                             <td><?=$Allpro['pro_name']?></td>
-                                            <td><img src="\roengrang\img/<?=$Allpro['pro_img']?>" style="width: 75px;hieght: 75px;"  /></td>
+                                            <td><img src="\roengrang\img/<?=$Allpro['pro_img']?>" style="width: 76px;height: 76px;"  /></td>
                                             <td><?=$Allpro['pro_price']?> บาท</td>
                                             <td><?=$Allpro['pro_amount']?></td>
                                             <td>

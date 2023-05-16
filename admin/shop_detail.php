@@ -203,16 +203,16 @@
                                     $shop=mysqli_fetch_array($Shop);
                                 ?>
                                 <div class="row">
-                                    <div class="col-3">
-                                        <div class="row mt-3">
+                                    <div class="col-2">
+                                        <div class="row">
                                             <div class="col">
                                                 <center>
-                                                    <img src="\roengrang\img/<?=$shop['shop_img']?>" alt="avatar" width="200" height="200">
+                                                    <img src="\roengrang\img/<?=$shop['shop_img']?>" alt="avatar" style="width: 150px;height: 150px;" >
                                                 </center>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-9">
+                                    <div class="col-10">
                                         <div class="row mt-4">
                                             <div class="col-md-3">
                                                 <label class="form-label">ชื่อร้านค้า :</label>
@@ -263,6 +263,9 @@
                             </div>
                         </div>
                         <div class="card mt-4 mb-4">
+                            <div class="card-header">
+                                สินค้าภายในร้าน
+                            </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
@@ -274,7 +277,6 @@
                                             <th>เวลา</th>
                                             <th>สถานะ</th>
                                             <th>การทำงาน</th>
-                                            <!--<th>ลบสินค้า</th>-->
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -286,7 +288,6 @@
                                             <th>เวลา</th>
                                             <th>สถานะ</th>
                                             <th>การทำงาน</th>
-                                            <!--<th>ลบสินค้า</th>-->
                                         </tr>
                                     </tfoot>
                                     <tbody>

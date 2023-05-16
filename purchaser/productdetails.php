@@ -275,30 +275,36 @@
             $pro_id = $_GET['pro_id'];
             $pro = $sql->product($pro_id);
             $Pro=mysqli_fetch_array($pro);
+            $countlikes = $sql->countlikes($pro_id);
+            $Countlikes=mysqli_fetch_array($countlikes);
+            $countcomment = $sql->countcomment($pro_id);
+            $Countcomment=mysqli_fetch_array($countcomment);
         ?>
         <!-- Start Blog Single -->
         <section class="blog-single section">
             <div class="container">
                 <div class="row no-gutters">
-                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
+                        <CENTER>
                         <!-- Product Slider -->
                             <div class="product-gallery">
                                 <div class="quickview-slider-active">
                                     <div class="single-slider">
-                                        <img src="\roengrang\img/<?=$Pro['pro_img']?>" alt="#">
+                                        <img src="\roengrang\img/<?=$Pro['pro_img']?>" style="width: 469px; height: 478px;" alt="#">
                                     </div>
                                     <div class="single-slider">
-                                        <img src="https://via.placeholder.com/569x528" alt="#">
+                                        <img src="https://via.placeholder.com/569x528" style="width: 469px; height: 478px; alt="#">
                                     </div>
                                     <div class="single-slider">
-                                        <img src="https://via.placeholder.com/569x528" alt="#">
+                                        <img src="https://via.placeholder.com/569x528" style="width: 469px; height: 478px; alt="#">
                                     </div>
                                     <div class="single-slider">
-                                        <img src="https://via.placeholder.com/569x528" alt="#">
+                                        <img src="https://via.placeholder.com/569x528" style="width: 469px; height: 478px; alt="#">
                                     </div>
                                 </div>
                             </div>
                         <!-- End Product slider -->
+                        </CENTER>
                     </div>
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                         <div class="quickview-content">
@@ -356,13 +362,16 @@
                                     }
                                     ?>
                                     </div>
-                                    <a href="#"> (1 customer review)</a>
+                                    <a> (<?=$Countcomment['comment_count']?> รีวิว)</a>
                                 </div>
                                 <div class="quickview-stock">
                                     <span><i class="fa fa-check-circle-o"></i> in stock</span>
                                 </div>
                                 <div class="quickview-stock">
-                                    <span><a href="#"><i class="ti-heart"></i></a></span>
+                                    <span><a id="countlikes">ถูกใจแล้ว <?=$Countlikes['like_count']?> คน</a></span>
+                                </div>
+                                <div class="quickview-stock">
+                                    <span><a id="likebtn"><i class="ti-heart"></i></a></span>
                                 </div>
                             </div>
                             <h3><?=$Pro['pro_price']?> บาท</h3>
@@ -404,8 +413,12 @@
                                             <p><?=$Pro['pro_detail']?></p>
                                         </div>
                                     </div>
-                                    
+                                    <hr>
                                 </div>
+
+                                <?php
+                                    if($Countcomment['comment_count']!=0){
+                                ?>
                                 <div class="col-12">
                                     <div class="comments">
                                         <h3 class="comment-title">ความคิดเห็น</h3>
@@ -446,7 +459,8 @@
                                             }
                                         ?>
                                     </div>                                  
-                                </div>                                          
+                                </div>   
+
                                 <div class="col-12">            
                                     <div class="reply">
                                         <div class="reply-head">
@@ -470,7 +484,11 @@
                                             <!-- End Comment Form -->
                                         </div>
                                     </div>          
-                                </div>          
+                                </div>   
+                                <?php
+                                    }
+                                ?>
+
                             </div>
                         </div>
                     </div>

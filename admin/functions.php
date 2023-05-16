@@ -231,5 +231,11 @@
             $allshop = mysqli_query($this->dbcon, "SELECT * FROM shop LEFT JOIN users ON shop.user_id=users.user_id ");
             return $allshop;
         }
+
+        #การเงิน
+        public function as($shop_id) {
+            $shop = mysqli_query($this->dbcon, "SELECT * FROM shop LEFT JOIN users ON shop.user_id=users.user_id WHERE shop_id='$shop_id' ");
+            return $shop;
+        }#SELECT DATE_FORMAT(add_date, '%W') AS day_of_week, SUM(pro_price) AS total_price FROM products WHERE WEEK(add_date) = WEEK(NOW()) GROUP BY DAYOFWEEK(add_date);
     }
 ?>

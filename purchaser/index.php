@@ -60,8 +60,22 @@
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/responsive.css">
-
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<style>
+		.header.shop .search-bar input {
+			display: inline-block;
+			float: left;
+			height: 48px;
+			background: transparent;
+			color: #666;
+			border-radius: 0;
+			border: none;
+			font-size: 14px;
+			font-weight: 400;
+			padding: 0 25px 0 20px ;
+			width: 328px;
+		}
+	</style>
 </head>
 <body class="js">
 	
@@ -108,39 +122,24 @@
                                 <a href="index.php"><img src="images/Logo4.png" alt="logo" hieght=""></a>
                             </div>
                             <!--/ End Logo -->
-                            <!-- Search Form -->
-                            <div class="search-top">
-                                <div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
-                                <!-- Search Form -->
-                                <div class="search-top">
-                                    <form class="search-form">
-                                        <input type="text" placeholder="Search here..." name="search">
-                                        <button value="search" type="submit"><i class="ti-search"></i></button>
-                                    </form>
-                                </div>
-                                <!--/ End Search Form -->
-                            </div>
-                            <!--/ End Search Form -->
-                            <div class="mobile-nav"></div>
                         </div>
                         <div class="col-lg-8 col-md-7 col-12">
                             <div class="search-bar-top">
                                 <div class="search-bar">
-                                    <select>
-                                        <option selected="selected">หมวดหมู่ทั้งหมด</option>
+									
+                                    <select id="cat" name="cat">
+                                        <option selected="selected" value="0">หมวดหมู่ทั้งหมด</option>
 										<?php
 											$cat = $sql->catagory();
                                             while($Cat=mysqli_fetch_array($cat)){
                                         ?>
-                                        <option><?=$Cat['cat_name']?></option>
+                                        <option value="<?=$Cat['id']?>"><?=$Cat['cat_name']?></option>
 										<?php
 											}
 										?>
                                     </select>
-                                    <form>
-                                        <input name="search" placeholder="ค้นหาสินค้าที่นี่....." type="search">
-                                        <button class="btnn"><i class="ti-search"></i></button>
-                                    </form>
+									<input id="search" name="search" placeholder="ค้นหาสินค้าที่นี่....." type="search">
+									<button id="searchbtn" class="btnn" ><i class="ti-search"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -656,6 +655,21 @@
 	<script src="js/easing.js"></script>
 	<!-- Active JS -->
 	<script src="js/active.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$('#searchbtn').click(function() {
+			// Get the values of cat and search
+			var cat = $('#cat').val();
+			var search = $('#search').val();
+
+			// Construct the URL with the values
+			var url = 'search.php?cat=' + cat + '&search=' + search;
+
+			// Redirect to the target page
+			window.location.href = url;
+		});
+	</script>
 </body>
 </html>
 

@@ -26,7 +26,7 @@
             /* Style the tab */
             .tab {
             overflow: hidden;
-            margin : 14px 16px;
+            margin : 10px 16px 0px;
             border: 1px solid #ccc;
             border-radius: 10px ;
             background-color: #f1f1f1;
@@ -184,8 +184,8 @@
                             <div class="col-6">
                                 <h1 >สมาชิก</h1>
                             </div>
-                            <div class="col-6" align ="right">
-                                <a class="btn btn-outline-primary" href="addmember.php"><i class="fa-solid fa-user"></i>&nbsp;เพิ่มสมาชิก</a>
+                            <div class="col-6 d-flex justify-content-end ">
+                                <button class="btn btn-outline-primary"><a class="text text-decoration-none" href="addmember.php">เพิ่มสมาชิก</a></button>
                             </div>
                         </div>
                         <?php  if (!empty($_SESSION['statusMsg'])) { ?>
@@ -206,7 +206,7 @@
                         </div>
 
                         <div id="allmember" class="tabcontent">
-                            <div class="card-body">
+                            
                                 <table id="AllmemTable">
                                     <thead>
                                         <tr>
@@ -236,7 +236,7 @@
                                             while($Allmem=mysqli_fetch_array($allmem)){
                                         ?>
                                         <tr>
-                                            <td><img class="card-img" src="\roengrang\img/<?=$Allmem['user_img']?>" style="width: 96px;hieght: 96px;"  /></td>
+                                            <td><img class="card-img" src="\roengrang\img/<?=$Allmem['user_img']?>" style="width: 76px;height: 76px;" /></td>
                                             <td><?=$Allmem['user_fullname']?></td>
                                             <td>
                                                 <?php
@@ -285,11 +285,11 @@
                                         ?>
                                     </tbody>
                                 </table>
-                            </div>
+                            
                         </div>
 
                         <div id="groupmember" class="tabcontent">
-                            <div class="card-body">
+                            
                                 <table id="groupTable">
                                     <thead>
                                         <tr>
@@ -360,11 +360,11 @@
                                         ?>
                                     </tbody>
                                 </table>
-                            </div>
+                            
                         </div>
 
                         <div id="generalmember" class="tabcontent">
-                            <div class="card-body">
+                            
                                 <table id="genTable">
                                     <thead>
                                         <tr>
@@ -435,11 +435,11 @@
                                         ?>
                                     </tbody>
                                 </table>
-                            </div>
+                            
                         </div>
 
                         <div id="adminmember" class="tabcontent">
-                            <div class="card-body">
+                            
                                 <table id="adminTable">
                                     <thead>
                                         <tr>
@@ -510,7 +510,7 @@
                                         ?>
                                     </tbody>
                                 </table>
-                            </div>
+                            
                         </div>
 
                     </div>

@@ -49,6 +49,18 @@
             $pro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE products.pro_id = '$pro_id' ORDER BY products.pro_id ");
             return $pro;
         }
+        public function productcat($cat_id) {
+            $pro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE products.cat_id = '$cat_id' ORDER BY products.pro_id ");
+            return $pro;
+        }
+        public function searchproduct($search) {
+            $pro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE products.pro_name LIKE '%$search%' ORDER BY products.pro_id;");
+            return $pro;
+        }
+        public function searchproductcat($cat,$search) {
+            $pro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE products.cat_id = '$cat' AND products.pro_name LIKE '%$search%' ORDER BY products.pro_id;");
+            return $pro;
+        }
         public function shoppro($shop_id) {
             $shoppro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE products.shop_id = '$shop_id' ORDER BY RAND() LIMIT 5");
             return $shoppro;
@@ -65,6 +77,14 @@
             $bestselled = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id ORDER BY products.pro_selled DESC LIMIT 12 ");
             return $bestselled;
         }
+        public function likes($user_id) {
+            $likes = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id LEFT JOIN likes ON products.pro_id = likes.pro_id WHERE likes.user_id = $user_id;");
+            return $likes;
+        }
+        public function countlikes($pro_id) {
+            $countlikes = mysqli_query($this->dbcon, "SELECT COUNT(likes.user_id) AS like_count FROM likes JOIN products ON likes.pro_id = products.pro_id WHERE products.pro_id = $pro_id;");
+            return $countlikes;
+        }
 
         #คอมเมนท์
         public function comment($pro_id) {
@@ -74,6 +94,10 @@
         public function reply($com_id) {
             $rep = mysqli_query($this->dbcon, "SELECT * FROM com_reply LEFT JOIN users ON com_reply.user_id=users.user_id WHERE com_reply.com_id = '$com_id' ");
             return $rep;
+        }
+        public function countcomment($pro_id) {
+            $countcomment = mysqli_query($this->dbcon, "SELECT COUNT(comment.id) AS comment_count FROM comment WHERE comment.pro_id = $pro_id;");
+            return $countcomment;
         }
 
         #ตะกร้า
