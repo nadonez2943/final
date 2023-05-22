@@ -26,14 +26,29 @@
             return $checkuser;
         }
 
-        public function registrationWorld($user_email,$user_password,$user_fullname,$user_tel,$user_address,$user_road,$user_soi,$user_subdistrict,$user_district,$user_provinces,$user_postID,$fileName) {
-            $reg = mysqli_query($this->dbcon, "INSERT INTO users(user_email,user_password,user_fullname,user_tel,user_address,user_road,user_soi,user_subdistrict,user_district,user_provinces,user_postID,user_img,user_role,user_regDate) VALUES ('$user_email','$user_password','$user_fullname','$user_tel','$user_address','$user_road','$user_soi','$user_subdistrict','$user_district','$user_provinces','$user_postID','$fileName','3',NOW())");
+        public function registrationWorld($user_email,$user_password,$user_fullname,$user_tel,$user_address,$user_road,$user_soi,$user_subdistrict,$fileName) {
+            $reg = mysqli_query($this->dbcon, "INSERT INTO users(user_email,user_password,user_fullname,user_tel,user_address,user_road,user_soi,user_subdistrict,user_img,user_role,user_regDate) VALUES ('$user_email','$user_password','$user_fullname','$user_tel','$user_address','$user_road','$user_soi','$user_subdistrict','$fileName','3',NOW())");
             return $reg;
         }
 
-        public function registrationLocal($user_email,$user_password,$user_fullname,$user_tel,$user_address,$user_road,$user_soi,$user_subdistrict,$user_district,$user_provinces,$user_postID,$fileName) {
-            $reg = mysqli_query($this->dbcon, "INSERT INTO users(user_email,user_password,user_fullname,user_tel,user_address,user_road,user_soi,user_subdistrict,user_district,user_provinces,user_postID,user_img,user_role,user_regDate) VALUES ('$user_email','$user_password','$user_fullname','$user_tel','$user_address','$user_road','$user_soi','$user_subdistrict','$user_district','$user_provinces','$user_postID','$fileName','4',NOW())");
+        public function registrationLocal($user_email,$user_password,$user_fullname,$user_tel,$user_address,$user_road,$user_soi,$user_subdistrict,$fileName) {
+            $reg = mysqli_query($this->dbcon, "INSERT INTO users(user_email,user_password,user_fullname,user_tel,user_address,user_road,user_soi,user_subdistrict,user_img,user_role,user_regDate) VALUES ('$user_email','$user_password','$user_fullname','$user_tel','$user_address','$user_road','$user_soi','$user_subdistrict','$fileName','4',NOW())");
             return $reg;
+        }
+
+        public function insertaddress($user_id,$user_fullname,$user_tel,$user_address,$user_road,$user_soi,$user_province,$user_district,$user_subdistrict,$user_zipcode) {
+            $insertaddress = mysqli_query($this->dbcon, "INSERT INTO user_address (user_id, user_fullname, user_tel, user_address, user_road, user_soi, user_province, user_district, user_subdistrict, user_zipcode, address_role) VALUES ('$user_id', '$user_fullname', '$user_tel', '$user_address', '$user_road', '$user_soi', '$user_province', '$user_district', '$user_subdistrict', '$user_zipcode', 'บ้าน')");
+            return $insertaddress;
+        }
+
+        public function searchid($email) {
+            $checkuser = mysqli_query($this->dbcon, "SELECT * FROM users WHERE users.user_email = '$email'");
+            return $checkuser;
+        }
+
+        public function address($sub_id) {
+            $address = mysqli_query($this->dbcon, "SELECT subdistrict.name_th as subdistrict_name,district.name_th  as district_name,provinces.name_th  as provinces_name,zip_code FROM subdistrict  LEFT JOIN district ON subdistrict.district_code=district.code LEFT JOIN provinces ON district.province_code=provinces.code WHERE subdistrict.code='$sub_id'");
+            return $address;
         }
 
         public function province() {

@@ -150,6 +150,14 @@
                             </div>
                         </div>
                         
+                        <?php  if (!empty($_SESSION['statusMsg'])) { ?>
+                            <div class="alert alert-success" role="alert">
+                                <?php 
+                                    echo $_SESSION['statusMsg']; 
+                                    unset($_SESSION['statusMsg']);
+                                ?>
+                            </div>
+                        <?php } ?>
                         <hr>
                         <div class="card mt-4 mb-4">
                             <div class="card-body">

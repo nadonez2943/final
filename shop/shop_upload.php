@@ -11,6 +11,7 @@
     if (isset($_POST['addShop'])) {
         $shop_name = $_POST['shop_name'];
         $shop_detail = $_POST['shop_detail'];
+        
 
         if (!empty($_FILES["file"]["name"])) {
             $tmp = $_FILES['file']['tmp_name'];
@@ -37,10 +38,16 @@
                         }
                     } else {
                         $_SESSION['statusMsg'] = "ผิดพลาดกรุณาลองใหม่อีครั้ง";
-                        header("location: registetshop.php");
+                        header("location: registershop.php");
                     }
                 } 
+            }else {
+                $_SESSION['statusMsg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed to upload.";
+                header("location: registershop.php");
             }
+        } else {
+            $_SESSION['statusMsg'] = "Please select a file to upload.";
+            header("location: registershop.php");
         }
     }
 

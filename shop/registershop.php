@@ -5,10 +5,6 @@
     $sql = new DB_con();
 
     if ($_SESSION['user_role'] == "2") {
-        if ($_SESSION['shop_id']){
-            $user_shop = $sql->shopavailable($_SESSION['shop_id']);
-            $User_shop=mysqli_fetch_array($user_shop);
-            if ($_SESSION['id'] == $User_shop['user_id'] ) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,16 +21,17 @@
 <body>
     
     <div class="container px-4 px-lg-5 my-5">
-        <?php  if (!empty($_SESSION['statusMsg'])) { ?>
-            <div class="alert alert-success" role="alert">
-                <?php 
-                    echo $_SESSION['statusMsg']; 
-                    unset($_SESSION['statusMsg']);
-                ?>
-            </div>
-        <?php } ?>
             <form class="card p-3" action="shop_upload.php" method="POST" enctype="multipart/form-data">
-            <CENTER><h1>สมัครขายสินค้าในชุมชนเริงราง</h1></CENTER><br>
+            <?php  if (!empty($_SESSION['statusMsg'])) { ?>
+                <div class="alert alert-success" role="alert">
+                    <?php 
+                        echo $_SESSION['statusMsg']; 
+                        unset($_SESSION['statusMsg']);
+                    ?>
+                </div>
+            <?php } ?>
+                <p class="text-center h2 fw-bold mb-5 mx-1 mx-md-3 mt-4">สมัครร้านค้าชุมชนเริงราง</p>
+
                 <div class="row gx-4 gx-lg-5 align-items-center">
                     <div class="col-md-6">
                         <CENTER>
@@ -49,20 +46,20 @@
                         </CENTER>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating mb-3">
-                            <input class="form-control" id="shop_name" name="shop_name" type="text" placeholder="ชื่อร้านค้า" />
-                            <label for="shop_name">ชื่อร้านค้า</label>
-                        </div>                    
-                        
-                        <div class="form-floating mb-3">
-                            <textarea class="form-control" id="shop_detail" name="shop_detail" placeholder="รายละเอียด"></textarea>
-                            <label for="shop_detail">รายละเอียดร้านค้า</label>
-                        </div>
-                        
-                        <p class="mt-3" ALIGN="center" >
-                            <button type="submit" name="addShop" class="btn btn-primary">สมัครขายสินค้า</button>
-                        </p>
+                    
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="shop_name" name="shop_name" type="text" placeholder="ชื่อร้านค้า" />
+                        <label for="shop_name">ชื่อร้านค้า<span class="text-danger"> * ไม่ต้องเติมคำว่า "ร้าน" หรือ "ร้านค้า" นำหน้า</span></label>
+                    </div>                    
+                    
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="shop_detail" name="shop_detail" placeholder="รายละเอียด"></textarea>
+                        <label for="shop_detail">รายละเอียดร้านค้า<span class="text-danger"> * ไม่เกิน ๕๐๐ ตัวอักษร</span></label>
                     </div>
+                    
+                    <p class="mt-3" ALIGN="center" >
+                        <button type="submit" name="addShop" class="btn btn-primary">สมัครร้านค้า</button>
+                    </p>
                 </div>
             </form>
 
@@ -91,12 +88,6 @@
 
 <?php 
       }
-            else{
-            header("location: 401.php");}
-        }
-        else{
-        header("location: 401.php");}
-    }
     else{
     header("location: 401.php");}      
 ?>

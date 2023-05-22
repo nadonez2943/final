@@ -6,90 +6,96 @@
     $sql = new DB_con();
 
     if (isset($_POST['function']) && $_POST['function'] == 'numnew') {
-
-        $allord = $sql->orders(0,$_SESSION['shop_id']);
-        $numnew=mysqli_num_rows($allord);
-
-        if ($numnew) {
-            echo $numnew;
-        } else {
+        $allord = $sql->countorder(0, $_SESSION['shop_id']);
+        $numnew = mysqli_fetch_array($allord);
+        if ($numnew['row_count'] != $_POST['numnew']) {
+            echo 1;
+        }else{
             echo 0;
         }
     }
+    
+    
+
     if (isset($_POST['function']) && $_POST['function'] == 'numdoing') {
+        $allord = $sql->countorder(1,$_SESSION['shop_id']);
+        $numdoing=mysqli_fetch_array($allord);
 
-        $allord = $sql->orders(1,$_SESSION['shop_id']);
-        $numdoing=mysqli_num_rows($allord);
-
-        if ($numdoing) {
-            echo $numdoing;
-        } else {
+        if ($numdoing['row_count']!=$_POST['row']) {
+            echo 1;
+        }else{
             echo 0;
         }
     }
+
     if (isset($_POST['function']) && $_POST['function'] == 'numprepare') {
 
-        $allord = $sql->orders(2,$_SESSION['shop_id']);
-        $numprepare=mysqli_num_rows($allord);
+        $allord = $sql->countorder(2,$_SESSION['shop_id']);
+        $numprepare=mysqli_fetch_array($allord);
 
-        if ($numprepare) {
-            echo $numprepare;
-        } else {
+        if ($numprepare['row_count']!=$_POST['row']) {
+            echo 1;
+        }else{
             echo 0;
         }
     }
+
     if (isset($_POST['function']) && $_POST['function'] == 'numship') {
 
-        $allord = $sql->orders(3,$_SESSION['shop_id']);
-        $numship=mysqli_num_rows($allord);
+        $allord = $sql->countorder(3,$_SESSION['shop_id']);
+        $numship=mysqli_fetch_array($allord);
 
-        if ($numship) {
-            echo $numship;
-        } else {
+        if ($numship['row_count']!=$_POST['row']) {
+            echo 1;
+        }else{
             echo 0;
         }
     }
+
     if (isset($_POST['function']) && $_POST['function'] == 'numshiped') {
 
-        $allord = $sql->orders(4,$_SESSION['shop_id']);
-        $numshiped=mysqli_num_rows($allord);
+        $allord = $sql->countorder(4,$_SESSION['shop_id']);
+        $numshiped=mysqli_fetch_array($allord);
 
-        if ($numshiped) {
-            echo $numshiped;
-        } else {
+        if ($numshiped['row_count']!=$_POST['row']) {
+            echo 1;
+        }else{
             echo 0;
         }
     }
+
     if (isset($_POST['function']) && $_POST['function'] == 'numsuccess') {
 
-        $allord = $sql->orders(5,$_SESSION['shop_id']);
-        $numsuccess=mysqli_num_rows($allord);
+        $allord = $sql->countorder(5,$_SESSION['shop_id']);
+        $numsuccess=mysqli_fetch_array($allord);
 
-        if ($numsuccess) {
-            echo $numsuccess;
-        } else {
+        if ($numsuccess['row_count']!=$_POST['row']) {
+            echo 1;
+        }else{
             echo 0;
         }
     }
+
     if (isset($_POST['function']) && $_POST['function'] == 'numcancle') {
 
-        $allord = $sql->orders(6,$_SESSION['shop_id']);
-        $numcancle=mysqli_num_rows($allord);
+        $row = $sql->countorder(6,$_SESSION['shop_id']);
+        $numcancle=mysqli_fetch_array($row);
 
-        if ($numcancle) {
-            echo $numcancle;
-        } else {
+        if ($numcancle['row_count']!=$_POST['row']) {
+            echo 1;
+        }else{
             echo 0;
         }
     }
+    
     if (isset($_POST['function']) && $_POST['function'] == 'numall') {
 
-        $allord = $sql->allorder($_SESSION['shop_id']);
-        $numall=mysqli_num_rows($allord);
+        $row = $sql->countallorder($_SESSION['shop_id']);
+        $numall=mysqli_fetch_array($row);
 
-        if ($numall) {
-            echo $numall;
-        } else {
+        if ($numall['row_count']!=$_POST['row']) {
+            echo 1;
+        }else{
             echo 0;
         }
     }

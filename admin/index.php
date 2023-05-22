@@ -181,51 +181,7 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
-        <script>
-        $(document).ready(function () {
-            showGraph();
-        });
-
-
-        function showGraph()
-        {
-            {
-                $.post("data.php",
-                function (data)
-                {
-                    console.log(data);
-                    var name = [];
-                    var marks = [];
-
-                    for (var i in data) {
-                        name.push(data[i].ord_name);
-                        marks.push(data[i].ord_amount);
-                    }
-
-                    var chartdata = {
-                        labels: name,
-                        datasets: [
-                            {
-                                label: 'Student Marks',
-                                backgroundColor: '#49e2ff',
-                                borderColor: '#46d5f1',
-                                hoverBackgroundColor: '#CCCCCC',
-                                hoverBorderColor: '#666666',
-                                data: marks
-                            }
-                        ]
-                    };
-
-                    var graphTarget = $("#myBarChart");
-
-                    var barGraph = new Chart(graphTarget, {
-                        type: 'bar',
-                        data: chartdata
-                    });
-                });
-            }
-        }
-    </script>
+        
     </body>
 </html>
 

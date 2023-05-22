@@ -188,9 +188,10 @@
                                     </tfoot>
                                     <?php 
                                             $allord = $sql->orders(0,$_SESSION['shop_id']);
-                                            $numnew=mysqli_num_rows($allord);
+                                            $row = $sql->countorder(0,$_SESSION['shop_id']);
+                                            $numnew=mysqli_fetch_array($row);
                                     ?>
-                                    <input hidden type="number" id="numnew" value="<?=$numnew?>">
+                                    <input type="number" id="numnew" value="<?=$numnew['row_count']?>">
                                     <tbody>
                                     <?php 
                                             while($Allord=mysqli_fetch_array($allord)){
@@ -289,9 +290,10 @@
                                     </tfoot>
                                     <?php 
                                             $allord = $sql->orders(1,$_SESSION['shop_id']);
-                                            $numdoing=mysqli_num_rows($allord);
+                                            $row = $sql->countorder(1,$_SESSION['shop_id']);
+                                            $numdoing=mysqli_fetch_array($row);
                                     ?>
-                                    <input hidden type="number" id="numdoing" value="<?=$numdoing?>">
+                                    <input type="number" id="numdoing" value="<?=$numdoing['row_count']?>">
                                     <tbody>
                                     <?php 
                                             while($Allord=mysqli_fetch_array($allord)){
@@ -390,9 +392,10 @@
                                     </tfoot>
                                     <?php 
                                             $allord = $sql->orders(2,$_SESSION['shop_id']);
-                                            $numprepare=mysqli_num_rows($allord);
+                                            $row = $sql->countorder(2,$_SESSION['shop_id']);
+                                            $numprepare=mysqli_fetch_array($row);
                                     ?>
-                                    <input hidden type="number" id="numprepare" value="<?=$numprepare?>">
+                                    <input hidden type="number" id="numprepare" value="<?=$numprepare['row_count']?>">
                                     <tbody>
                                     <?php 
                                             while($Allord=mysqli_fetch_array($allord)){
@@ -491,9 +494,10 @@
                                     </tfoot>
                                     <?php 
                                             $allord = $sql->orders(3,$_SESSION['shop_id']);
-                                            $numship=mysqli_num_rows($allord);
+                                            $row = $sql->countorder(3,$_SESSION['shop_id']);
+                                            $numship=mysqli_fetch_array($row);
                                     ?>
-                                    <input hidden type="number" id="numship" value="<?=$numship?>">
+                                    <input hidden type="number" id="numship" value="<?=$numship['row_count']?>">
                                     <tbody>
                                     <?php 
                                             while($Allord=mysqli_fetch_array($allord)){
@@ -592,9 +596,10 @@
                                     </tfoot>
                                     <?php 
                                             $allord = $sql->orders(4,$_SESSION['shop_id']);
-                                            $numshiped=mysqli_num_rows($allord);
+                                            $row = $sql->countorder(4,$_SESSION['shop_id']);
+                                            $numshiped=mysqli_fetch_array($row);
                                     ?>
-                                    <input hidden type="number" id="numshiped" value="<?=$numshiped?>">
+                                    <input hidden type="number" id="numshiped" value="<?=$numshiped['row_count']?>">
                                     <tbody>
                                     <?php 
                                             while($Allord=mysqli_fetch_array($allord)){
@@ -693,9 +698,10 @@
                                     </tfoot>
                                     <?php 
                                             $allord = $sql->orders(5,$_SESSION['shop_id']);
-                                            $numsuccess=mysqli_num_rows($allord);
+                                            $row = $sql->countorder(5,$_SESSION['shop_id']);
+                                            $numsuccess=mysqli_fetch_array($row);
                                     ?>
-                                    <input hidden type="number" id="numsuccess" value="<?=$numsuccess?>">
+                                    <input hidden type="number" id="numsuccess" value="<?=$numsuccess['row_count']?>">
                                     <tbody>
                                     <?php 
                                             while($Allord=mysqli_fetch_array($allord)){
@@ -794,9 +800,10 @@
                                     </tfoot>
                                     <?php 
                                             $allord = $sql->orders(6,$_SESSION['shop_id']);
-                                            $numcancle=mysqli_num_rows($allord);
+                                            $row = $sql->countorder(6,$_SESSION['shop_id']);
+                                            $numcancle=mysqli_fetch_array($row);
                                     ?>
-                                    <input hidden type="number" id="numcancle" value="<?=$numcancle?>">
+                                    <input type="number" id="numcancle" value="<?=$numcancle['row_count']?>">
                                     <tbody>
                                     <?php 
                                             while($Allord=mysqli_fetch_array($allord)){
@@ -895,9 +902,10 @@
                                     </tfoot>
                                     <?php 
                                             $allord = $sql->allorder($_SESSION['shop_id']);
-                                            $numall=mysqli_num_rows($allord);
+                                            $row = $sql->countallorder($_SESSION['shop_id']);
+                                            $numall=mysqli_fetch_array($row);
                                     ?>
-                                    <input hidden type="number" id="numall" value="<?=$numall?>">
+                                    <input hidden type="number" id="numall" value="<?=$numall['row']?>">
                                     <tbody>
                                     <?php 
                                             while($Allord=mysqli_fetch_array($allord)){

@@ -224,6 +224,25 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <script>
+        $(document).ready(function () {
+            showGraph();
+            function showGraph()
+        {
+            $.ajax({
+                type: 'POST',
+                url: 'data.php', 
+                success: function(data) {
+                    console.log(data);
+                }
+            });
+                
+        }
+        });
+
+
+        
+        </script>
     </body>
 </html>
 

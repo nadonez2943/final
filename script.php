@@ -8,38 +8,64 @@
       url: "ajax_db.php",
       data: {id:id_province,function:'provinces'},
       success: function(data){
-          $('#amphures').html(data); 
-          $('#districts').html(' '); 
-          $('#districts').val(' ');  
-          $('#zip_code').val(' '); 
+          $('#district').html(data); 
+          $('#subdistrict').html(data); 
+          $('#zip_code').attr('placeholder', 'กรุณาเลือกอำเภอ/เขต');
       }
     });
   });
 
-  $('#amphures').change(function() {
-    var id_amphures = $(this).val();
+  $('#district').change(function() {
+    var id_district = $(this).val();
 
       $.ajax({
       type: "POST",
       url: "ajax_db.php",
-      data: {id:id_amphures,function:'amphures'},
+      data: {id:id_district,function:'district'},
       success: function(data){
-          $('#districts').html(data);  
+          $('#subdistrict').html(data); 
+          $('#zip_code').attr('placeholder', 'กรุณาเลือกตำบล/แขวง');
       }
     });
   });
 
-   $('#districts').change(function() {
-    var id_districts= $(this).val();
+   $('#subdistrict').change(function() {
+    var id_subdistrict= $(this).val();
 
       $.ajax({
       type: "POST",
       url: "ajax_db.php",
-      data: {id:id_districts,function:'districts'},
+      data: {id:id_subdistrict,function:'subdistrict'},
       success: function(data){
           $('#zip_code').val(data)
       }
     });
   
   });
+
+  $("#id_chk").change(() => {
+    if($("#id_chk").is(":checked")) {
+      console.log("checked");
+      $("body").css("background-color", "greenyellow");
+      $("#title").text("ON");
+      Swal.fire({
+        icon: 'success',
+        title: 'success',
+        text: "wait a sec",
+        timer: 1000
+      })
+    } else {
+      console.log("unchecked");
+      $("body").css("background-color", "unset");
+      $("#title").text("OFF");
+      Swal.fire({
+        icon: 'success',
+        title: 'success',
+        text: "wait a sec",
+        timer: 1000
+      })
+    }
+  });
+
+
 </script>

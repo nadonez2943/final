@@ -28,6 +28,10 @@
             $checkshop = mysqli_query($this->dbcon, "SELECT user_id FROM shop WHERE shop.shop_id = '$shop_id'");
             return $checkshop;
         }
+        public function usershop($user_id) {
+            $usershop = mysqli_query($this->dbcon, "SELECT * FROM shop WHERE shop.user_id = '$user_id'");
+            return $usershop;
+        }
 
         # product
         public function allproduct() {
@@ -91,6 +95,14 @@
             $st = mysqli_query($this->dbcon, "SELECT order_status FROM orders WHERE orders.id = '$id'");
             return $st;
         }
+        public function countorder($order_status,$shop_id) {
+            $countorder = mysqli_query($this->dbcon, "SELECT COUNT(id) AS row_count FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.order_status = '$order_status' AND shop.shop_id = '$shop_id'");
+            return $countorder;
+        }
+        public function countallorder($shop_id) {
+            $countallorder = mysqli_query($this->dbcon, "SELECT COUNT(id) AS row_count FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE shop.shop_id = '$shop_id'");
+            return $countallorder;
+        }
 
         #อัปเดต      
         public function update_order_status($id,$order_status) {
@@ -100,6 +112,36 @@
         public function update_pro_status($st_full,$pro_id) {
             $update_pro_status = mysqli_query($this->dbcon, "UPDATE products SET pro_status = '$st_full' WHERE products.pro_id='$pro_id'");
             return $update_pro_status;
+        }
+
+        #การเงิน
+        public function thisweekp($shop_id) {
+            $thisweekp = mysqli_query($this->dbcon, "SELECT DATE_FORMAT(add_date, '%W') AS day_of_week, SUM(pro_price) AS total_price FROM products WHERE WEEK(add_date) = WEEK(NOW()) GROUP BY DAYOFWEEK(add_date);");
+            return $thisweekp;
+        }
+        public function lastweekp($shop_id) {
+            $lastweekp = mysqli_query($this->dbcon, "SELECT DATE_FORMAT(add_date, '%W') AS day_of_week, SUM(pro_price) AS total_price FROM products WHERE WEEK(add_date) = WEEK(DATE_SUB(NOW(), INTERVAL 1 WEEK)) GROUP BY DAYOFWEEK(add_date);");
+            return $lastweekp;
+        }
+
+        #ลบ-------------------------------------------------------------------------------
+        public function delete_products($pro_id) {
+            $delete_cart = mysqli_query($this->dbcon, "DELETE FROM cart WHERE pro_id='$pro_id'");
+            $delete_comment = mysqli_query($this->dbcon, "DELETE FROM comment WHERE pro_id='$pro_id'");
+            $delete_com_reply = mysqli_query($this->dbcon, "DELETE FROM com_reply WHERE pro_id='$pro_id'");
+            $delete_report_pro = mysqli_query($this->dbcon, "DELETE FROM report_pro WHERE pro_id='$pro_id'");
+            $delete_products = mysqli_query($this->dbcon, "DELETE FROM products WHERE pro_id='$pro_id'");
+            return $delete_cart;
+            return $delete_comment;
+            return $delete_com_reply;
+            return $delete_report_pro;
+            return $delete_products;
+        }
+        public function delete_shop($shop_id) {
+            $delete_report_shop = mysqli_query($this->dbcon, "DELETE FROM report_shop WHERE shop_id='$shop_id'");
+            $delete_shop = mysqli_query($this->dbcon, "DELETE FROM shop WHERE shop_id='$shop_id'");
+            return $delete_pro_shop;
+            return $delete_shop;
         }
     }
 

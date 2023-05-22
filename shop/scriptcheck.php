@@ -9,144 +9,117 @@
             $.ajax({
                 type: 'POST',
                 url: 'checkorder.php',
-                data: { function: 'numnew' }, // Sending data as an object
+                data: { row:$('#numnew').val(),function: 'numnew' }, 
                 success: function(data) {
-                    if (data != numnew) {
-                        console.log("changed");
-                        console.log(data);
-                        $('#numnew').val(data);
+                    if (data == 1) {
                         location.reload();
                     } 
                 },
                 complete: function() {
-                    // Schedule the next request when the current one is complete
-                    setTimeout(checkOrder, 5000); // Using setTimeout instead of setInterval
+                    setTimeout(checkOrder, 5000); 
                 }
             });
-            var numdoing = $('#numdoing').val();
+            var numdoing = parseInt($('#numdoing').val());
             $.ajax({
                 type: 'POST',
                 url: 'checkorder.php',
-                data: { function: 'numdoing' }, // Sending data as an object
+                data: { row: numdoing,function: 'numdoing' }, 
                 success: function(data) {
-                    if (data != numdoing) {
-                        console.log("changed");
-                        console.log(data);
-                        $('#numdoing').val(data);
+                    if (data == 1) {
                         location.reload();
                     } 
                 },
                 complete: function() {
-                    // Schedule the next request when the current one is complete
-                    setTimeout(checkOrder, 5000); // Using setTimeout instead of setInterval
+                    setTimeout(checkOrder, 5000); 
                 }
             });
-            var numprepare = $('#numprepare').val();
+            var numprepare = parseInt($('#numprepare').val());
             $.ajax({
                 type: 'POST',
                 url: 'checkorder.php',
-                data: { function: 'numprepare' }, // Sending data as an object
+                data: { row: numprepare,function: 'numprepare' }, 
                 success: function(data) {
-                    if (data != numprepare) {
-                        console.log("changed");
-                        console.log(data);
-                        $('#numprepare').val(data);
+                    if (data == 1) {
                         location.reload();
                     } 
                 },
                 complete: function() {
-                    // Schedule the next request when the current one is complete
-                    setTimeout(checkOrder, 5000); // Using setTimeout instead of setInterval
+                    setTimeout(checkOrder, 5000); 
                 }
             });
-            var numship = $('#numship').val();
+
+            var numship = parseInt($('#numship').val());
             $.ajax({
                 type: 'POST',
                 url: 'checkorder.php',
-                data: { function: 'numship' }, // Sending data as an object
+                data: { row: numship,function: 'numship' }, 
                 success: function(data) {
-                    if (data != numship) {
-                        console.log("changed");
-                        console.log(data);
-                        $('#numship').val(data);
+                    if (data == 1) {
                         location.reload();
                     } 
                 },
                 complete: function() {
-                    // Schedule the next request when the current one is complete
-                    setTimeout(checkOrder, 5000); // Using setTimeout instead of setInterval
+                    setTimeout(checkOrder, 5000); 
                 }
             });
-            var numshiped = $('#numshiped').val();
+
+            var numshiped = parseInt($('#numshiped').val());
             $.ajax({
                 type: 'POST',
                 url: 'checkorder.php',
-                data: { function: 'numshiped' }, // Sending data as an object
+                data: { row: numshiped,function: 'numshiped' }, 
                 success: function(data) {
-                    if (data != numshiped) {
-                        console.log("changed");
-                        console.log(data);
-                        $('#numshiped').val(data);
+                    if (data == 1) {
                         location.reload();
                     } 
                 },
                 complete: function() {
-                    // Schedule the next request when the current one is complete
-                    setTimeout(checkOrder, 5000); // Using setTimeout instead of setInterval
+                    setTimeout(checkOrder, 5000); 
                 }
             });
-            var numsuccess = $('#numsuccess').val();
+
+            var numsuccess = parseInt($('#numsuccess').val());
             $.ajax({
                 type: 'POST',
                 url: 'checkorder.php',
-                data: { function: 'numsuccess' }, // Sending data as an object
+                data: { row: numsuccess,function: 'numsuccess' }, 
                 success: function(data) {
-                    if (data != numsuccess) {
-                        console.log("changed");
-                        console.log(data);
-                        $('#numsuccess').val(data);
+                    if (data == 1) {
                         location.reload();
                     } 
                 },
                 complete: function() {
-                    // Schedule the next request when the current one is complete
-                    setTimeout(checkOrder, 5000); // Using setTimeout instead of setInterval
+                    setTimeout(checkOrder, 5000); 
                 }
             });
-            var numcancle = $('#numcancle').val();
+
+            var numcancle = parseInt($('#numcancle').val());
             $.ajax({
                 type: 'POST',
                 url: 'checkorder.php',
-                data: { function: 'numcancle' }, // Sending data as an object
+                data: { row: numcancle,function: 'numcancle' }, 
                 success: function(data) {
-                    if (data != numcancle) {
-                        console.log("changed");
-                        console.log(data);
-                        $('#numcancle').val(data);
+                    if (data == 1) {
                         location.reload();
                     } 
                 },
                 complete: function() {
-                    // Schedule the next request when the current one is complete
-                    setTimeout(checkOrder, 5000); // Using setTimeout instead of setInterval
+                    setTimeout(checkOrder, 5000); 
                 }
             });
-            var numall = $('#numall').val();
+
+            var numall = parseInt($('#numall').val());
             $.ajax({
                 type: 'POST',
                 url: 'checkorder.php',
-                data: { function: 'numall' }, // Sending data as an object
+                data: { function: 'numall' }, 
                 success: function(data) {
-                    if (data != numall) {
-                        console.log("changed");
-                        console.log(data);
-                        $('#numall').val(data);
+                    if (data == 1) {
                         location.reload();
                     } 
                 },
                 complete: function() {
-                    // Schedule the next request when the current one is complete
-                    setTimeout(checkOrder, 5000); // Using setTimeout instead of setInterval
+                    setTimeout(checkOrder, 5000); 
                 }
             });
         }
