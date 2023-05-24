@@ -47,6 +47,21 @@ $sql = new DB_con();
             header("location: allproduct.php");
         }
     }
+
+    else if($_GET['what']=='catagory'){
+        $pro = $sql->cat_products($_GET['cat_id']);
+        while($Pro=mysqli_fetch_array($pro)){
+            $delete = $sql->delete_products($Pro['pro_id']);
+        }
+        $delete = $sql->delete_catagory($_GET['cat_id']);
+        if ($delete) {
+            $_SESSION['statusMsg'] = "ลบหมวดหมู่สำเร็จ";
+            header("location: catagory.php");
+        }else{
+            $_SESSION['statusMsg'] = "มีบางอย่างผิดพลาด";
+            header("location: catagory.php");
+        }
+    }
     
 ?>
     

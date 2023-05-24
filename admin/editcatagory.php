@@ -192,119 +192,48 @@
             <div id="layoutSidenav_content">
                 <main>
 
-                    <div class="container px-4 px-lg-5 mt-4">
-                    <h1 class="mt-4">แก้ไขข้อมูลสินค้า</h1>
+                    <div class="container px-4 px-lg-5 mt-5">
+                    <h1 class="mt-4">แก้ไขหมวดหมู่</h1>
                         <hr>
                         <div class="card">
                             <div class="card-body">
                                 <br>
                                 <?php
-                                    $Pro = $sql->products($_GET['pro_id']);
-                                    $pro=mysqli_fetch_array($Pro);
+                                    $allpro = $sql->whatcatagory($_GET['id']);
+                                    $cat=mysqli_fetch_array($allpro)
                                 ?>
-                                
                                 <form action="product_upload.php" method="POST" enctype="multipart/form-data">
                                 <div class="row">
-                                    <div class="col-3">
-                                        <div class="row">
-                                            <div class="col">
-                                                <CENTER>
-                                                <div class="col-md-9">
-                                                    <img class="card-img mb-5 mb-md-0" id="blah" src="\roengrang\img/<?=$pro['pro_img']?>" alt="avatar" width="200" height="200"/>
-                                                </div>
-                                                </CENTER>
-                                                <CENTER>
-                                                <div class="col-10">
-                                                    <input type="file" class="form-control mt-3" name="file" id="file" onchange="readURL(this); " accept="image/*" />
-                                                    <input class="form-control" hidden id="img_name" name="img_name" type="text" value="<?=$pro['pro_img']?>" />
-                                                    <input class="form-control" hidden id="pro_id" name="pro_id" type="text" value="<?=$pro['pro_id']?>" />
-                                                </div>
-                                                </CENTER>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <CENTER>
                                     <div class="col-9">
-                                    <?php  if (!empty($_SESSION['statusMsg'])) { ?>
-                                        <div class="alert alert-success" role="alert">
-                                            <?php 
-                                                echo $_SESSION['statusMsg']; 
-                                                unset($_SESSION['statusMsg']);
-                                            ?>
-                                        </div>
-                                    <?php } ?>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-floating mb-3">
-                                                    <input class="form-control" id="pro_name" name="pro_name" type="text" value="<?=$pro['pro_name']?>" placeholder="ชื่อสินค้า" />
-                                                    <label for="inputName">ชื่อสินค้า</label>
-                                                </div>
+                                        <?php  if (!empty($_SESSION['statusMsg'])) { ?>
+                                            <div class="alert alert-success" role="alert">
+                                                <?php 
+                                                    echo $_SESSION['statusMsg']; 
+                                                    unset($_SESSION['statusMsg']);
+                                                ?>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-floating mb-3">
-                                                    <input class="form-control" id="pro_price" name="pro_price" type="number" value="<?=$pro['pro_price']?>" placeholder="ราคา" />
-                                                    <label for="inputPrice">ราคา</label>
+                                        <?php } ?>
+                                        <div class="row mt-4">
+                                            <div class="row">
+                                            <CENTER>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3">
+                                                        <input class="form-control" id="cat_name" name="cat_name" type="text" value="<?=$cat['cat_name']?>" placeholder="ชื่อหมวดหมู่" />
+                                                        <label for="inputName">ชื่อหมวดหมู่</label>
+                                                        <input hidden id="cat_id" name="cat_id" type="text" value="<?=$cat['id']?>" />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-floating mb-3">
-                                                    <input class="form-control" id="pro_amount" name="pro_amount" type="number" value="<?=$pro['pro_amount']?>" placeholder="จำนวน" />
-                                                    <label for="inputDetail">จำนวน</label>
+                                                <div class="col-md-6">
+                                                        <button type="submit" name="updatecat" style="width:130px; height:60; font-size:17px;" class="btn btn-success">ยันยัน</button>
+                                                        <input type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-outline-danger text-decoration-none" onClick="window.location.href = 'catagory.php'" value='ย้อนกลับ'>
                                                 </div>
+                                            </CENTER>
                                             </div>
-                                        </div>
+                                    
                                         
-                                        
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-floating mb-3">
-                                                    <select class="form-control" name="cat_id" id="cat_id" placeholder="หมวดหมู่" required>
-                                                        <option value="<?=$pro['cat_id']?>" selected><?=$pro['cat_name']?></option>
-                                                        <option value="1" >อุปโภค</option>
-                                                        <option value="2" >บริโภค</option>
-                                                    </select>
-                                                    <label for="cat_id">หมวดหมู่</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-floating mb-3">
-                                                    <select class="form-control" name="pro_send" id="pro_send" placeholder="การขายสินค้า" required>
-                                                        <option value="<?=$pro['pro_send']?>" selected>
-                                                        <?php
-                                                            switch ($pro['pro_send']) {
-                                                                case 1:
-                                                                    echo "ขายสินค้าเฉพาะภายในชุมชน";
-                                                                    break;
-                                                                case 2:
-                                                                    echo "ขายสินค้าทั่วประเทศ";
-                                                                    break;
-                                                            }
-                                                        ?>
-                                                        </option>
-                                                        <option value="1" >ขายสินค้าเฉพาะภายในชุมชน</option>
-                                                        <option value="2" >ขายสินค้าทั่วประเทศ</option>
-                                                    </select>
-                                                    <label for="pro_send">การขายสินค้า</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="form-floating mb-3">
-                                            <textarea class="form-control" id="pro_detail" name="pro_detail" placeholder="รายละเอียด"><?=$pro['pro_detail']?></textarea>
-                                            <label for="inputDetail">รายละเอียด</label>
-                                        </div>
-                                        
-                                        <p class="mt-3" ALIGN="right" >
-                                            <button type="submit" name="updatePro" style="width:130px; height:60; font-size:17px;" class="btn btn-success">ยันยัน</button>
-                                            <a class="text-decoration-none" href="allproduct.php">   
-                                                        <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-outline-danger text-decoration-none">ย้อนกลับ</button>
-                                                    </a>
-
-                         
-                                        </p>
-                                        </div>
                                     </div>
+                                    </CENTER>
                                 </div>
                                 </form>
                             </div>

@@ -141,33 +141,44 @@
 
             <div id="layoutSidenav_content">
 
-                <main>
-                <div class="container px-4 px-lg-5 mt-4">
-                    <h2>ข้อมูลร้านค้า</h2>
+            <main>
+
+            <div class="container px-4 px-lg-5 mt-5">
+                    <h1 class="mt-4">ข้อมูลร้านค้า</h1>
                         <hr>
                         <div class="card">
                             <div class="card-body">
                                 <br>
                                 <?php
-                                    $Shop = $sql->shop($_SESSION['shop_id']);
+                                    $Shop = $sql->shop($_GET['shop_id']);
                                     $shop=mysqli_fetch_array($Shop);
                                 ?>
+                                <form action="product_upload.php" method="POST" enctype="multipart/form-data">
                                 <div class="row">
-                                    <div class="col-2">
+                                    <div class="col-3">
                                         <div class="row">
                                             <div class="col">
-                                                <center>
-                                                    <img src="\roengrang\img/<?=$shop['shop_img']?>" alt="avatar" style="width: 150px;height: 150px;" >
-                                                </center>
+                                                <CENTER>
+                                                <div class="col-md-9">
+                                                    <img class="card-img mb-5 mb-md-0" id="blah" src="\roengrang\img/<?=$shop['shop_img']?>" alt="avatar" width="200" height="200"/>
+                                                </div>
+                                                </CENTER>
+                                                <CENTER>
+                                                <div class="col-10">
+                                                    <input type="file" class="form-control mt-3" name="file" id="file" onchange="readURL(this); " accept="image/*" />
+                                                </div>
+                                                </CENTER>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-10">
+                                    <div class="col-9">
                                         <div class="row mt-4">
-                                            <div class="col-md-3">
-                                                <label class="form-label">ชื่อร้านค้า :</label>
-                                                <div>
-                                                    <label class="form-label"><?=$shop['shop_name']?></label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3">
+                                                        <input class="form-control" id="shop_name" name="shop_name" type="text" value="<?=$shop['shop_name']?>" placeholder="ชื่อร้านค้า" />
+                                                        <label for="inputName">ชื่อร้านค้า</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
@@ -202,41 +213,24 @@
                                         </div>
                                         <hr>
                                     
-                                        <p align ="right">
-                                            <a class="text-decoration-none" href="editshop.php?shop_id=<?=$shop['shop_id']?>">
-                                                <button type="button" style="width:130px;" class="btn btn-primary">แก้ไขข้อมูล</button>
-                                            </a>
+                                        <p class="mt-3" ALIGN="right" >
+                                            <button type="submit" name="updateShop" style="width:130px; height:60; font-size:17px;" class="btn btn-success">ยันยัน</button>
                                             <input type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-outline-danger text-decoration-none" onClick='window.history.back()' value='ย้อนกลับ'>
                                         </p>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                         </div>
-                        <div class="row mt-4">
-                            <div class="col-6"><h2>จัดการสินค้า</h2></div>
-                            <div class="col-6 d-flex justify-content-end ">
-                                <button class="btn btn-outline-primary"><a class="text text-decoration-none" href="addproduct.php">เพิ่มสินค้า</a></button>
-                            </div>
-                        </div>
-                        
-                        <?php  if (!empty($_SESSION['statusMsg'])) { ?>
-                            <div class="alert alert-success" role="alert">
-                                <?php 
-                                    echo $_SESSION['statusMsg']; 
-                                    unset($_SESSION['statusMsg']);
-                                ?>
-                            </div>
-                        <?php } ?>
-                        <hr>
                         <div class="card mt-4 mb-4">
                             <div class="card-body">
-                            <table id="datatablesSimple">
+                                <table id="datatablesSimple">
                                     <thead>
                                         <tr>
                                             <th>ชื่อ</th>
                                             <th>รูปสินค้า</th>
                                             <th>ราคา</th>
-                                            <th>คลัง</th>
+                                            <th>จำนวนคงเหลือ</th>
                                             <th>เวลา</th>
                                             <th>สถานะ</th>
                                             <th>การทำงาน</th>
@@ -248,7 +242,7 @@
                                             <th>ชื่อ</th>
                                             <th>รูปสินค้า</th>
                                             <th>ราคา</th>
-                                            <th>คลัง</th>
+                                            <th>จำนวนคงเหลือ</th>
                                             <th>เวลา</th>
                                             <th>สถานะ</th>
                                             <th>การทำงาน</th>
@@ -257,12 +251,12 @@
                                     </tfoot>
                                     <tbody>
                                     <?php
-                                        $allpro = $sql->MyProduct($_SESSION['shop_id']);
+                                        $allpro = $sql->shop_products($_SESSION['shop_id']);
                                         while($Allpro=mysqli_fetch_array($allpro)){
                                     ?>
                                         <tr>
                                             <td><?=$Allpro['pro_name']?></td>
-                                            <td><img src="\roengrang\img/<?=$Allpro['pro_img']?>" style="width: 76px;height: 76px;"  /></td>
+                                            <td><img class="card-img" src="\roengrang\img/<?=$Allpro['pro_img']?>" style="width: 75px;hieght: 75px;"  /></td>
                                             <td><?=$Allpro['pro_price']?> บาท</td>
                                             <td><?=$Allpro['pro_amount']?></td>
                                             <td>
@@ -296,7 +290,6 @@
                                 </table>
                             </div>
                         </div>
-                                           
                     </div>
                 </main>
 

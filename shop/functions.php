@@ -50,6 +50,10 @@
             $pro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id=shop.shop_id LEFT JOIN catagory ON products.cat_id=catagory.id WHERE pro_id='$pro_id' ");
             return $pro;
         }
+        public function shop_products($shop_id) {
+            $shop_pro = mysqli_query($this->dbcon, "SELECT * FROM products WHERE shop_id='$shop_id'; ");
+            return $shop_pro;
+        }
 
 
         public function insertProduct($shop_id, $cat_id, $pro_name, $pro_price, $pro_amount, $pro_detail, $pro_send, $fileName) {
@@ -113,6 +117,10 @@
             $update_pro_status = mysqli_query($this->dbcon, "UPDATE products SET pro_status = '$st_full' WHERE products.pro_id='$pro_id'");
             return $update_pro_status;
         }
+        public function update_product($pro_id, $cat_id, $pro_name, $pro_price, $pro_amount, $pro_detail, $pro_send, $fileName) {
+            $update_product = mysqli_query($this->dbcon, "UPDATE products SET cat_id = '$cat_id',pro_name = '$pro_name',pro_price = '$pro_price',pro_amount = '$pro_amount',pro_detail = '$pro_detail',update_date = NOW(),pro_send = '$pro_send',pro_img = '$fileName' WHERE pro_id='$pro_id'");
+            return $update_product;
+        }
 
         #การเงิน
         public function thisweekp($shop_id) {
@@ -122,6 +130,10 @@
         public function lastweekp($shop_id) {
             $lastweekp = mysqli_query($this->dbcon, "SELECT DATE_FORMAT(add_date, '%W') AS day_of_week, SUM(pro_price) AS total_price FROM products WHERE WEEK(add_date) = WEEK(DATE_SUB(NOW(), INTERVAL 1 WEEK)) GROUP BY DAYOFWEEK(add_date);");
             return $lastweekp;
+        }
+        public function yeartotal($shop_id) {
+            $yeartotal = mysqli_query($this->dbcon, "SELECT SUM(CASE WHEN WEEK(ord_date) = WEEK(CURRENT_DATE()) THEN total_price ELSE 0 END) AS total_week, SUM(CASE WHEN YEAR(ord_date) = YEAR(CURRENT_DATE()) THEN total_price ELSE 0 END) AS total_year FROM orders WHERE shop_id='$shop_id';");
+            return $yeartotal;
         }
 
         #ลบ-------------------------------------------------------------------------------
@@ -142,6 +154,12 @@
             $delete_shop = mysqli_query($this->dbcon, "DELETE FROM shop WHERE shop_id='$shop_id'");
             return $delete_pro_shop;
             return $delete_shop;
+        }
+
+        #เรียกร้านค้า
+        public function shop($shop_id) {
+            $shop = mysqli_query($this->dbcon, "SELECT * FROM shop LEFT JOIN users ON shop.user_id=users.user_id WHERE shop_id='$shop_id' ");
+            return $shop;
         }
     }
 

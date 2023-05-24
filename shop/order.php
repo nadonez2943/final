@@ -674,7 +674,7 @@
                         <div id="success" class="tabcontent">
                             <div class="card-body">
                                 <table id="successTable">
-                                <thead>
+                                    <thead>
                                         <tr>
                                             <th>รูปสินค้า</th>
                                             <th>สินค้า</th>

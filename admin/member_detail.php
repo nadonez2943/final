@@ -166,7 +166,7 @@
                                 <?php
                                     $Mem = $sql->requestdetail($_GET['user_id']);
                                     $mem=mysqli_fetch_array($Mem);
-                                    $address = $sql->address($mem['user_subdistrict']);
+                                    $address = $sql->useraddress($_GET['user_id']);
                                     $Address=mysqli_fetch_array($address);
                                 ?>
                                 <br>
@@ -225,25 +225,25 @@
                                                 <div class="col-md-3">
                                                     <label for="provinces" class="form-label">จังหวัด :</label>
                                                     <div>
-                                                        <label class="form-label"><?=$Address['provinces_name']?></label>
+                                                        <label class="form-label"><?=$Address['user_province']?></label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="district" class="form-label">อำเภอ/เขต :</label>
                                                     <div>
-                                                        <label class="form-label"><?=$Address['district_name']?></label>
+                                                        <label class="form-label"><?=$Address['user_district']?></label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="subdistrict" class="form-label">ตำบล/แขวง :</label>
                                                     <div>
-                                                        <label class="form-label"><?=$Address['subdistrict_name']?></label>
+                                                        <label class="form-label"><?=$Address['user_subdistrict']?></label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="zip_code" class="form-label">รหัสไปรษณีย์ :</label>
                                                     <div>
-                                                        <label class="form-label"><?=$Address['zip_code']?></label>
+                                                        <label class="form-label"><?=$Address['user_zipcode']?></label>
                                                     </div>
                                                 </div>
                                             </div>

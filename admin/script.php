@@ -9,9 +9,9 @@
       data: {id:id_province,function:'provinces'},
       success: function(data){
           $('#district').html(data); 
-          $('#subdistrict').html(' '); 
-          $('#subdistrict').val(' ');  
-          $('#zip_code').val(' '); 
+          $('#subdistrict').html(data); 
+          $('#zip_code').attr('placeholder', 'กรุณาเลือกอำเภอ/เขต');
+          $('#zip_code').val('');
       }
     });
   });
@@ -24,7 +24,9 @@
       url: "ajax_db.php",
       data: {id:id_district,function:'district'},
       success: function(data){
-          $('#subdistrict').html(data);  
+          $('#subdistrict').html(data); 
+          $('#zip_code').attr('placeholder', 'กรุณาเลือกตำบล/แขวง');
+          $('#zip_code').val('');
       }
     });
   });

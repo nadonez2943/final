@@ -215,12 +215,22 @@
                                                 <CENTER>
                                                 <div class="col-10">
                                                     <input type="file" class="form-control mt-3" name="file" id="file" onchange="readURL(this); " accept="image/*" />
+                                                    <input class="form-control" hidden id="img_name" name="img_name" type="text" value="<?=$shop['shop_img']?>" />
+                                                    <input class="form-control" hidden id="shop_id" name="shop_id" type="text" value="<?=$_GET['shop_id']?>" />
                                                 </div>
                                                 </CENTER>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-9">
+                                        <?php  if (!empty($_SESSION['statusMsg'])) { ?>
+                                            <div class="alert alert-success" role="alert">
+                                                <?php 
+                                                    echo $_SESSION['statusMsg']; 
+                                                    unset($_SESSION['statusMsg']);
+                                                ?>
+                                            </div>
+                                        <?php } ?>
                                         <div class="row mt-4">
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -259,7 +269,12 @@
                                                     <label class="form-label"><?=$shop['shop_point']?></label>
                                                 </div>
                                             </div>
-                                        </div>
+                                            <div class="col-md-12">
+                                                    <div class="form-floating mb-3">
+                                                        <textarea class="form-control" id="shop_detail" name="shop_detail" placeholder="รายละเอียด"><?=$shop['shop_detail']?></textarea>
+                                                        <label for="inputDetail">รายละเอียด</label>
+                                                    </div>
+                                            </div>
                                         <hr>
                                     
                                         <p class="mt-3" ALIGN="right" >

@@ -183,7 +183,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label for="zip_code" class="form-label">รหัสไปรษณีย์ :</label>
-                                            <input type="text" name="zip_code" id="zip_code" class="form-control mt-1 mb-1" required>
+                                            <input type="text" name="zip_code" id="zip_code" class="form-control mt-1 mb-1" placeholder='กรุณาเลือกจังหวัด' required>
                                         </div>
                                     </div>
                                     <div class="row mt-3">

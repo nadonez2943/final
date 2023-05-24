@@ -24,6 +24,8 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/Chart.min.js"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-light">
@@ -179,24 +181,43 @@
 
                         </div>
 
-                        <div class="card p-2 mb-5">
-                            <div class="row">
-                                <div class="col-xl-6">
-                                    <div class="card mb-4">
-                                        <div class="card-header">
-                                            <i class="fas fa-chart-area me-1"></i>
-                                            ยอดขายประจำเดือน ธันวาคม
+                        <?php
+                            $yeartotal = $sql->yeartotal($_SESSION['shop_id']);
+                            $yeartotal=mysqli_fetch_array($yeartotal);
+                        ?>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                ยอดขายประจำปี พ.ศ.<?=date("Y")+543?>
+                                            </div>
+                                            <div class="col-6" style="text-align: right;">
+                                                ยอดรวมสุทธิ <?=$yeartotal['total_year']?> บาท
+                                            </div>
                                         </div>
-                                        <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                                        
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="year" width="100%" height="40"></canvas>
                                     </div>
                                 </div>
-                                <div class="col-xl-6">
-                                    <div class="card mb-4">
-                                        <div class="card-header">
-                                            <i class="fas fa-chart-bar me-1"></i>
-                                            ยอดขายประจำปี 2565
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                ยอดขายประจำสัปดาห์
+                                            </div>
+                                            <div class="col-6" style="text-align: right;">
+                                                ยอดรวมสุทธิ <?=$yeartotal['total_week']?> บาท
+                                            </div>
                                         </div>
-                                        <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="week" width="100%" height="40"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -225,23 +246,90 @@
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
         <script>
-        $(document).ready(function () {
-            showGraph();
-            function showGraph()
-        {
-            $.ajax({
-                type: 'POST',
-                url: 'data.php', 
-                success: function(data) {
-                    console.log(data);
-                }
+            $(document).ready(function () {
+                showGraph();
             });
-                
-        }
-        });
+
+            function showGraph() {
+
+                $.post("data.php", function (data) {
+                var day = [];
+                var total = [];
+
+                for (var i in data) {
+                    var dayName = getDayName(data[i].day_number);
+                    day.push(dayName);
+                    total.push(data[i].total_price);
+                }
+                var chartdata = {
+                    labels: day,
+                    datasets: [
+                        {
+                            label: 'ยอดขายในแต่ละวัน',
+                            backgroundColor: '#49e2ff',
+                            borderColor: '#46d5f1',
+                            hoverBackgroundColor: '#CCCCCC',
+                            hoverBorderColor: '#666666',
+                            data: total
+                        }
+                    ]
+                };
+
+                var graphTarget = $("#week");
+                var barGraph = new Chart(graphTarget, {
+                    type: 'bar',
+                    data: chartdata
+                });
+            });
+
+            function getDayName(dayNumber) {
+                var dayNames = [
+                    "อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"
+                ];
+                return dayNames[dayNumber - 1];
+            }
 
 
-        
+                $.post("datamount.php", function (data) {
+                    var month = [];
+                    var total = [];
+
+                    for (var i in data) {
+                        // Convert the month number to a month name
+                        var monthName = getMonthName(data[i].month_number);
+                        month.push(monthName);
+                        total.push(data[i].total_price);
+                    }
+                    var chartdata = {
+                        labels: month,
+                        datasets: [
+                            {
+                                label: 'ยอดขาย',
+                                backgroundColor: '#49e2ff',
+                                borderColor: '#46d5f1',
+                                hoverBackgroundColor: '#CCCCCC',
+                                hoverBorderColor: '#666666',
+                                data: total,
+                            }
+                        ]
+                    };
+
+                    var graphTarget = $("#year");
+                    var barGraph = new Chart(graphTarget, {
+                        type: 'line',
+                        data: chartdata
+                    });
+                });
+            }
+
+            function getMonthName(monthNumber) {
+                var monthNames = [
+                    "ม.ค.", "ก.พ.", "มี.ค.", "เม.ษ.", "พ.ค.", "มิ.ย",
+                    "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."
+                ];
+                return monthNames[monthNumber - 1];
+            }
+
         </script>
     </body>
 </html>

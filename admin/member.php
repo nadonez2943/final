@@ -495,14 +495,15 @@
                                             </td>
                                             <td>
                                                 <a class="text-decoration-none" href="editmember.php?user_id=<?=$Adminmem['user_id']?>">
-                                                <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-primary">แก้ไขข้อมูล</button></a>
+                                                    <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-primary">แก้ไขข้อมูล</button>
+                                                </a>
 
                                                 <a class="text-decoration-none" href="#">
                                                     <button type="button" style="width:130px; height:60; font-size:17px;"class="btn btn-warning">ปิดการใช้งาน</button></a>
           
                                                 <a class="text-decoration-none" href="#">   
-                                                    <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ลบบัญชี</button></a>
-                                                
+                                                    <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ลบบัญชี</button>
+                                                </a>
                                             </td>
                                         </tr>
                                         <?php

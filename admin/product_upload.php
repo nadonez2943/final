@@ -91,4 +91,64 @@
         }
     }
 
+    if (isset($_POST['updateShop'])) {
+        $shop_id = $_POST['shop_id'];
+        $shop_name = $_POST['shop_name'];
+        $shop_detail = $_POST['shop_detail'];
+        $img_name = $_POST['img_name'];
+
+        if (!empty($_FILES["file"]["name"])) {
+            $tmp = $_FILES['file']['tmp_name'];
+            $namefile = $_FILES['file']['name'];
+            $fileBasame = basename($_FILES["file"]["name"]);
+            $fileType = pathinfo($fileBasame, PATHINFO_EXTENSION);
+            $fileName = md5(time().$namefile.$tmp).'.'.$fileType;
+            $targetFilePath = $targetDir . $fileName;
+
+            // Allow certain file formats
+            $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'pdf');
+            if (in_array($fileType, $allowTypes)) {
+                if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFilePath)) {
+                    $insert = $sql->update_shop($shop_id,$shop_name,$shop_detail,$fileName);
+                    if ($insert) {
+                        $_SESSION['statusMsg'] = "แก้ไขร้านค้าสำเร็จ";
+                        header("location: editshop.php?shop_id=".$shop_id); 
+                    } else {
+                        $_SESSION['statusMsg'] = "อัพโหลดร้านค้าผิดพลาดกรุณาลองใหม่อีครั้ง";
+                        header("location: editshop.php?shop_id=".$shop_id);
+                    }
+                }else{
+                    echo "1";
+                }
+            }else{
+                echo "2";
+            }
+        }else{
+           $insert = $sql->update_shop($shop_id,$shop_name,$shop_detail,$img_name);
+            if ($insert) {
+                $_SESSION['statusMsg'] = "แก้ไขร้านค้าสำเร็จ";
+                header("location: editshop.php?shop_id=".$shop_id); 
+            } else {
+                $_SESSION['statusMsg'] = "อัพโหลดร้านค้าผิดพลาดกรุณาลองใหม่อีครั้ง";
+                header("location: editshop.php?shop_id=".$shop_id);
+            }
+                
+        }
+    }
+
+    if (isset($_POST['updatecat'])) {
+        $cat_id = $_POST['cat_id'];
+        $cat_name = $_POST['cat_name'];
+       
+        $insert = $sql->update_cat($cat_id,$cat_name);
+        if ($insert) {
+            $_SESSION['statusMsg'] = "แก้ไขหมวดหมู่สำเร็จ";
+            header("location: editcatagory.php?id=".$cat_id); 
+        } else {
+            $_SESSION['statusMsg'] = "มีบางอย่างผิดพลาดกรุณาลองใหม่อีครั้ง";
+            header("location: editcatagory.php?id=".$cat_id);
+        }
+        
+    }
+
 ?>

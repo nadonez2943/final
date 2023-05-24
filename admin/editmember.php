@@ -109,6 +109,8 @@
                         <?php } 
                         $mem = $sql->member($_GET['user_id']);
                         $Mem=mysqli_fetch_array($mem);
+                        $address = $sql->useraddress($_GET['user_id']);
+                        $Address=mysqli_fetch_array($address);
                         ?>
                         <hr>
                         <form action="upload.php" method="POST" enctype="multipart/form-data">
@@ -124,6 +126,8 @@
                                         <CENTER>
                                         <div class="col-10">
                                             <input type="file" class="form-control mt-3" name="file" id="file" onchange="readURL(this); " accept="image/*" />
+                                            <input class="form-control" hidden id="img_name" name="img_name" type="text" value="<?=$Mem['user_img']?>" />
+                                            <input class="form-control" hidden id="user_id" name="user_id" type="text" value="<?=$Mem['user_id']?>" />
                                         </div>
                                         </CENTER>
                                     </div>
@@ -168,7 +172,7 @@
                                         <div class="col-md-3">
                                             <label for="provinces" class="form-label">จังหวัด :</label>
                                             <select class="form-control mt-1 mb-1 " name="provinces" id="provinces" required>
-                                                <option value="" selected disabled >-กรุณาเลือกจังหวัด-</option>
+                                                <option value="<?=$Address['province_id']?>" selected ><?=$Address['user_province']?></option>
                                                 <?php foreach ($query as $value) { ?>
                                                 <option value="<?=$value['code']?>" ><?=$value['name_th']?></option>
                                                 <?php } ?>
@@ -177,25 +181,41 @@
                                         <div class="col-md-3">
                                             <label for="district" class="form-label">อำเภอ/เขต :</label>
                                             <select class="form-control mt-1 mb-1" name="district" id="district" required>
-                                            <option value="" selected disabled >-กรุณาเลือกจังหวัด-</option>
+                                            <option value="<?=$Address['district_id']?>" selected ><?=$Address['user_district']?></option>
                                             </select>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="subdistrict" class="form-label">ตำบล/แขวง :</label>
                                             <select class="form-control mt-1 mb-1" name="subdistrict" id="subdistrict" required>
-                                            <option value="" selected disabled >-กรุณาเลือกจังหวัด-</option>
+                                            <option value="<?=$Address['subdistrict_id']?>" selected ><?=$Address['user_subdistrict']?></option>
                                             </select>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="zip_code" class="form-label">รหัสไปรษณีย์ :</label>
-                                            <input type="text" name="zip_code" id="zip_code" class="form-control mt-1 mb-1" required>
+                                            <input type="text" name="zip_code" id="zip_code" value="<?=$Address['user_zipcode']?>" class="form-control mt-1 mb-1" required>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-3">
                                             <label for="user_role" class="form-label">สถานะของผู้ใช้ :</label>
                                             <select class="form-control mt-1 mb-1" name="user_role" id="user_role" required>
-                                                <option value="" selected disabled ></option>
+                                                <option value="<?=$Mem['user_role']?>" selected  >
+                                                <?php
+                                                    switch ($Mem['user_role']) {
+                                                    case 1:
+                                                        echo "ผู้ดูแลระบบ";
+                                                        break;
+                                                    case 2:
+                                                        echo "สมาชิกภายในชุมชน";
+                                                        break;
+                                                    case 3:
+                                                        echo "สมาชิกภายนอกชุมชน";
+                                                        break;
+                                                    default:
+                                                        echo "กำลังร้องขอ";
+                                                    }
+                                                ?>
+                                                </option>
                                                 <option value="1" >ผู้ดูแลระบบ</option>
                                                 <option value="2" >สมาชิกภายในชุมชน</option>
                                                 <option value="3" >สมาชิกภายนอกชุมชน</option>
@@ -259,6 +279,5 @@
 <?php
     }
 ?>
-
 
 

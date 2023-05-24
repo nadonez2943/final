@@ -20,63 +20,8 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-        <script type='text/javascript'>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-         
-        function preview_image(event) 
-        {
-             var reader = new FileReader();
-             reader.onload = function()
-             {
-                  var output = document.getElementById('showimg');
-                  output.src = reader.result;
-             }
-             reader.readAsDataURL(event.target.files[0]);
-        }
-
         <style>
-
-            /* Style the tab */
-            .tab {
-            overflow: hidden;
-            margin : 14px 16px;
-            border: 1px solid #ccc;
-            border-radius: 10px ;
-            background-color: #f1f1f1;
-            }
-
-            /* Style the buttons inside the tab */
-            .tab button {
-            background-color: inherit;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            transition: 0.3s;
-            font-size: 17px;
-            }
-
-            /* Change background color of buttons on hover */
-            .tab button:hover {
-            background-color: #ddd;
-            }
-
-            /* Create an active/current tablink class */
-            .tab button.active {
-            background-color: #ccc;
-            }
-
-            /* Style the tab content */
-            .tabcontent {
-            display: none;
-            padding: 6px 12px;
-            background-color: #fff;
-            /* border: 1px solid #ccc; */
-            border: none;
-            border-top: none;
-            }
-
             .switch {
                 width: 50px;
                 height: 30px;
@@ -119,7 +64,7 @@
         </style>
     </head>
     <body class="sb-nav-fixed">
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Sidebar Toggle-->
             <button class="btn btn-link order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Brand-->
@@ -191,99 +136,19 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-
                     <div class="container px-4 px-lg-5 mt-5">
-                        <h1 class="mt-4">ข้อมูลร้านค้า</h1>
-                        <hr>
-                        <div class="card">
-                            <div class="card-body">
-                                <br>
-                                <?php
-                                    $Shop = $sql->shop($_GET['shop_id']);
-                                    $shop=mysqli_fetch_array($Shop);
-                                ?>
-                                <div class="row">
-                                    <div class="col-2">
-                                        <div class="row">
-                                            <div class="col">
-                                                <center>
-                                                    <img src="\roengrang\img/<?=$shop['shop_img']?>" alt="avatar" style="width: 150px;height: 150px;" >
-                                                </center>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-10">
-                                        <div class="row mt-4">
-                                            <div class="col-md-3">
-                                                <label class="form-label">ชื่อร้านค้า :</label>
-                                                <div>
-                                                    <label class="form-label"><?=$shop['shop_name']?></label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label class="form-label">เจ้าของ :</label>
-                                                <div>
-                                                    <label class="form-label"><?=$shop['user_fullname']?></label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label class="form-label">สถานะร้านค้า :</label>
-                                                <div>
-                                                    <label class="form-label">
-                                                        <?php
-                                                            switch ($shop['shop_status']) {
-                                                            case 0:
-                                                                echo "ระงับ";
-                                                                break;
-                                                            case 1:
-                                                                echo "ปกติ";
-                                                                break;
-                                                            }
-                                                        ?>    
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label class="form-label">คะแนน :</label>
-                                                <div>
-                                                    <label class="form-label"><?=$shop['shop_point']?></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <?php
-                                            $total = $sql->shoptotal($_GET['shop_id']);
-                                            $total=mysqli_fetch_array($total);
-                                            $order = $sql->countshoptotal($_GET['shop_id']);
-                                            $order=mysqli_fetch_array($order);
-                                        ?>
-                                        <div class="row mt-2">
-                                            <div class="col-md-3">
-                                                <label class="form-label">ขายแล้ว :</label>
-                                                <label class="form-label"><?=$order['count_total_shop']?></label>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label class="form-label">รายได้สุทธิ :</label>
-                                                <label class="form-label"><?=$total['total_shop']?> บาท</label>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                    
-                                        <p align ="right">
-                                            <a class="text-decoration-none" href="editshop.php?shop_id=<?=$shop['shop_id']?>">
-                                                <button type="button" style="width:130px;" class="btn btn-primary">แก้ไขข้อมูล</button>
-                                            </a>
-                                            <input type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-outline-danger text-decoration-none" onClick='window.history.back()' value='ย้อนกลับ'>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                        <div calss="row">
+                        <?php
+                            $allpro = $sql->whatcatagory($_GET['id']);
+                            $cat=mysqli_fetch_array($allpro)
+                        ?>
+                            <div class="col-md-4"><h1 class="mt-4">หมวดหมู่ <?=$cat['cat_name']?></h1></div>
                         </div>
+                        
+                        <hr>
                         <div class="card mt-4 mb-4">
-                            <div class="card-header">
-                                สินค้าภายในร้าน
-                            </div>
                             <div class="card-body">
-                                <table id="datatablesSimple">
+                            <table id="datatablesSimple">
                                     <thead>
                                         <tr>
                                             <th>ชื่อ</th>
@@ -293,6 +158,7 @@
                                             <th>เวลา</th>
                                             <th>สถานะ</th>
                                             <th>การทำงาน</th>
+                                            <!--<th>ลบสินค้า</th>-->
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -304,11 +170,12 @@
                                             <th>เวลา</th>
                                             <th>สถานะ</th>
                                             <th>การทำงาน</th>
+                                            <!--<th>ลบสินค้า</th>-->
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                     <?php
-                                        $allpro = $sql->shop_products($_GET['shop_id']);
+                                        $allpro = $sql->cat_products($_GET['id']);
                                         while($Allpro=mysqli_fetch_array($allpro)){
                                     ?>
                                         <tr>
@@ -347,18 +214,15 @@
                                 </table>
                             </div>
                         </div>
+                                           
                     </div>
                 </main>
-
-               
             </div>
         </div>
-
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
-        <script src="js.js" type="text/javascript"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             function status(pro_id,pro_status) {
@@ -377,4 +241,9 @@
     </body>
 </html>
 
-<?php } ?>
+<?php
+    }
+?>
+
+
+

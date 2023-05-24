@@ -53,7 +53,7 @@
             return $address;
         }
         public function useraddress($user_id) {
-            $address = mysqli_query($this->dbcon, "SELECT * FROM user_address WHERE user_id='$user_id'" );
+            $address = mysqli_query($this->dbcon, "SELECT * FROM user_address WHERE user_id='$user_id' AND address_role='บ้าน'" );
             return $address;
         }
 
@@ -104,6 +104,15 @@
             $addmem = mysqli_query($this->dbcon, "INSERT INTO users(user_email,user_password,user_fullname,user_tel,user_address,user_road,user_soi,user_subdistrict,user_img,user_role,user_regDate) VALUES ('$user_email','$user_password','$user_fullname','$user_tel','$user_address','$user_road','$user_soi','$user_subdistrict','$fileName','$user_role',NOW())");
             return $addmem;
         }
+        public function addcatagory($cat_name) {
+            $addcatagory = mysqli_query($this->dbcon, "INSERT INTO catagory(cat_name) VALUES ('$cat_name')");
+            return $addcatagory;
+        }
+        public function insertaddress($user_id,$user_fullname,$user_tel,$user_address,$user_road,$user_soi,$province_id,$district_id,$subdistrict_id,$user_province,$user_district,$user_subdistrict,$user_zipcode) {
+            $insertaddress = mysqli_query($this->dbcon, "INSERT INTO user_address (user_id, user_fullname, user_tel, user_address, user_road, user_soi, province_id, district_id, subdistrict_id,user_province, user_district, user_subdistrict, user_zipcode, address_role) VALUES ('$user_id', '$user_fullname', '$user_tel', '$user_address', '$user_road', '$user_soi', '$province_id', '$district_id', '$subdistrict_id', '$user_province', '$user_district', '$user_subdistrict', '$user_zipcode', 'บ้าน')");
+            return $insertaddress;
+        }
+
 
         // ----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -124,10 +133,30 @@
             $update_shop_status = mysqli_query($this->dbcon, "UPDATE shop SET shop_status = '$st_full' WHERE shop.shop_id='$shop_id'");
             return $update_shop_status;
         }
+        public function update_product($pro_id, $cat_id, $pro_name, $pro_price, $pro_amount, $pro_detail, $pro_send, $fileName) {
+            $update_product = mysqli_query($this->dbcon, "UPDATE products SET cat_id = '$cat_id',pro_name = '$pro_name',pro_price = '$pro_price',pro_amount = '$pro_amount',pro_detail = '$pro_detail',update_date = NOW(),pro_send = '$pro_send',pro_img = '$fileName' WHERE pro_id='$pro_id'");
+            return $update_product;
+        }
+        public function update_shop($shop_id,$shop_name,$shop_detail,$fileName) {
+            $update_shop = mysqli_query($this->dbcon, "UPDATE shop SET shop_name = '$shop_name',shop_detail = '$shop_detail',shop_img = '$fileName' WHERE shop_id='$shop_id'");
+            return $update_shop;
+        }
+        public function update_user($user_email,$user_password,$user_fullname,$user_tel,$user_address,$user_road,$user_soi,$user_subdistrict,$user_role,$fileName,$user_id) {
+            $update_user = mysqli_query($this->dbcon, "UPDATE users SET user_email = '$user_email',user_password = '$user_password',user_fullname = '$user_fullname',user_tel = '$user_tel',user_address = '$user_address',user_road = '$user_road',user_soi = '$user_soi',user_subdistrict = '$user_subdistrict',user_img = '$fileName',user_role = '$user_role' WHERE user_id='$user_id' ");
+            return $update_user;
+        }
+        public function update_user_address($user_fullname,$user_tel,$user_address,$user_road,$user_soi,$province_id,$district_id,$subdistrict_id,$user_province,$user_district,$user_subdistrict,$user_zipcode,$user_id) {
+            $update_user_address = mysqli_query($this->dbcon, "UPDATE user_address SET user_fullname='$user_fullname',user_tel='$user_tel',user_address='$user_address',user_road='$user_road',user_soi='$user_soi',province_id='$province_id',district_id='$district_id',subdistrict_id='$subdistrict_id',user_province='$user_province',user_district='$user_district',user_subdistrict='$user_subdistrict',user_zipcode='$user_zipcode' WHERE user_id='$user_id' AND address_role='บ้าน' ");
+            return $update_user_address;
+        }
+        public function update_cat($cat_id,$cat_name) {
+            $update_cat = mysqli_query($this->dbcon, "UPDATE catagory SET cat_name = '$cat_name' WHERE catagory.id='$cat_id'");
+            return $update_cat;
+        }
 
-        // ----------------------------------------------------------------------------------------------------------------------------------------
+        // ------------------------------------------------------------------------------------------------------------------------------------
 
-        #อัปเดต
+        #การลบ
 
         public function delete_user($user_id) {
             $delete_user = mysqli_query($this->dbcon, "DELETE FROM users WHERE user_id='$user_id'");
@@ -167,6 +196,10 @@
             return $delete_pro_shop;
             return $delete_shop;
         }
+        public function delete_catagory($cat_id) {
+            $delete_catagory = mysqli_query($this->dbcon, "DELETE FROM catagory WHERE id='$cat_id'");
+            return $delete_catagory;
+        }
 
         // ----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -182,6 +215,22 @@
         public function shop_products($shop_id) {
             $shop_pro = mysqli_query($this->dbcon, "SELECT * FROM products WHERE shop_id='$shop_id' ");
             return $shop_pro;
+        }
+        public function cat_products($cat_id) {
+            $cat_products = mysqli_query($this->dbcon, "SELECT * FROM products WHERE cat_id='$cat_id' ");
+            return $cat_products;
+        }
+
+        // ----------------------------------------------------------------------------------------------------------------------------------------
+
+        #เรียกหมวดหมู่
+        public function catagory() {
+            $cat = mysqli_query($this->dbcon, "SELECT * FROM catagory");
+            return $cat;
+        }
+        public function whatcatagory($id) {
+            $whatcatagory = mysqli_query($this->dbcon, "SELECT * FROM catagory WHERE id='$id';");
+            return $whatcatagory;
         }
 
         // ----------------------------------------------------------------------------------------------------------------------------------------
@@ -215,6 +264,10 @@
             $reqde = mysqli_query($this->dbcon, "SELECT * FROM users WHERE user_id='$user_id'");
             return $reqde;
         }
+        public function searchid($email) {
+            $checkuser = mysqli_query($this->dbcon, "SELECT * FROM users WHERE users.user_email = '$email'");
+            return $checkuser;
+        }
 
         // ----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -232,5 +285,75 @@
             return $allshop;
         }
 
+        #-------------------------------------------------------------------------------------------------------------
+
+        #counting
+        public function countrequest() {
+            $countrequest = mysqli_query($this->dbcon, "SELECT COUNT(user_id) AS countrequest FROM users WHERE users.user_status = '4';");
+            return $countrequest;
+        }
+        public function countuser() {
+            $countuser = mysqli_query($this->dbcon, "SELECT COUNT(user_id) AS countuser FROM users WHERE users.user_status != '4';");
+            return $countuser;
+        }
+        public function countshop() {
+            $countshop = mysqli_query($this->dbcon, "SELECT COUNT(shop_id) AS countshop FROM shop ;");
+            return $countshop;
+        }
+        public function countproduct() {
+            $countproduct = mysqli_query($this->dbcon, "SELECT COUNT(pro_id) AS countproduct FROM products ;");
+            return $countproduct;
+        }
+        public function count_cat_product($cat_id) {
+            $count_cat_product = mysqli_query($this->dbcon, "SELECT COUNT(pro_id) AS count_cat_product FROM products WHERE cat_id='$cat_id';");
+            return $count_cat_product;
+        }
+        public function countreportshop() {
+            $countreportshop = mysqli_query($this->dbcon, "SELECT COUNT(id) AS countreportshop FROM report_shop ;");
+            return $countreportshop;
+        }
+        public function countreportproduct() {
+            $countreportproduct = mysqli_query($this->dbcon, "SELECT COUNT(id) AS countreportproduct FROM report_pro ;");
+            return $countreportproduct;
+        }
+        public function countshoptotal($shop_id) {
+            $countshoptotal = mysqli_query($this->dbcon, "SELECT COUNT(id) AS count_total_shop FROM orders WHERE shop_id='$shop_id';");
+            return $countshoptotal;
+        }
+
+        #-----------------------------------------------------------------------------------------------------------------------
+        #การเงิน
+        public function thisweekp() {
+            $thisweekp = mysqli_query($this->dbcon, "SELECT days_of_week.day_name, COALESCE(SUM(orders.total_price), 0) AS total_price FROM ( SELECT 'Sunday' AS day_name UNION SELECT 'Monday' UNION SELECT 'Tuesday' UNION SELECT 'Wednesday' UNION SELECT 'Thursday' UNION SELECT 'Friday' UNION SELECT 'Saturday') AS days_of_week LEFT JOIN orders ON days_of_week.day_name = DATE_FORMAT(orders.ord_date, '%W') WHERE WEEK(orders.ord_date) = WEEK(NOW()) OR orders.ord_date IS NULL GROUP BY days_of_week.day_name;");
+            return $thisweekp;
+        }
+        public function lastweekp($shop_id) {
+            $lastweekp = mysqli_query($this->dbcon, "SELECT DATE_FORMAT(add_date, '%W') AS day_of_week, SUM(pro_price) AS total_price FROM products WHERE WEEK(add_date) = WEEK(DATE_SUB(NOW(), INTERVAL 1 WEEK)) GROUP BY DAYOFWEEK(add_date);");
+            return $lastweekp;
+        }
+        public function yeartotal() {
+            $yeartotal = mysqli_query($this->dbcon, "SELECT SUM(CASE WHEN WEEK(ord_date) = WEEK(CURRENT_DATE()) THEN total_price ELSE 0 END) AS total_week, SUM(CASE WHEN YEAR(ord_date) = YEAR(CURRENT_DATE()) THEN total_price ELSE 0 END) AS total_year FROM orders;");
+            return $yeartotal;
+        }
+        public function weektotal($shop_id) {
+            $weektotal = mysqli_query($this->dbcon, "SELECT SUM(total_price) AS total_week FROM orders WHERE WEEK(ord_date) = WEEK(CURRENT_TIMESTAMP);");
+            return $weektotal;
+        }
+        public function shoptotal($shop_id) {
+            $shoptotal = mysqli_query($this->dbcon, "SELECT SUM(total_price) AS total_shop FROM orders WHERE shop_id='$shop_id';");
+            return $shoptotal;
+        }
+
+        #The best
+
+        
+        public function bestshop() {
+            $bestshop = mysqli_query($this->dbcon, "SELECT @row_number := @row_number + 1 AS `No.`, shop_id, shop_name, total_price_sum FROM ( SELECT orders.shop_id AS shop_id,shop_name, SUM(total_price) AS total_price_sum FROM orders INNER JOIN shop ON orders.shop_id=shop.shop_id GROUP BY orders.shop_id ORDER BY total_price_sum DESC ) AS ranked, (SELECT @row_number := 0) AS x;");
+            return $bestshop;
+        }
+        public function bestproducts() {
+            $bestproducts = mysqli_query($this->dbcon, "SELECT @row_number := @row_number + 1 AS `No.`, pro_id, pro_name, pro_selled, total_price_sum FROM ( SELECT orders.pro_id AS pro_id,pro_name,pro_selled, SUM(total_price) AS total_price_sum FROM orders INNER JOIN products ON orders.pro_id=products.pro_id GROUP BY orders.pro_id ORDER BY total_price_sum DESC ) AS ranked, (SELECT @row_number := 0) AS x;");
+            return $bestproducts;
+        }
     }
 ?>
