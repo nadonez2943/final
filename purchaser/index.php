@@ -8,11 +8,6 @@
 	$rs = $sql->rowsum($_SESSION['id']);
 	$RS=mysqli_fetch_array($rs);
 
-	if ($RS[0]>0){
-		$row = $RS[0];
-	}else{$row = 0 ;}
-		
-
     if ($_SESSION['user_role'] != 2) {
         header("location: /roengrang/error/401.php");
     }else{
@@ -137,8 +132,9 @@
 										<?php
 											}
 										?>
+										<option value="shop">ร้านค้า</option>
                                     </select>
-									<input id="search" name="search" placeholder="ค้นหาสินค้าที่นี่....." type="search">
+									<input id="search" name="search" placeholder="ค้นหาที่นี่....." type="search">
 									<button id="searchbtn" class="btnn" ><i class="ti-search"></i></button>
                                 </div>
                             </div>
@@ -150,59 +146,7 @@
                                     <a href="productlike.php"><i class="fa fa-heart" aria-hidden="true"></i> สินค้าที่ถูกใจ</a>
                                 </div>
                                 <div class="sinlge-bar shopping">
-                                <?php 
-										if ($RS[0]>0){
-									?>
-									<a  class="single-icon"><i class="ti-shopping-cart-full"></i> <span class="total-count"><?=$row?></span></a>
-                                    <!-- Shopping Item -->
-                                    <div class="shopping-item">
-                                        <div class="dropdown-cart-header">
-                                            <span><?=$row?> รายการ</span>
-                                            <a href="cart.php">ดูตะกร้า</a>
-                                        </div>
-                                        <ul class="shopping-list">
-											<?php
-												while($Cart=mysqli_fetch_array($cart)){
-											?>
-                                            <li>
-                                                <a href="deletecart.php?cart_id=<?=$Cart['amount']?>" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                <a class="cart-img" href="productdetails.php?pro_id=<?=$Cart['pro_id']?>"><img src="\roengrang\img/<?=$Cart['pro_img']?>"></a>
-                                                <h4><a href="productdetails.php?pro_id=<?=$Cart['pro_id']?>"><?=$Cart['pro_name']?></a></h4>
-                                                <p class="quantity"><?=$Cart['amount']?> - <span class="amount"><?=$Cart['price']?> บาท</span></p>
-                                            </li>
-											<?php
-												}
-											?>
-                                        </ul>
-                                        <div class="bottom">
-                                            <div class="total">
-                                                <span>รวม</span>
-                                                <span class="total-amount"><?=$RS['total']?> บาท</span>
-                                            </div>
-                                            <a href="checkout.php" class="btn animate">ชำระเงิน</a>
-                                        </div>
-                                    </div>
-									<?php 
-										}else{
-									?>
-									<a class="single-icon"><i class="ti-shopping-cart-full"></i> <span class="total-count"><?=$row?></span></a>
-                                    <!-- Shopping Item -->
-                                    <div class="shopping-item">
-                                        <div class="dropdown-cart-header">
-                                            <span>0 รายการ</span>
-                                            <a href="cart.php">ดูตะกร้า</a>
-                                        </div>
-                                        <ul class="shopping-list text-center">
-                                            <li>
-                                                <a>ไม่มีรายการ</a> 
-                                            </li>
-                                        </ul>
-                                    </div>
-									<?php
-										}
-									?>
-                                    <!--/ End Shopping Item -->
-
+									<a  class="single-icon" href="cart.php"><i class="ti-shopping-cart-full"></i> <span class="total-count" id="cartcount"><?=$RS['count']?></span></a>
                                 </div>
                             </div>
                         </div>
@@ -331,8 +275,9 @@
 									<div class="tab-single">
 										<div class="row">
 											<?php
-												$tabpro = $sql->tabproduct();
+												$tabpro = $sql->taballproduct();
 												while($TabPro=mysqli_fetch_array($tabpro)){
+													$product_id = $TabPro['pro_id'];
 											?>
 												<div class="col-xl-3 col-lg-4 col-md-4 col-12">
 													<div class="single-product">
@@ -343,10 +288,22 @@
 															</a>
 															<div class="button-head">
 																<div class="product-action">
-																	<a title="Wishlist" href="#"><i class=" ti-heart "></i><span>ถูกใจสินค้า</span></a>
+																	<?php
+																		$LIKE = $sql->likescount($_SESSION['id'],$product_id);
+																		$like=mysqli_fetch_array($LIKE)	;
+																		if($like['count']==1){
+																	?>
+																		<a title="ยกเลิกถูกใจสินค้า" id="Like<?=$TabPro['pro_id']?>" onclick="unlikes('<?php echo $product_id; ?>')"><i class="fa fa-heart "></i><span>ยกเลิกถูกใจสินค้า</span></a>
+																	<?php	
+																		}else{				
+																	?>
+																		<a title="ถูกใจสินค้า" id="Like<?=$TabPro['pro_id']?>" onclick="likes('<?php echo $product_id; ?>')"><i class=" ti-heart "></i><span>ถูกใจสินค้า</span></a>
+																	<?php	
+																		}			
+																	?>
 																</div>
 																<div class="product-action-2">
-																	<a title="Add to cart" href="addcart.php?pro_id=<?=$TabPro['pro_id']?>">เพิ่มลงในตะกร้า</a>
+																	<a title="Add to cart" id="addcart<?=$TabPro['pro_id']?>" onclick="addcart('<?php echo $product_id; ?>')">เพิ่มลงในตะกร้า</a>
 																</div>
 															</div>
 														</div>
@@ -367,42 +324,58 @@
 								<!--/ End Single Tab -->
 								<?php
 									$cattabid = $sql->catagory();
+									$catNames = array();
 									while($Cattabid=mysqli_fetch_array($cattabid)){
+										$catNames[] = $Cattabid['cat_name'];
 								?>
 									<!-- Start Single Tab -->
 									<div class="tab-pane fade" id="<?=$Cattabid['cat_name']?>" role="tabpanel"> 
 										<div class="tab-single">
 											<div class="row">
 												<?php
-													$tabpro = $sql->tabproduct();
+													$tabpro = $sql->tabproduct($Cattabid['id']);
 													while($TabPro=mysqli_fetch_array($tabpro)){
+														$product_id = $TabPro['pro_id'];
 												?>
 													<div class="col-xl-3 col-lg-4 col-md-4 col-12">
-														<div class="single-product">
-															<div class="product-img">
-																	<a href="product-details.php">
-																	<img class="default-img" src="\roengrang\img/<?=$TabPro['pro_img']?>"  width="auto" height="200px" >
-																	<img class="hover-img" src="\roengrang\img/<?=$TabPro['pro_img']?>" width="auto" height="200px" >
-																</a>
-																<div class="button-head">
-																	<div class="product-action">
-																		<a title="Wishlist" href="#"><i class=" ti-heart "></i><span>ถูกใจสินค้า</span></a>
-																	</div>
-																	<div class="product-action-2">
-																		<a title="Add to cart" href="addcart.php?pro_id=<?=$TabPro['pro_id']?>">เพิ่มลงในตะกร้า</a>
-																	</div>
+													<div class="single-product">
+														<div class="product-img">
+															<a href="productdetails.php?pro_id=<?=$TabPro['pro_id']?>">
+																<img class="default-img" src="\roengrang\img/<?=$TabPro['pro_img']?>"  width="auto" height="200px" >
+																<img class="hover-img" src="\roengrang\img/<?=$TabPro['pro_img']?>" width="auto" height="200px" >
+															</a>
+															<div class="button-head">
+																<div class="product-action">
+																	<?php
+																		$LIKE = $sql->likescount($_SESSION['id'],$product_id);
+																		$like=mysqli_fetch_array($LIKE)	;
+																		if($like['count']==1){
+																	?>
+																		<a title="ยกเลิกถูกใจสินค้า" id="Like<?=$TabPro['pro_id']?>" onclick="unlikes('<?php echo $product_id; ?>')"><i class="fa fa-heart "></i><span>ยกเลิกถูกใจสินค้า</span></a>
+																	<?php	
+																		}else{				
+																	?>
+																		<a title="ถูกใจสินค้า" id="Like<?=$TabPro['pro_id']?>" onclick="likes('<?php echo $product_id; ?>')"><i class=" ti-heart "></i><span>ถูกใจสินค้า</span></a>
+																	<?php	
+																		}			
+																	?>
 																</div>
-															</div>
-															<div class="product-content">
-																<h3><a href="productdetails.php"><?=$TabPro['pro_name']?></a></h3>
-																<div class="product-price">
-																	<span><?=$TabPro['pro_price']?> บาท</span>
+																<div class="product-action-2">
+																	<a title="Add to cart" id="addcart<?=$TabPro['pro_id']?>" onclick="addcart('<?php echo $product_id; ?>')">เพิ่มลงในตะกร้า</a>
 																</div>
 															</div>
 														</div>
+														<div class="product-content">
+															<h3><a href="productdetails.php?pro_id=<?=$TabPro['pro_id']?>"><?=$TabPro['pro_name']?></a></h3>
+															<div class="product-price">
+																<span><?=$TabPro['pro_price']?> บาท</span>
+															</div>
+														</div>
 													</div>
+												</div>
 												<?php
 													}
+													$jsonArray = json_encode($catNames);
 												?>
 											</div>
 										</div>
@@ -445,7 +418,7 @@
 							</div>
 							<div class="col-lg-6 col-md-6 col-12 no-padding">
 								<div class="content">
-									<h4 class="title"><a href="productdetails.php?pro_id=<?=$BestSell['pro_id']?>">Licity jelly leg flat Sandals</a></h4>
+									<h4 class="title"><a href="productdetails.php?pro_id=<?=$BestSell['pro_id']?>"><?=$BestSell['pro_name']?></a></h4>
 									<p class="price with-discount"><?=$BestSell['pro_price']?> บาท</p>
 								</div>
 							</div>
@@ -662,14 +635,64 @@
 			// Get the values of cat and search
 			var cat = $('#cat').val();
 			var search = $('#search').val();
-
-			// Construct the URL with the values
-			var url = 'search.php?cat=' + cat + '&search=' + search;
-
-			// Redirect to the target page
+			if(cat=='shop'){
+				var url = 'shop.php?search=' + search;
+			}else{
+				var url = 'search.php?cat=' + cat + '&search=' + search;
+			}
+			
 			window.location.href = url;
 		});
 	</script>
+	<script>
+        function likes(productId) {
+			var button = document.getElementById('Like' + productId);
+            $.ajax({
+                url: "ajax_db.php",
+                type: "POST",
+                data: { product_id: productId,function:'addlike' },
+                success: function(response) {
+					if(response==productId){
+					button.innerHTML = '<i class="fa fa-heart"></i><span>ยกเลิกถูกใจสินค้า</span>';
+					button.setAttribute('title', 'ยกเลิกกดถูกใจ');
+					button.setAttribute('onclick', "unlikes('" + productId + "')");
+					}
+                }
+            });
+        }
+		function unlikes(productId) {
+			var button = document.getElementById('Like' + productId);
+            $.ajax({
+                url: "ajax_db.php",
+                type: "POST",
+                data: { product_id: productId,function:'unlike'},
+                success: function(response) {
+					if(response==productId){
+						button.innerHTML = '<i class="ti-heart"></i><span>ถูกใจสินค้า</span>';
+						button.setAttribute('title', 'กดถูกใจ');
+						button.setAttribute('onclick', "likes('" + productId + "')");
+					}
+                }
+            });
+        }
+		function addcart(productId) {
+			var button = document.getElementById('cart' + productId);
+            $.ajax({
+                url: "ajax_db.php",
+                type: "POST",
+                data: { product_id: productId,product_amount: 1,function:'addcart' },
+                success: function(response) {
+					$('#cartcount').text(response); 
+                }
+            });
+        }
+    </script>
+	<script>
+var parsedArray = <?php echo $jsonArray; ?>;
+for (var i = 0; i < parsedArray.length; i++) {
+  console.log(parsedArray[i]);
+}
+</script>
 </body>
 </html>
 

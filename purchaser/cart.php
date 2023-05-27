@@ -308,7 +308,7 @@
 												<i class="ti-minus"></i>
 											</button>
 										</div>
-										<input type="text" name="quant[<?=$CartTable['pro_id']?>]" class="input-number"  data-min="1" data-max="100" value="1">
+										<input type="text" name="quant[<?=$CartTable['pro_id']?>]" class="input-number"  data-min="1" data-max="100" value="<?=$CartTable['amount']?>">
 										<div class="button plus">
 											<button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[<?=$CartTable['pro_id']?>]">
 												<i class="ti-plus"></i>

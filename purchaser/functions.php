@@ -69,9 +69,13 @@
             $pro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE products.pro_id = '$pro_id' ORDER BY products.pro_id ");
             return $pro;
         }
-        public function tabproduct() { #สินค้ายังน้อย เดะค่อยทำหมวดหมู่
-            $tabpro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id ORDER BY RAND() LIMIT 8 ");
+        public function tabproduct($cat_id) {
+            $tabpro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE cat_id='$cat_id' ORDER BY RAND() LIMIT 8 ");
             return $tabpro;
+        }
+        public function taballproduct() {
+            $taballproduct = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id ORDER BY RAND() LIMIT 8 ");
+            return $taballproduct;
         }
         public function bestselled() {
             $bestselled = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id ORDER BY products.pro_selled DESC LIMIT 12 ");
@@ -84,6 +88,10 @@
         public function countlikes($pro_id) {
             $countlikes = mysqli_query($this->dbcon, "SELECT COUNT(likes.user_id) AS like_count FROM likes JOIN products ON likes.pro_id = products.pro_id WHERE products.pro_id = $pro_id;");
             return $countlikes;
+        }
+        public function likescount($user_id,$pro_id) {
+            $likes = mysqli_query($this->dbcon, "SELECT count(id) AS count FROM likes WHERE likes.user_id = $user_id AND likes.pro_id = $pro_id;");
+            return $likes;
         }
 
         #คอมเมนท์
@@ -106,12 +114,16 @@
             return $cart;
         }
         public function rowsum($user_id) {
-            $rs = mysqli_query($this->dbcon, "SELECT COUNT(products.pro_price*products.pro_id) as rowc,SUM(products.pro_price*products.pro_id) as total FROM cart LEFT JOIN products ON cart.pro_id = products.pro_id WHERE cart.user_id = '$user_id'");
+            $rs = mysqli_query($this->dbcon, "SELECT COUNT(products.pro_price*products.pro_id) as count,SUM(products.pro_price*products.pro_id) as total FROM cart LEFT JOIN products ON cart.pro_id = products.pro_id WHERE cart.user_id = '$user_id'");
             return $rs;
         }
         public function deletecart($cart_id) {
             $delcart = mysqli_query($this->dbcon, "DELETE FROM cart WHERE cart.id='$cart_id'");
             return $delcart;
+        }
+        public function wherecart($pro_id,$user_id) {
+            $wherecart = mysqli_query($this->dbcon, "SELECT * FROM cart WHERE cart.pro_id = '$pro_id' AND cart.user_id = '$user_id'");
+            return $wherecart;
         }
 
         #เรียกหมวดหมู่
@@ -147,14 +159,32 @@
 
         #insert
         public function addorders($pro_id,$user_id,$ord_name,$ord_amount,$sumprice,$sentprice,$totalprice,$ord_tel,$ord_address,$ord_road,$ord_soi,$ord_province,$ord_district,$ord_subdistrict,$ord_postID,$ord_note,$payment) {
-            $reg = mysqli_query($this->dbcon, "INSERT INTO orders(pro_id,user_id,ord_name,ord_amount,sum_price,sent_price,total_price,ord_tel,ord_address,ord_road,ord_soi,ord_province,ord_district,ord_subdistrict,ord_postID,ord_note,payment) VALUES('$pro_id','$user_id','$ord_name','$ord_amount','$sumprice','$sentprice','$totalprice','$ord_tel','$ord_address','$ord_road','$ord_soi','$ord_province','$ord_district','$ord_subdistrict','$ord_postID','$ord_note','$payment')");
-            return $reg;
+            $addorders = mysqli_query($this->dbcon, "INSERT INTO orders(pro_id,user_id,ord_name,ord_amount,sum_price,sent_price,total_price,ord_tel,ord_address,ord_road,ord_soi,ord_province,ord_district,ord_subdistrict,ord_postID,ord_note,payment) VALUES('$pro_id','$user_id','$ord_name','$ord_amount','$sumprice','$sentprice','$totalprice','$ord_tel','$ord_address','$ord_road','$ord_soi','$ord_province','$ord_district','$ord_subdistrict','$ord_postID','$ord_note','$payment')");
+            return $addorders;
+        }
+        public function addlike($pro_id,$user_id) {
+            $addlike = mysqli_query($this->dbcon, "INSERT INTO likes(pro_id,user_id) VALUES('$pro_id','$user_id')");
+            return $addlike;
+        }
+        public function addcart($pro_id,$user_id,$amount) {
+            $addcart = mysqli_query($this->dbcon, "INSERT INTO cart(pro_id,user_id,amount) VALUES('$pro_id','$user_id','$amount')");
+            return $addcart;
         }
 
         #update
         public function update_order_status($id,$order_status) {
             $update_order_status = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' WHERE orders.id='$id'");
             return $update_order_status;
+        }
+        public function updatecart($pro_id,$user_id,$amount) {
+            $updatecart = mysqli_query($this->dbcon, "UPDATE cart SET amount = '$amount' WHERE cart.pro_id='$pro_id' AND cart.user_id='$user_id'");
+            return $updatecart;
+        }
+
+        #delete
+        public function unlike($pro_id,$user_id) {
+            $unlike = mysqli_query($this->dbcon, "DELETE FROM likes WHERE likes.pro_id='$pro_id' AND likes.user_id='$user_id'");
+            return $unlike;
         }
 
     }

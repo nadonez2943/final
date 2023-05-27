@@ -102,45 +102,31 @@
 			<div class="middle-inner">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-2 col-md-2 col-12">
+                    <div class="col-lg-2 col-md-2 col-12">
                             <!-- Logo -->
                             <div class="logo">
                                 <a href="index.php"><img src="images/Logo4.png" alt="logo" hieght=""></a>
                             </div>
                             <!--/ End Logo -->
-                            <!-- Search Form -->
-                            <div class="search-top">
-                                <div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
-                                <!-- Search Form -->
-                                <div class="search-top">
-                                    <form class="search-form">
-                                        <input type="text" placeholder="Search here..." name="search">
-                                        <button value="search" type="submit"><i class="ti-search"></i></button>
-                                    </form>
-                                </div>
-                                <!--/ End Search Form -->
-                            </div>
-                            <!--/ End Search Form -->
-                            <div class="mobile-nav"></div>
                         </div>
                         <div class="col-lg-8 col-md-7 col-12">
                             <div class="search-bar-top">
                                 <div class="search-bar">
-                                    <select>
-                                        <option selected="selected">หมวดหมู่ทั้งหมด</option>
+									
+                                    <select id="cat" name="cat">
+                                        <option selected="selected" value="0">หมวดหมู่ทั้งหมด</option>
 										<?php
 											$cat = $sql->catagory();
                                             while($Cat=mysqli_fetch_array($cat)){
                                         ?>
-                                        <option><?=$Cat['cat_name']?></option>
+                                        <option value="<?=$Cat['id']?>"><?=$Cat['cat_name']?></option>
 										<?php
 											}
 										?>
+										<option value="shop">ร้านค้า</option>
                                     </select>
-                                    <form>
-                                        <input name="search" placeholder="ค้นหาสินค้าที่นี่....." type="search">
-                                        <button class="btnn"><i class="ti-search"></i></button>
-                                    </form>
+									<input id="search" name="search" placeholder="ค้นหาที่นี่....." type="search">
+									<button id="searchbtn" class="btnn" ><i class="ti-search"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -264,32 +250,46 @@
 										$allpro = $sql->likes($_SESSION['id']);
 										$row = mysqli_fetch_row($allpro);
                                     	if($row>=1){
-											while($Allpro=mysqli_fetch_array($allpro)){
-									?>
-										<div class="col-xl-3 col-lg-4 col-md-3">
-											<div class="single-product">
-												<div class="product-img">
-													<a href="product-details.php">
-														<img class="default-img" src="\roengrang\img/<?=$Allpro['pro_img']?>"  width="auto" height="200px" >
-														<img class="hover-img" src="\roengrang\img/<?=$Allpro['pro_img']?>" width="auto" height="200px" >
-													</a>
-													<div class="button-head">
-														<div class="product-action">
-															<a title="Wishlist" href="#"><i class=" ti-heart "></i><span>ถูกใจสินค้า</span></a>
-														</div>
-														<div class="product-action-2">
-															<a title="Add to cart" href="addcart.php?pro_id=<?=$Allpro['pro_id']?>">เพิ่มลงในตะกร้า</a>
-														</div>
-													</div>
-												</div>
-												<div class="product-content">
-													<h3><a href="productdetails.php"><?=$Allpro['pro_name']?></a></h3>
-													<div class="product-price">
-														<span><?=$Allpro['pro_price']?> บาท</span>
-													</div>
-												</div>
-											</div>
-										</div>
+                                            $ok = $sql->likes($_SESSION['id']);
+											while($Allpro=mysqli_fetch_array($ok)){
+                                                $product_id = $Allpro['pro_id'];
+                                    ?>
+                                        <div class="col-xl-3 col-lg-4 col-md-4 col-12">
+                                            <div class="single-product">
+                                                <div class="product-img">
+                                                    <a href="productdetails.php?pro_id=<?=$Allpro['pro_id']?>">
+                                                        <img class="default-img" src="\roengrang\img/<?=$Allpro['pro_img']?>"  width="auto" height="200px" >
+                                                        <img class="hover-img" src="\roengrang\img/<?=$Allpro['pro_img']?>" width="auto" height="200px" >
+                                                    </a>
+                                                    <div class="button-head">
+                                                        <div class="product-action">
+                                                            <?php
+                                                                $LIKE = $sql->likescount($_SESSION['id'],$product_id);
+                                                                $like=mysqli_fetch_array($LIKE)	;
+                                                                if($like['count']==1){
+                                                            ?>
+                                                                <a title="ยกเลิกถูกใจสินค้า" id="Like<?=$Allpro['pro_id']?>" onclick="unlikes('<?php echo $product_id; ?>')"><i class="fa fa-heart "></i><span>ยกเลิกถูกใจสินค้า</span></a>
+                                                            <?php	
+                                                                }else{				
+                                                            ?>
+                                                                <a title="ถูกใจสินค้า" id="Like<?=$Allpro['pro_id']?>" onclick="likes('<?php echo $product_id; ?>')"><i class=" ti-heart "></i><span>ถูกใจสินค้า</span></a>
+                                                            <?php	
+                                                                }			
+                                                            ?>
+                                                        </div>
+                                                        <div class="product-action-2">
+                                                            <a title="Add to cart" href="addcart.php?pro_id=<?=$Allpro['pro_id']?>">เพิ่มลงในตะกร้า</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content">
+                                                    <h3><a href="productdetails.php?pro_id=<?=$Allpro['pro_id']?>"><?=$Allpro['pro_name']?></a></h3>
+                                                    <div class="product-price">
+                                                        <span><?=$Allpro['pro_price']?> บาท</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 									<?php
 										}
 									}else{
@@ -297,6 +297,7 @@
 										<div class="col-12 mt-5">
 											<center>
                                                 <div class="m-5">
+                                                    <?=$row?>
                                                     <h3>...คุณยังไม่มีสินค้าที่ถูกใจ...</h3>
                                                 </div>
                                             </center>
@@ -387,6 +388,48 @@
 	<script src="js/easing.js"></script>
 	<!-- Active JS -->
 	<script src="js/active.js"></script>
+    <script>
+        function likes(productId) {
+			var button = document.getElementById('Like' + productId);
+            $.ajax({
+                url: "ajax_db.php",
+                type: "POST",
+                data: { product_id: productId,function:'addlike' },
+                success: function(response) {
+					if(response==productId){
+					button.innerHTML = '<i class="fa fa-heart"></i><span>ยกเลิกถูกใจสินค้า</span>';
+					button.setAttribute('title', 'ยกเลิกกดถูกใจ');
+					button.setAttribute('onclick', "unlikes('" + productId + "')");
+                    alert("likeProduct " + productId + "");
+					}
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    alert("An error occurred. Please try again later.");
+                }
+            });
+        }
+		function unlikes(productId) {
+			var button = document.getElementById('Like' + productId);
+            $.ajax({
+                url: "ajax_db.php",
+                type: "POST",
+                data: { product_id: productId,function:'unlike'},
+                success: function(response) {
+					if(response==productId){
+						button.innerHTML = '<i class="ti-heart"></i><span>ถูกใจสินค้า</span>';
+						button.setAttribute('title', 'กดถูกใจ');
+						button.setAttribute('onclick', "likes('" + productId + "')");
+						alert("unlikeProduct " + productId + " ");
+					}
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    alert("An error occurred. Please try again later.");
+                }
+            });
+        }
+    </script>
 </body>
 </html>
 
