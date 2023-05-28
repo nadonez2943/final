@@ -191,7 +191,7 @@
                                             $row = $sql->countorder(0,$_SESSION['shop_id']);
                                             $numnew=mysqli_fetch_array($row);
                                     ?>
-                                    <input type="number" id="numnew" value="<?=$numnew['row_count']?>">
+                                    <input hidden type="number" id="numnew" value="<?=$numnew['row_count']?>">
                                     <tbody>
                                     <?php 
                                             while($Allord=mysqli_fetch_array($allord)){
@@ -293,7 +293,7 @@
                                             $row = $sql->countorder(1,$_SESSION['shop_id']);
                                             $numdoing=mysqli_fetch_array($row);
                                     ?>
-                                    <input type="number" id="numdoing" value="<?=$numdoing['row_count']?>">
+                                    <input hidden type="number" id="numdoing" value="<?=$numdoing['row_count']?>">
                                     <tbody>
                                     <?php 
                                             while($Allord=mysqli_fetch_array($allord)){
@@ -803,7 +803,7 @@
                                             $row = $sql->countorder(6,$_SESSION['shop_id']);
                                             $numcancle=mysqli_fetch_array($row);
                                     ?>
-                                    <input type="number" id="numcancle" value="<?=$numcancle['row_count']?>">
+                                    <input hidden type="number" id="numcancle" value="<?=$numcancle['row_count']?>">
                                     <tbody>
                                     <?php 
                                             while($Allord=mysqli_fetch_array($allord)){
@@ -905,7 +905,7 @@
                                             $row = $sql->countallorder($_SESSION['shop_id']);
                                             $numall=mysqli_fetch_array($row);
                                     ?>
-                                    <input hidden type="number" id="numall" value="<?=$numall['row']?>">
+                                    <input hidden type="number" id="numall" value="<?=$numall['row_count']?>">
                                     <tbody>
                                     <?php 
                                             while($Allord=mysqli_fetch_array($allord)){

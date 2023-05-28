@@ -61,9 +61,21 @@
             $pro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE products.cat_id = '$cat' AND products.pro_name LIKE '%$search%' ORDER BY products.pro_id;");
             return $pro;
         }
+        public function searchshop($search) {
+            $searchshop = mysqli_query($this->dbcon, "SELECT * FROM shop WHERE shop.shop_name LIKE '%$search%' ORDER BY shop.shop_id LIMIT 2;");
+            return $searchshop;
+        }
+        public function allsearchshop($search) {
+            $searchshop = mysqli_query($this->dbcon, "SELECT * FROM shop WHERE shop.shop_name LIKE '%$search%' ORDER BY shop.shop_id;");
+            return $searchshop;
+        }
         public function shoppro($shop_id) {
             $shoppro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE products.shop_id = '$shop_id' ORDER BY RAND() LIMIT 5");
             return $shoppro;
+        }
+        public function shopproduct($shop_id) {
+            $shopproduct = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE products.shop_id = '$shop_id' ORDER BY RAND()");
+            return $shopproduct;
         }
         public function productlike($user_id) {
             $pro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE products.pro_id = '$pro_id' ORDER BY products.pro_id ");
@@ -92,6 +104,12 @@
         public function likescount($user_id,$pro_id) {
             $likes = mysqli_query($this->dbcon, "SELECT count(id) AS count FROM likes WHERE likes.user_id = $user_id AND likes.pro_id = $pro_id;");
             return $likes;
+        }
+
+        #ร้านค้า
+        public function shop($shop_id) {
+            $shop = mysqli_query($this->dbcon, "SELECT * FROM shop WHERE shop.shop_id = '$shop_id'");
+            return $shop;
         }
 
         #คอมเมนท์
@@ -154,6 +172,10 @@
         public function order($ord_id) {
             $order = mysqli_query($this->dbcon, "SELECT * FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.id = '$ord_id'");
             return $order;
+        }
+        public function countorder($order_status,$user_id) {
+            $countorder = mysqli_query($this->dbcon, "SELECT COUNT(id) AS row_count FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.order_status = '$order_status' AND orders.user_id = '$user_id'");
+            return $countorder;
         }
         
 

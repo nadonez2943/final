@@ -252,134 +252,101 @@
         </header>
 		<!--/ End Header -->
 	
+	<!-- Start Product Area -->
+	<section class="shop-home-list section">
+		<div class="container">
+			<div class="row">
 			<?php
-				$searchshop = $sql->searchshop($_GET['search']);
-				$row=mysqli_fetch_row($searchshop);
-				if($row>0){
+				$Searchshop = $sql->shop($_GET['shop_id']);
+				while($searchshop=mysqli_fetch_array($Searchshop)){
 			?>
-			<section class="shop-home-list section">
-				<div class="container">
-					<div class="row mt-5">
-						<div class="col-6">
-							<a style="font-size:20px;">ร้านค้าที่เกี่ยวข้องกับ "<?=$_GET['search']?>"</a>
-						</div>
-						<div class="col-6 text-right">
-							<a style="font-size:20px;" href="search_shop.php?keyword=<?=$_GET['search']?>">ดูร้านค้าอื่นๆ</a>
-						</div>
-					</div>
-					<div class="row">
-					<?php
-						$Searchshop = $sql->searchshop($_GET['search']);
-						while($searchshop=mysqli_fetch_array($Searchshop)){
-					?>
-						<div class="col-md-6 col-12">
-							<!-- Start Single List  -->
-							<div class="single-list">
-								<div class="row">
-									<div class="col-lg-5 col-md-6 col-12">
-										<div class="list-image overlay">
-											<img src="\roengrang\img/<?=$searchshop['shop_img']?>">
-										</div>
-									</div>
-									<div class="col-lg-6 col-md-6 col-12 no-padding">
-										<div class="row mt-1">
-											<h4 class="title">
-												<a >ร้านค้า</a>
-												<a href="shopdetails.php?shop_id=<?=$searchshop['shop_id']?>"><?=$searchshop['shop_name']?></a>
-											</h4>
-										</div>
-										<div class="row mt-2">
-												<a style="font-size:18px;">ร้านค้า</a>
-										</div>
-										<div class="row mt-4">
-											<a style="font-size:18px;">สินค้า : 2 | คะแนน : 2</a>
-										</div>
-										<div class="row mt-4">
-											<button class="btn"><a href="shopdetails.php?shop_id=<?=$searchshop['shop_id']?>" style="font-size:18px;">ดูร้านค้า</a></button>
-											
-										</div>
-									</div>
+				<div class="col-12">
+					<!-- Start Single List  -->
+					<div class="single-list">
+						<div class="row">
+							<div class="col-3">
+								<center>
+									<img class="card-img" src="\roengrang\img/<?=$searchshop['shop_img']?>" style="width:150px;height: 150px;">
+								</center>
+							</div>
+							<div class="col-4">
+								<div class="row mt-1">
+									<h4 class="title">
+										<a >ร้านค้า</a>
+										<a href="shopdetails.php?shop_id=<?=$searchshop['shop_id']?>"><?=$searchshop['shop_name']?></a>
+									</h4>
+								</div>
+								<div class="row mt-2">
+										<a style="font-size:18px;">ร้านค้า</a>
 								</div>
 							</div>
-							<!-- End Single List  -->
+							<div class="col-2">
+								<a style="font-size:18px;">สินค้า : 2</a>
+							</div>
+							<div class="col-2">
+								<a style="font-size:18px;">คะแนน : 2</a>
+							</div>
 						</div>
-					<?php
-						}
-					?>
 					</div>
+					<!-- End Single List  -->
 				</div>
-			</section>
 			<?php
 				}
 			?>
-	<!-- Start Product Area -->
-            <div class="container">
-				<div class="row">
-					<div class="col-12">
-						<div class="product-info">
-							<div class="tab-single">
-								<div class="row">
-									<?php
-                                    if($_GET['search']==""){
-                                        if($_GET['cat']==0){
-                                            $pro = $sql->allproduct();
-                                        }else{
-                                            $pro = $sql->productcat($_GET['cat']);
-                                        }
-                                    }else{
-                                        if($_GET['cat']==0){
-                                            $pro = $sql->searchproduct($_GET['search']);
-                                        }else{
-                                            $pro = $sql->searchproductcat($_GET['cat'],$_GET['search']);
-                                        }
-                                    }
-                                    if($pro!=""){
-                                        while($Searchpro=mysqli_fetch_array($pro)){
-									?>
-										<div class="col-xl-3 col-lg-4 col-md-3">
-											<div class="single-product">
-												<div class="product-img">
-													<a href="product-details.php">
-														<img class="default-img" src="\roengrang\img/<?=$Searchpro['pro_img']?>"  width="auto" height="200px" >
-														<img class="hover-img" src="\roengrang\img/<?=$Searchpro['pro_img']?>" width="auto" height="200px" >
-													</a>
-													<div class="button-head">
-														<div class="product-action">
-															<a title="Wishlist" href="#"><i class=" ti-heart "></i><span>ถูกใจสินค้า</span></a>
-														</div>
-														<div class="product-action-2">
-															<a title="Add to cart" href="addcart.php?pro_id=<?=$Searchpro['pro_id']?>">เพิ่มลงในตะกร้า</a>
-														</div>
-													</div>
-												</div>
-												<div class="product-content">
-													<h3><a href="productdetails.php"><?=$Searchpro['pro_name']?></a></h3>
-													<div class="product-price">
-														<span><?=$Searchpro['pro_price']?> บาท</span>
-													</div>
-												</div>
+			</div>
+			<h3 class="mt-5">สินค้าภายในร้าน</h3><hr>
+			<div class="tab-pane fade show active" id="all" role="tabpanel">
+				<div class="tab-single">
+					<div class="row">
+						<?php
+							$tabpro = $sql->shopproduct($_GET['shop_id']);
+							while($TabPro=mysqli_fetch_array($tabpro)){
+								$product_id = $TabPro['pro_id'];
+						?>
+							<div class="col-xl-3 col-lg-4 col-md-4 col-12">
+								<div class="single-product">
+									<div class="product-img">
+										<a href="productdetails.php?pro_id=<?=$TabPro['pro_id']?>">
+											<img class="default-img" src="\roengrang\img/<?=$TabPro['pro_img']?>"  width="auto" height="200px" >
+											<img class="hover-img" src="\roengrang\img/<?=$TabPro['pro_img']?>" width="auto" height="200px" >
+										</a>
+										<div class="button-head">
+											<div class="product-action">
+												<?php
+													$LIKE = $sql->likescount($_SESSION['id'],$product_id);
+													$like=mysqli_fetch_array($LIKE)	;
+													if($like['count']==1){
+												?>
+													<a title="ยกเลิกถูกใจสินค้า" id="Like<?=$TabPro['pro_id']?>" onclick="unlikes('<?php echo $product_id; ?>')"><i class="fa fa-heart "></i><span>ยกเลิกถูกใจสินค้า</span></a>
+												<?php	
+													}else{				
+												?>
+													<a title="ถูกใจสินค้า" id="Like<?=$TabPro['pro_id']?>" onclick="likes('<?php echo $product_id; ?>')"><i class=" ti-heart "></i><span>ถูกใจสินค้า</span></a>
+												<?php	
+													}			
+												?>
+											</div>
+											<div class="product-action-2">
+												<a title="Add to cart" id="addcart<?=$TabPro['pro_id']?>" onclick="addcart('<?php echo $product_id; ?>')">เพิ่มลงในตะกร้า</a>
 											</div>
 										</div>
-									<?php
-										}
-                                    }else{
-									?>
-                                        <div class="col-12 mt-5">
-											<center>
-                                                <div class="m-5">
-                                                    <h3>...ไม่พบรายการที่ค้นหา...</h3>
-                                                </div>
-                                            </center>
+									</div>
+									<div class="product-content">
+										<h3><a href="productdetails.php?pro_id=<?=$TabPro['pro_id']?>"><?=$TabPro['pro_name']?></a></h3>
+										<div class="product-price">
+											<span><?=$TabPro['pro_price']?> บาท</span>
 										</div>
-                                    <?php
-                                    }
-									?>
+									</div>
 								</div>
 							</div>
-						</div>
+						<?php
+							}
+						?>
 					</div>
-				</div><hr class="mt-5 mb-5">
-            </div>
+				</div>
+			</div>
+		</div>
+	</section>
 			
 	<!-- End Product Area -->
 	

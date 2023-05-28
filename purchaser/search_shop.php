@@ -252,133 +252,57 @@
         </header>
 		<!--/ End Header -->
 	
-			<?php
-				$searchshop = $sql->searchshop($_GET['search']);
-				$row=mysqli_fetch_row($searchshop);
-				if($row>0){
-			?>
-			<section class="shop-home-list section">
-				<div class="container">
-					<div class="row mt-5">
-						<div class="col-6">
-							<a style="font-size:20px;">ร้านค้าที่เกี่ยวข้องกับ "<?=$_GET['search']?>"</a>
-						</div>
-						<div class="col-6 text-right">
-							<a style="font-size:20px;" href="search_shop.php?keyword=<?=$_GET['search']?>">ดูร้านค้าอื่นๆ</a>
-						</div>
-					</div>
-					<div class="row">
-					<?php
-						$Searchshop = $sql->searchshop($_GET['search']);
-						while($searchshop=mysqli_fetch_array($Searchshop)){
-					?>
-						<div class="col-md-6 col-12">
-							<!-- Start Single List  -->
-							<div class="single-list">
-								<div class="row">
-									<div class="col-lg-5 col-md-6 col-12">
-										<div class="list-image overlay">
-											<img src="\roengrang\img/<?=$searchshop['shop_img']?>">
-										</div>
-									</div>
-									<div class="col-lg-6 col-md-6 col-12 no-padding">
-										<div class="row mt-1">
-											<h4 class="title">
-												<a >ร้านค้า</a>
-												<a href="shopdetails.php?shop_id=<?=$searchshop['shop_id']?>"><?=$searchshop['shop_name']?></a>
-											</h4>
-										</div>
-										<div class="row mt-2">
-												<a style="font-size:18px;">ร้านค้า</a>
-										</div>
-										<div class="row mt-4">
-											<a style="font-size:18px;">สินค้า : 2 | คะแนน : 2</a>
-										</div>
-										<div class="row mt-4">
-											<button class="btn"><a href="shopdetails.php?shop_id=<?=$searchshop['shop_id']?>" style="font-size:18px;">ดูร้านค้า</a></button>
-											
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- End Single List  -->
-						</div>
-					<?php
-						}
-					?>
-					</div>
-				</div>
-			</section>
-			<?php
-				}
-			?>
 	<!-- Start Product Area -->
             <div class="container">
-				<div class="row">
-					<div class="col-12">
-						<div class="product-info">
-							<div class="tab-single">
-								<div class="row">
-									<?php
-                                    if($_GET['search']==""){
-                                        if($_GET['cat']==0){
-                                            $pro = $sql->allproduct();
-                                        }else{
-                                            $pro = $sql->productcat($_GET['cat']);
-                                        }
-                                    }else{
-                                        if($_GET['cat']==0){
-                                            $pro = $sql->searchproduct($_GET['search']);
-                                        }else{
-                                            $pro = $sql->searchproductcat($_GET['cat'],$_GET['search']);
-                                        }
-                                    }
-                                    if($pro!=""){
-                                        while($Searchpro=mysqli_fetch_array($pro)){
-									?>
-										<div class="col-xl-3 col-lg-4 col-md-3">
-											<div class="single-product">
-												<div class="product-img">
-													<a href="product-details.php">
-														<img class="default-img" src="\roengrang\img/<?=$Searchpro['pro_img']?>"  width="auto" height="200px" >
-														<img class="hover-img" src="\roengrang\img/<?=$Searchpro['pro_img']?>" width="auto" height="200px" >
-													</a>
-													<div class="button-head">
-														<div class="product-action">
-															<a title="Wishlist" href="#"><i class=" ti-heart "></i><span>ถูกใจสินค้า</span></a>
-														</div>
-														<div class="product-action-2">
-															<a title="Add to cart" href="addcart.php?pro_id=<?=$Searchpro['pro_id']?>">เพิ่มลงในตะกร้า</a>
-														</div>
-													</div>
-												</div>
-												<div class="product-content">
-													<h3><a href="productdetails.php"><?=$Searchpro['pro_name']?></a></h3>
-													<div class="product-price">
-														<span><?=$Searchpro['pro_price']?> บาท</span>
-													</div>
-												</div>
-											</div>
-										</div>
-									<?php
-										}
-                                    }else{
-									?>
-                                        <div class="col-12 mt-5">
-											<center>
-                                                <div class="m-5">
-                                                    <h3>...ไม่พบรายการที่ค้นหา...</h3>
-                                                </div>
-                                            </center>
-										</div>
-                                    <?php
-                                    }
-									?>
-								</div>
+				<section class="shop-home-list section">
+					<div class="container">
+						<div class="row mt-5">
+							<div class="col-6">
+								<a style="font-size:20px;">ร้านค้าที่เกี่ยวข้องกับ "<?=$_GET['keyword']?>"</a>
 							</div>
 						</div>
+						<div class="row">
+						<?php
+							$Searchshop = $sql->searchshop($_GET['keyword']);
+							while($searchshop=mysqli_fetch_array($Searchshop)){
+						?>
+							<div class="col-md-6 col-12">
+								<!-- Start Single List  -->
+								<div class="single-list">
+									<div class="row">
+										<div class="col-lg-5 col-md-6 col-12">
+											<div class="list-image overlay">
+												<img src="\roengrang\img/<?=$searchshop['shop_img']?>">
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-12 no-padding">
+											<div class="row mt-1">
+												<h4 class="title">
+													<a >ร้านค้า</a>
+													<a href="shopdetails.php?shop_id=<?=$searchshop['shop_id']?>"><?=$searchshop['shop_name']?></a>
+												</h4>
+											</div>
+											<div class="row mt-2">
+													<a style="font-size:18px;">ร้านค้า</a>
+											</div>
+											<div class="row mt-4">
+												<a style="font-size:18px;">สินค้า : 2 | คะแนน : 2</a>
+											</div>
+											<div class="row mt-4">
+												<button class="btn"><a href="shopdetails.php?shop_id=<?=$searchshop['shop_id']?>" style="font-size:18px;">ดูร้านค้า</a></button>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- End Single List  -->
+							</div>
+						<?php
+							}
+						?>
+						</div>
 					</div>
-				</div><hr class="mt-5 mb-5">
+				</section>
             </div>
 			
 	<!-- End Product Area -->

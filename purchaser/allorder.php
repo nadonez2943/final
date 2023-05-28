@@ -283,6 +283,35 @@
 						</div>
 					</div>
 				</div>
+                <?php
+                    $numnew = $sql->countorder(0,$_SESSION['id']);
+                    $numnew=mysqli_fetch_array($numnew);
+
+                    $numdoing = $sql->countorder(1,$_SESSION['id']);
+                    $numdoing=mysqli_fetch_array($numdoing);
+
+                    $numprepare = $sql->countorder(2,$_SESSION['id']);
+                    $numprepare=mysqli_fetch_array($numprepare);
+
+                    $numship = $sql->countorder(3,$_SESSION['id']);
+                    $numship=mysqli_fetch_array($numship);
+
+                    $numshiped = $sql->countorder(4,$_SESSION['id']);
+                    $numshiped=mysqli_fetch_array($numshiped);
+
+                    $numsuccess = $sql->countorder(5,$_SESSION['id']);
+                    $numsuccess=mysqli_fetch_array($numsuccess);
+
+                    $numcancle = $sql->countorder(6,$_SESSION['id']);
+                    $numcancle=mysqli_fetch_array($numcancle);
+                ?>
+                <input hidden type="number" id="numnew" value="<?=$numnew['row_count']?>">
+                <input hidden type="number" id="numdoing" value="<?=$numdoing['row_count']?>">
+                <input hidden type="number" id="numprepare" value="<?=$numprepare['row_count']?>">
+                <input hidden type="number" id="numship" value="<?=$numship['row_count']?>">
+                <input hidden type="number" id="numshiped" value="<?=$numshiped['row_count']?>">
+                <input hidden type="number" id="numsuccess" value="<?=$numsuccess['row_count']?>">
+                <input hidden type="number" id="numcancle" value="<?=$numcancle['row_count']?>">
 				<div class="row">
 					<div class="col-12">
 						<div class="product-info">
@@ -290,9 +319,10 @@
 								<!-- Tab Nav -->
 								<ul class="nav nav-tabs" id="myTab" role="tablist">
 									<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#allorder" role="tab">คำสั่งซื้อทั้งหมด</a></li>
-									<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#prepar" role="tab">กำลังเตรียมจัดส่ง</a></li>
-									<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#shipping" role="tab">อยู่ระหว่างการขนส่ง</a></li>
-									<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#success" role="tab">จัดส่งสำเร็จ</a></li>
+									<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#prepare" role="tab">กำลังเตรียมจัดส่ง</a></li>
+									<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#ship" role="tab">อยู่ละหว่างขนส่ง</a></li>
+									<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#shiped" role="tab">คำสั่งซื้อที่ส่งแล้ว</a></li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#success" role="tab">คำสั่งซื้อที่สำเร็จ</a></li>
 									<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#cancel" role="tab">คำสั่งซื้อที่ยกเลิก</a></li>
 								</ul>
 								<!--/ End Tab Nav -->
@@ -864,22 +894,6 @@
 	<script src="js/easing.js"></script>
 	<!-- Active JS -->
 	<script src="js/active.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        function status(user_id,user_status) {
-            var user_id,user_status;
-            //console.log(user_id+" "+user_status);
-            $("#id_chk"+user_id).change();
-            $.ajax({
-                method: 'POST',
-                url: 'update_status.php',
-                data: {
-                    user_id: user_id
-                },
-            });
-        }
-
-    </script>
 </body>
 </html>
 
