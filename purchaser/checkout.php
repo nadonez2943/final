@@ -60,7 +60,22 @@
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/responsive.css">
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<style>
+		.header.shop .search-bar input {
+			display: inline-block;
+			float: left;
+			height: 48px;
+			background: transparent;
+			color: #666;
+			border-radius: 0;
+			border: none;
+			font-size: 14px;
+			font-weight: 400;
+			padding: 0 25px 0 20px ;
+			width: 328px;
+		}
+	</style>
 </head>
 <body class="js">
 	
@@ -68,7 +83,7 @@
 	<!-- End Preloader -->
 		
 		<!-- Header -->
-            <header class="header shop">
+        <header class="header shop">
             <!-- Topbar -->
             <div class="topbar">
                 <div class="container">
@@ -107,39 +122,25 @@
                                 <a href="index.php"><img src="images/Logo4.png" alt="logo" hieght=""></a>
                             </div>
                             <!--/ End Logo -->
-                            <!-- Search Form -->
-                            <div class="search-top">
-                                <div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
-                                <!-- Search Form -->
-                                <div class="search-top">
-                                    <form class="search-form">
-                                        <input type="text" placeholder="Search here..." name="search">
-                                        <button value="search" type="submit"><i class="ti-search"></i></button>
-                                    </form>
-                                </div>
-                                <!--/ End Search Form -->
-                            </div>
-                            <!--/ End Search Form -->
-                            <div class="mobile-nav"></div>
                         </div>
                         <div class="col-lg-8 col-md-7 col-12">
                             <div class="search-bar-top">
                                 <div class="search-bar">
-                                    <select>
-                                        <option selected="selected">หมวดหมู่ทั้งหมด</option>
+									
+                                    <select id="cat" name="cat">
+                                        <option selected="selected" value="0">หมวดหมู่ทั้งหมด</option>
 										<?php
 											$cat = $sql->catagory();
                                             while($Cat=mysqli_fetch_array($cat)){
                                         ?>
-                                        <option><?=$Cat['cat_name']?></option>
+                                        <option value="<?=$Cat['id']?>"><?=$Cat['cat_name']?></option>
 										<?php
 											}
 										?>
+										<option value="shop">ร้านค้า</option>
                                     </select>
-                                    <form>
-                                        <input name="search" placeholder="ค้นหาสินค้าที่นี่....." type="search">
-                                        <button class="btnn"><i class="ti-search"></i></button>
-                                    </form>
+									<input id="search" name="search" placeholder="ค้นหาที่นี่....." type="search">
+									<button id="searchbtn" class="btnn" ><i class="ti-search"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -150,59 +151,7 @@
                                     <a href="productlike.php"><i class="fa fa-heart" aria-hidden="true"></i> สินค้าที่ถูกใจ</a>
                                 </div>
                                 <div class="sinlge-bar shopping">
-									<?php 
-										if ($RS[0]>0){
-									?>
-									<a  class="single-icon"><i class="ti-shopping-cart-full"></i> <span class="total-count"><?=$row?></span></a>
-                                    <!-- Shopping Item -->
-                                    <div class="shopping-item">
-                                        <div class="dropdown-cart-header">
-                                            <span><?=$row?> รายการ</span>
-                                            <a href="cart.php">ดูตะกร้า</a>
-                                        </div>
-                                        <ul class="shopping-list">
-											<?php
-												while($Cart=mysqli_fetch_array($cart)){
-											?>
-                                            <li>
-                                                <a href="deletecart.php?cart_id=<?=$Cart['id']?>" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                <a class="cart-img" href="product.php?pro_id=<?=$Cart['pro_id']?>"><img src="\roengrang\img/<?=$Cart['pro_img']?>" alt="#"></a>
-                                                <h4><a href="product.php?pro_id=<?=$Cart['pro_id']?>"><?=$Cart['pro_name']?></a></h4>
-                                                <p class="quantity"><?=$Cart['amount']?> - <span class="amount"><?=$Cart['price']?> บาท</span></p>
-                                            </li>
-											<?php
-												}
-											?>
-                                        </ul>
-                                        <div class="bottom">
-                                            <div class="total">
-                                                <span>รวม</span>
-                                                <span class="total-amount"><?=$RS['total']?> บาท</span>
-                                            </div>
-                                            <a href="checkout.php" class="btn animate">ชำระเงิน</a>
-                                        </div>
-                                    </div>
-									<?php 
-										}else{
-									?>
-									<a class="single-icon"><i class="ti-shopping-cart-full"></i> <span class="total-count"><?=$row?></span></a>
-                                    <!-- Shopping Item -->
-                                    <div class="shopping-item">
-                                        <div class="dropdown-cart-header">
-                                            <span>0 รายการ</span>
-                                            <a href="cart.php">ดูตะกร้า</a>
-                                        </div>
-                                        <ul class="shopping-list text-center">
-                                            <li>
-                                                <a>ไม่มีรายการ</a> 
-                                            </li>
-                                        </ul>
-                                    </div>
-									<?php
-										}
-									?>
-                                    <!--/ End Shopping Item -->
-
+									<a  class="single-icon" href="cart.php"><i class="ti-shopping-cart-full"></i> <span class="total-count" id="cartcount"><?=$RS['count']?></span></a>
                                 </div>
                             </div>
                         </div>
@@ -221,7 +170,7 @@
                                         <div class="navbar-collapse">	
                                             <div class="nav-inner">	
                                                 <ul class="nav main-menu menu navbar-nav">
-                                                        <li><a href="index.php">หน้าหลัก</a></li>
+                                                        <li class="active"><a>หน้าหลัก</a></li>
                                                         <li><a href="allproduct.php">สินค้า</a></li>	
                                                         <!-- <li><a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
                                                             <ul class="dropdown">
@@ -234,9 +183,8 @@
                                                                 <li><a href="blog-single-sidebar.php">Blog Single Sidebar</a></li>
                                                             </ul>
                                                         </li> -->
-                                                        <li class="active"><a>ตะกร้าสินค้า</a></li>
+                                                        <li><a href="cart.php">ตะกร้าสินค้า</a></li>
                                                         <li><a href="allorder.php">รายการสั่งซื้อ</a></li>
-                                                        <li><a href="contact.php">เกี่ยวกับเรา</a></li>
                                                     </ul>
                                             </div>
                                         </div>
@@ -273,7 +221,14 @@
 		<!-- Start Checkout -->
 		<section class="shop checkout section">
 			<div class="container">
-				
+                <?php  if (!empty($_SESSION['statusMsg'])) { ?>
+                    <div class="alert alert-success text-center" role="alert">
+                        <?php 
+                            echo $_SESSION['statusMsg']; 
+                            unset($_SESSION['statusMsg']);
+                        ?>
+                    </div>
+                <?php } ?>
 				<form action="addorders.php" name="checkout" method="POST" enctype="multipart/form-data">
 					<div class="row"> 
 						<div class="col-lg-8 col-12">
@@ -329,41 +284,41 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="row">
-                                                <div class="col-4"><?=$address['name']?></div>
-                                                <input hidden name="name" id="name" value="<?=$address['name']?>">
-                                                <div class="col-2"><?=$address['tel']?></div>
-                                                <input hidden name="tel" id="tel" value="<?=$address['tel']?>">
+                                                <div class="col-4"><?=$address['user_fullname']?></div>
+                                                <input hidden name="name" id="name" value="<?=$address['user_fullname']?>">
+                                                <div class="col-2"><?=$address['user_tel']?></div>
+                                                <input hidden name="tel" id="tel" value="<?=$address['user_tel']?>">
                                             </div>
                                             <div class="row mt-2">
                                                 <div class="col-4"> 
-                                                    ที่อยู่<a class="ml-1"><?=$address['address']?></a>
-                                                    <input hidden name="address" id="address" value="<?=$address['address']?>">
+                                                    ที่อยู่<a class="ml-1"><?=$address['user_address']?></a>
+                                                    <input hidden name="address" id="address" value="<?=$address['user_address']?>">
                                                 </div>
                                                 <div class="col-3">
-                                                    ถนน<a class="ml-1" id="road" value="<?=$address['road']?>"><?=$address['road']?></a>
-                                                    <input hidden name="road" id="road" value="<?=$address['road']?>">
+                                                    ถนน<a class="ml-1"><?=$address['user_road']?></a>
+                                                    <input hidden name="road" id="road" value="<?=$address['user_road']?>">
                                                 </div>
                                                 <div class="col-3">
-                                                    ซอย<a class="ml-1"><?=$address['soi']?></a>
-                                                    <input hidden name="soi" id="soi" value="<?=$address['soi']?>">
+                                                    ซอย<a class="ml-1"><?=$address['user_soi']?></a>
+                                                    <input hidden name="soi" id="soi" value="<?=$address['user_soi']?>">
                                                 </div>
                                             </div>
                                             <div class="row mt-2">
                                                 <div class="col-3">
-                                                    ตำบล/แขวง<a class="ml-1"> <?=$address['subdistrict']?></a>
-                                                    <input hidden name="subdistrict" id="subdistrict" value="<?=$address['subdistrict']?>">
+                                                    ตำบล/แขวง<a class="ml-1"> <?=$address['user_subdistrict']?></a>
+                                                    <input hidden name="subdistrict" id="subdistrict" value="<?=$address['user_subdistrict']?>">
                                                 </div>
                                                 <div class="col-3">
-                                                    อำเภอ/เขต<a class="ml-1"> <?=$address['district']?></a>
-                                                    <input hidden name="district" id="district" value="<?=$address['district']?>">
+                                                    อำเภอ/เขต<a class="ml-1"> <?=$address['user_district']?></a>
+                                                    <input hidden name="district" id="district" value="<?=$address['user_district']?>">
                                                 </div>
                                                 <div class="col-3">
-                                                    จังหวัด<a class="ml-1"> <?=$address['province']?></a>
-                                                    <input hidden name="province" id="province" value="<?=$address['province']?>">
+                                                    จังหวัด<a class="ml-1"> <?=$address['user_province']?></a>
+                                                    <input hidden name="province" id="province" value="<?=$address['user_province']?>">
                                                 </div>
                                                 <div class="col-3">
-                                                    รหัสไปรษณีย์<a class="ml-1"><?=$address['zipcode']?></a>
-                                                    <input hidden name="zipcode" id="zipcode" value="<?=$address['zipcode']?>">
+                                                    รหัสไปรษณีย์<a class="ml-1"><?=$address['user_zipcode']?></a>
+                                                    <input hidden name="zipcode" id="zipcode" value="<?=$address['user_zipcode']?>">
                                                 </div>
                                             </div>
                                             <div class="row mt-2">
@@ -402,7 +357,7 @@
 								</div>
 								<!--/ End Order Widget -->
 								<!-- Order Widget -->
-								<div class="single-widget">
+								<!-- <div class="single-widget">
 									<h2>การชำระเงิน</h2>
 									<div class="content">
 										<div class="checkbox">
@@ -410,7 +365,7 @@
 											<label class="checkbox-inline" for="promptpay"><input name="payment" id="promptpay" type="checkbox" value="ชำระเงินผ่านแอปธนาคาร(พร้อมเพย์)">ชำระเงินผ่านแอปธนาคาร(พร้อมเพย์)</label>
 										</div>
 									</div>
-								</div>
+								</div> -->
 								<!--/ End Order Widget -->
 								<!-- Button Widget -->
 								<div class="single-widget get-button">
@@ -509,7 +464,7 @@
 	<script src="js/easing.js"></script>
 	<!-- Active JS -->
 	<script src="js/active.js"></script>
-    
+    <?php include('scriptsearch.php');?>
 	<script>
 		$(document).ready(function() {
             var quant= $('#quant').val();

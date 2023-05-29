@@ -26,7 +26,7 @@
         }
 
         public function usershop($user_id) {
-            $usershop = mysqli_query($this->dbcon, "SELECT shop_id FROM shop WHERE user_id = '$user_id'");
+            $usershop = mysqli_query($this->dbcon, "SELECT shop_id,shop_name FROM shop WHERE user_id = '$user_id'");
             return $usershop;
         }
 
@@ -173,9 +173,21 @@
             $order = mysqli_query($this->dbcon, "SELECT * FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.id = '$ord_id'");
             return $order;
         }
+        public function countallorder($user_id) {
+            $countallorder = mysqli_query($this->dbcon, "SELECT COUNT(id) AS row_count FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.user_id = '$user_id'");
+            return $countallorder;
+        }
         public function countorder($order_status,$user_id) {
             $countorder = mysqli_query($this->dbcon, "SELECT COUNT(id) AS row_count FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.order_status = '$order_status' AND orders.user_id = '$user_id'");
             return $countorder;
+        }
+        public function orders($order_status,$user_id) {
+            $ord = mysqli_query($this->dbcon, "SELECT * FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.order_status = '$order_status' AND orders.user_id = '$user_id'");
+            return $ord;
+        }
+        public function ordersprepare($order_status1,$order_status2,$user_id) {
+            $ord = mysqli_query($this->dbcon, "SELECT * FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.order_status = '$order_status1' OR orders.order_status = '$order_status2' AND orders.user_id = '$user_id'");
+            return $ord;
         }
         
 

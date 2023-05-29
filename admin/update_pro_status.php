@@ -8,10 +8,10 @@
     $row = $sql->products($_POST['pro_id']);
     $st=mysqli_fetch_array($row);
 
-    if ($st['pro_status'] == 1) {
+    if ($st['pro_ban'] == 1) {
         $st_full = '0';
 
-    }else if ($st['pro_status'] == 0){
+    }else if ($st['pro_ban'] == 0){
         $st_full = '1';
     }
 

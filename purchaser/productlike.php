@@ -60,8 +60,22 @@
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/responsive.css">
-
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<style>
+		.header.shop .search-bar input {
+			display: inline-block;
+			float: left;
+			height: 48px;
+			background: transparent;
+			color: #666;
+			border-radius: 0;
+			border: none;
+			font-size: 14px;
+			font-weight: 400;
+			padding: 0 25px 0 20px ;
+			width: 328px;
+		}
+	</style>
 </head>
 <body class="js">
 	
@@ -69,7 +83,7 @@
 	<!-- End Preloader -->
 		
 		<!-- Header -->
-            <header class="header shop">
+        <header class="header shop">
             <!-- Topbar -->
             <div class="topbar">
                 <div class="container">
@@ -102,7 +116,7 @@
 			<div class="middle-inner">
                 <div class="container">
                     <div class="row">
-                    <div class="col-lg-2 col-md-2 col-12">
+                        <div class="col-lg-2 col-md-2 col-12">
                             <!-- Logo -->
                             <div class="logo">
                                 <a href="index.php"><img src="images/Logo4.png" alt="logo" hieght=""></a>
@@ -137,59 +151,7 @@
                                     <a href="productlike.php"><i class="fa fa-heart" aria-hidden="true"></i> สินค้าที่ถูกใจ</a>
                                 </div>
                                 <div class="sinlge-bar shopping">
-                                <?php 
-										if ($RS[0]>0){
-									?>
-									<a  class="single-icon"><i class="ti-shopping-cart-full"></i> <span class="total-count"><?=$row?></span></a>
-                                    <!-- Shopping Item -->
-                                    <div class="shopping-item">
-                                        <div class="dropdown-cart-header">
-                                            <span><?=$row?> รายการ</span>
-                                            <a href="cart.php">ดูตะกร้า</a>
-                                        </div>
-                                        <ul class="shopping-list">
-											<?php
-												while($Cart=mysqli_fetch_array($cart)){
-											?>
-                                            <li>
-                                                <a href="deletecart.php?cart_id=<?=$Cart['amount']?>" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                <a class="cart-img" href="product.php?pro_id=<?=$Cart['pro_id']?>"><img src="\roengrang\img/<?=$Cart['pro_img']?>" alt="#"></a>
-                                                <h4><a href="product.php?pro_id=<?=$Cart['pro_id']?>"><?=$Cart['pro_name']?></a></h4>
-                                                <p class="quantity"><?=$Cart['amount']?> - <span class="amount"><?=$Cart['price']?> บาท</span></p>
-                                            </li>
-											<?php
-												}
-											?>
-                                        </ul>
-                                        <div class="bottom">
-                                            <div class="total">
-                                                <span>รวม</span>
-                                                <span class="total-amount"><?=$RS['total']?> บาท</span>
-                                            </div>
-                                            <a href="checkout.php" class="btn animate">ชำระเงิน</a>
-                                        </div>
-                                    </div>
-									<?php 
-										}else{
-									?>
-									<a class="single-icon"><i class="ti-shopping-cart-full"></i> <span class="total-count"><?=$row?></span></a>
-                                    <!-- Shopping Item -->
-                                    <div class="shopping-item">
-                                        <div class="dropdown-cart-header">
-                                            <span>0 รายการ</span>
-                                            <a href="cart.php">ดูตะกร้า</a>
-                                        </div>
-                                        <ul class="shopping-list text-center">
-                                            <li>
-                                                <a>ไม่มีรายการ</a> 
-                                            </li>
-                                        </ul>
-                                    </div>
-									<?php
-										}
-									?>
-                                    <!--/ End Shopping Item -->
-
+									<a  class="single-icon" href="cart.php"><i class="ti-shopping-cart-full"></i> <span class="total-count" id="cartcount"><?=$RS['count']?></span></a>
                                 </div>
                             </div>
                         </div>
@@ -208,8 +170,8 @@
                                         <div class="navbar-collapse">	
                                             <div class="nav-inner">	
                                                 <ul class="nav main-menu menu navbar-nav">
-                                                        <li><a href="index.php">หน้าหลัก</a></li>
-                                                        <li class="active"><a>สินค้า</a></li>	
+                                                        <li class="active"><a>หน้าหลัก</a></li>
+                                                        <li><a href="allproduct.php">สินค้า</a></li>	
                                                         <!-- <li><a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
                                                             <ul class="dropdown">
                                                                 <li><a href="shop-grid.php">Shop Grid</a></li>
@@ -223,7 +185,6 @@
                                                         </li> -->
                                                         <li><a href="cart.php">ตะกร้าสินค้า</a></li>
                                                         <li><a href="allorder.php">รายการสั่งซื้อ</a></li>
-                                                        <li><a href="contact.php">เกี่ยวกับเรา</a></li>
                                                     </ul>
                                             </div>
                                         </div>
@@ -388,6 +349,7 @@
 	<script src="js/easing.js"></script>
 	<!-- Active JS -->
 	<script src="js/active.js"></script>
+    <?php include('scriptsearch.php');?>
     <script>
         function likes(productId) {
 			var button = document.getElementById('Like' + productId);

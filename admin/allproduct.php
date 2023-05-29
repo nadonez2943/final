@@ -187,7 +187,7 @@
                                             </td>
                                             <td>
                                                 <label class="switch">
-                                                    <input type="checkbox" class="chk" id="id_chk<?=$Allpro['pro_id']?>" onclick="status(<?=$Allpro['pro_id']?>,<?=$Allpro['pro_status']?>)" <?php echo($Allpro['pro_status'] != 0)?'checked':''; ?>>
+                                                    <input type="checkbox" class="chk" id="id_chk<?=$Allpro['pro_id']?>" onclick="status(<?=$Allpro['pro_id']?>,<?=$Allpro['pro_ban']?>)" <?php echo($Allpro['pro_ban'] != 0)?'checked':''; ?>>
                                                     <span class="slider"></span>
                                                 </label>
                                             </td>

@@ -108,6 +108,20 @@
             return $countallorder;
         }
 
+
+        #การนับ
+        public function countban($shop_id) {
+            $countban = mysqli_query($this->dbcon, "SELECT COUNT(pro_id) AS row_count FROM products WHERE products.pro_ban=0 AND products.shop_id = '$shop_id'");
+            return $countban;
+        }
+        public function countclose($shop_id) {
+            $countclose = mysqli_query($this->dbcon, "SELECT COUNT(pro_id) AS row_count FROM products WHERE products.pro_amount<=5 AND products.shop_id = '$shop_id'");
+            return $countclose;
+        }
+        public function countproducts($shop_id) {
+            $countproducts = mysqli_query($this->dbcon, "SELECT COUNT(pro_id) AS row_count FROM products WHERE products.shop_id = '$shop_id'");
+            return $countproducts;
+        }
         #อัปเดต      
         public function update_order_status($id,$order_status) {
             $update_order_status = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' WHERE orders.id='$id'");

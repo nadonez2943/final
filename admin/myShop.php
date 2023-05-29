@@ -5,7 +5,7 @@
     $sql = new DB_con();
 
     $allmem = $sql->allmember();
-    $Allmem=mysqli_fetch_array($allmem)  
+    $Allmem=mysqli_fetch_array($allmem) ; 
 
     if ($_SESSION['user_role'] != "1") {
         header("location: 401.php");

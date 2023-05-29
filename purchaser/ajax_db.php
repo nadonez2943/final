@@ -33,23 +33,35 @@
   if (isset($_POST['function']) && $_POST['function'] == 'addcart') {
     $product_id = $_POST['product_id'];
     $product_amount = intval($_POST['product_amount']);
-    $wherecart = $sql->wherecart($product_id, $_SESSION['id']);
-    $wherecart = mysqli_fetch_array($wherecart);
-    if ($wherecart == null) {
-        $addcart = $sql->addcart($product_id, $_SESSION['id'], $product_amount);
-        $rs = $sql->rowsum($_SESSION['id']);
-	      $RS=mysqli_fetch_array($rs);
-        if ($addcart) {
-          echo $RS['count'];
-        }
-    } else {
-        $product_amount += $wherecart['amount'];
-        $updatecart = $sql->updatecart($product_id, $_SESSION['id'], $product_amount);
-        $rs = $sql->rowsum($_SESSION['id']);
-	      $RS=mysqli_fetch_array($rs);
-        if ($updatecart) {
-          echo $RS['count'];
-        }
+
+    $users = $sql->usershop($_SESSION['id']);
+    $users=mysqli_fetch_array($users);
+
+    $Pro = $sql->product($product_id);
+    $pro=mysqli_fetch_array($Pro);
+
+    if ($users['shop_id'] != $pro['shop_id']){
+      //echo '<script>alert("คุณไม่สามารถซื้อสินค้าภายในร้านของคุณได้");</script>';
+      echo "shop";
+    }else{
+      $wherecart = $sql->wherecart($product_id, $_SESSION['id']);
+      $wherecart = mysqli_fetch_array($wherecart);
+      if ($wherecart == null) {
+          $addcart = $sql->addcart($product_id, $_SESSION['id'], $product_amount);
+          $rs = $sql->rowsum($_SESSION['id']);
+          $RS=mysqli_fetch_array($rs);
+          if ($addcart) {
+            echo $RS['count'];
+          }
+      } else {
+          $product_amount += $wherecart['amount'];
+          $updatecart = $sql->updatecart($product_id, $_SESSION['id'], $product_amount);
+          $rs = $sql->rowsum($_SESSION['id']);
+          $RS=mysqli_fetch_array($rs);
+          if ($updatecart) {
+            echo $RS['count'];
+          }
+      }
     }
 }
 

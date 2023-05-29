@@ -67,12 +67,12 @@
         </style>
     </head>
     <body class="sb-nav-fixed">
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-light">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-light">
             <!-- Sidebar Toggle-->
             <button class="btn btn-link order-1 order-lg-0 me-4 me-lg-0" style="color:black;" id="sidebarToggle"><i class="fas fa-bars"></i></button>
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-1" style="color:black;" href="index.php">
-                ร้านค้าชุมชนเริงราง
+                <img src="\roengrang\img/logo1.png" alt="logo" height="36"> ร้านค้าชุมชนเริงราง
             </a>
             
             <!-- Navbar Message-->
@@ -113,10 +113,6 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
                                 รีวิวคำสั่งซื้อ และร้านค้า
                             </a>
-                            <a class="nav-link" href="myShop.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
-                                ร้านค้าของฉัน
-                            </a>
                             <a class="nav-link" href="report.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-coins"></i></div>
                                 การเงิน
@@ -134,8 +130,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        ร้าน...
+                    <div class="sb-sidenav-footer text-center">
+                        ร้าน <?=$_SESSION['shop_name']?>
                     </div>
                 </nav>
             </div>
@@ -236,19 +232,19 @@
                                                 <?php
                                                 switch ($Allord['order_status']) {
                                                     case 0:
-                                                        echo "รอการตอบรับ";
+                                                        echo "คำสั่งซื้อใหม่ กรุณาตอบรับคำสั่งซื้อ";
                                                         break;
                                                     case 1:
-                                                        echo "รอลูกค้าชำระเงิน และยืนยันคำสั่งซื้อ";
+                                                        echo "ตอบรับคำสั่งซื้อแล้ว<br>กรุณาจัดเตรียมสินค้าเพื่อจัดส่ง";
                                                         break;
                                                     case 2:
-                                                        echo "เตรียมสินค้า";
+                                                        echo "อยู่ระหว่างเตรียมสินค้า<br>กรุณาจัดส่งสินค้าเมื่อเสร็จสิ้น";
                                                         break;
                                                     case 3:
-                                                        echo "ขนส่งสินค้า";
+                                                        echo "อยู่ระหว่างขนส่งสินค้า";
                                                         break;
                                                     case 4:
-                                                        echo "ส่งสินค้าแล้ว";
+                                                        echo "จัดส่งสินค้าสำเร็จแล้ว";
                                                         break;
                                                     case 5:
                                                         echo "คำสั่งซื้อเสร็จสิ้น";

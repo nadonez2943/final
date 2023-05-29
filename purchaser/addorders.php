@@ -25,17 +25,31 @@ if (isset($_POST['checkout'])) {
     $ord_subdistrict = $_POST['subdistrict'];
     $ord_postID = $_POST['zipcode'];
     $ord_note = $_POST['note'];
-    $payment = $_POST['payment'];
 
-    $insert = $sql->addorders($pro_id,$user_id,$ord_name,$ord_amount,$sumprice,$sentprice,$totalprice,$ord_tel,$ord_address,$ord_road,$ord_soi,$ord_province,$ord_district,$ord_subdistrict,$ord_postID,$ord_note,$payment);
-    if ($insert) {
-        $_SESSION['statusOrders'] = "ส่งคำสั่งซื้อแล้ว กรุณารอร้านค้าตอบรับออร์เดอร์";
-        header("location: allorder.php"); 
-    } else {
-        $_SESSION['statusOrders'] = "ส่งคำสั่งซื้อผิดพลาด กรุณาลองใหม่อีกครั้ง";
-        header("location: window.history.back()");
+    $users = $sql->usershop($_SESSION['id']);
+    $users=mysqli_fetch_array($users);
+
+    $Pro = $sql->product($pro_id);
+    $pro=mysqli_fetch_array($Pro);
+    if ($users['shop_id'] == $pro['shop_id']){
+        $_SESSION['statusMsg'] = "คุณไม่สามารถซื้อสินค้าภายในร้านของคุณได้";
+        header("Location: checkout.php?pro_id=" . $pro_id);
+    }else{
+        if ($ord_amount > $pro['pro_amount']){
+            $_SESSION['statusMsg'] = "จำนวนสินค้าในคลังคงเหลือ ".$pro['pro_amount']." ไม่เพียงพอต่อความต้องการของคุณ";
+            header("Location: checkout.php?pro_id=" . $pro_id);
+        }else {
+            $insert = $sql->addorders($pro_id,$user_id,$ord_name,$ord_amount,$sumprice,$sentprice,$totalprice,$ord_tel,$ord_address,$ord_road,$ord_soi,$ord_province,$ord_district,$ord_subdistrict,$ord_postID,$ord_note,$payment);
+        if ($insert) {
+            $_SESSION['statusOrders'] = "ส่งคำสั่งซื้อแล้ว กรุณารอร้านค้าตอบรับออร์เดอร์";
+                header("location: allorder.php"); 
+            } else {
+                $_SESSION['statusMsg'] = "ส่งคำสั่งซื้อผิดพลาด กรุณาลองใหม่อีกครั้ง";
+                header("Location: checkout.php?pro_id=" . $pro_id);
+            }
+        }
     }
-            
+         
 }
 
 ?>

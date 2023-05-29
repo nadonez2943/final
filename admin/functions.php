@@ -126,7 +126,7 @@
             return $update_user_status;
         }
         public function update_pro_status($st_full,$pro_id) {
-            $update_pro_status = mysqli_query($this->dbcon, "UPDATE products SET pro_status = '$st_full' WHERE products.pro_id='$pro_id'");
+            $update_pro_status = mysqli_query($this->dbcon, "UPDATE products SET pro_ban = '$st_full' WHERE products.pro_id='$pro_id'");
             return $update_pro_status;
         }
         public function update_shop_status($st_full,$shop_id) {

@@ -14,12 +14,12 @@
                     if (data != st) {
                         switch (parseInt(data)) {
                             case 0:
-                                $('#status').text("รอร้านค้าตอบรับคำสั่งซื้อ");
+                                $('#status').text("สั่งซื้อสินค้าแล้ว");
                                 $('#oparetion').html('<div><button type="button" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div>');
                                 break;
                             case 1:
-                                $('#status').text("กรุณาชำระเงิน และยืนยันคำสั่งซื้อชำระเงิน");
-                                $('#oparetion').html('<div class="row mb-1"><div><button id="st1" type="button" class="btn btn-primary">ชำระเงิน และยืนยันคำสั่งซื้อ</button></div></div><div class="row mb-1"><div><button type="button" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div></div>');
+                                $('#status').text("ร้านค้าตอบรับคำสั่งซื้อแล้ว");
+                                $('#oparetion').html('<div class="row mb-1"><div><button type="button" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div></div>');
                                 break;
                             case 2:
                                 $('#status').text("ร้านค้ากำลังจัดเตรียมสินค้า");
@@ -30,12 +30,12 @@
                                 $('#oparetion').html('');
                                 break;
                             case 4:
-                                $('#status').text("สินค้าถูกจัดส่งแล้ว กรุณาตรวจรับสินค้า");
+                                $('#status').html("สินค้าถูกจัดส่งแล้ว<br>กรุณารับสินค้า");
                                 $('#oparetion').html('<div class="row mb-1"><div><button id="st4" type="button" class="btn btn-primary">ได้รับสิ้นค้าแล้ว</button></div></div>');
                                 break;
                             case 5:
                                 $('#status').text("คำสั่งซื้อสำเร็จแล้ว");
-                                $('#oparetion').html('');
+                                $('#oparetion').html('<div class="row mb-1"><div><button type="button" class="btn btn-primary">ให้คะแนน และรีวิวสินค้า</button></div></div>');
                                 break;
                             case 6:
                                 $('#status').text("คำสั่งซื้อถูกยกเลิก");
@@ -46,12 +46,12 @@
                     }else{
                         switch (parseInt(data)) {
                             case 0:
-                                $('#status').text("รอร้านค้าตอบรับคำสั่งซื้อ");
+                                $('#status').text("สั่งซื้อสินค้าแล้ว");
                                 $('#oparetion').html('<div><button type="button" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div>');
                                 break;
                             case 1:
-                                $('#status').text("กรุณาชำระเงิน และยืนยันคำสั่งซื้อชำระเงิน");
-                                $('#oparetion').html('<div class="row mb-1"><div><button id="st1" type="button" class="btn btn-primary">ชำระเงิน และยืนยันคำสั่งซื้อ</button></div></div><div class="row mb-1"><div><button type="button" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div></div>');
+                                $('#status').text("ร้านค้าตอบรับคำสั่งซื้อแล้ว");
+                                $('#oparetion').html('<div class="row mb-1"><div><button type="button" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div></div>');
                                 break;
                             case 2:
                                 $('#status').text("ร้านค้ากำลังจัดเตรียมสินค้า");
@@ -62,12 +62,12 @@
                                 $('#oparetion').html('');
                                 break;
                             case 4:
-                                $('#status').text("สินค้าถูกจัดส่งแล้ว กรุณาตรวจรับสินค้า");
+                                $('#status').html("สินค้าถูกจัดส่งแล้ว<br>กรุณารับสินค้า");
                                 $('#oparetion').html('<div class="row mb-1"><div><button id="st4" type="button" class="btn btn-primary">ได้รับสิ้นค้าแล้ว</button></div></div>');
                                 break;
                             case 5:
                                 $('#status').text("คำสั่งซื้อสำเร็จแล้ว");
-                                $('#oparetion').html('');
+                                $('#oparetion').html('<div class="row mb-1"><div><button type="button" class="btn btn-primary">ให้คะแนน และรีวิวสินค้า</button></div></div>');
                                 break;
                             case 6:
                                 $('#status').text("คำสั่งซื้อถูกยกเลิก");
@@ -84,26 +84,6 @@
             });
         }
     });
-
-    $(document).on('click', '#st1', function() {
-        $.ajax({
-            type: 'POST',
-            url: 'update.php',
-            data: { id: $('#id').val(), order_status: 2, function: 'update_order_status' },
-            success: function(response) {
-                if (response == "2") {
-                    $('#st').val(response);
-                    $('#status').text("ร้านค้ากำลังจัดเตรียมสินค้า");
-                    $('#oparetion').html('');
-                } else {
-                    console.log("Failed to fetch the updated order status.");
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    });
     
     $(document).on('click', '#st4', function() {
         $.ajax({
@@ -115,7 +95,7 @@
                 if (response == "5") {
                     $('#st').val(response);
                     $('#status').text("คำสั่งซื้อสำเร็จแล้ว");
-                    $('#oparetion').html('');
+                    $('#oparetion').html('<div class="row mb-1"><div><button type="button" class="btn btn-primary">ให้คะแนน และรีวิวสินค้า</button></div></div>');
                 } else {
                     console.log("Failed to fetch the updated order status.");
                 }

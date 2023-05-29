@@ -180,7 +180,6 @@
                                                         </li> -->
                                                         <li><a href="cart.php">ตะกร้าสินค้า</a></li>
                                                         <li><a href="allorder.php">รายการสั่งซื้อ</a></li>
-                                                        <li><a href="contact.php">เกี่ยวกับเรา</a></li>
                                                     </ul>
                                             </div>
                                         </div>
@@ -243,6 +242,14 @@
 	<!-- Start Product Area -->
     <div class="product-area section">
             <div class="container">
+				<?php  if (!empty($_SESSION['statusMsg'])) { ?>
+                    <div class="alert alert-success text-center" role="alert">
+                        <?php 
+                            echo $_SESSION['statusMsg']; 
+                            unset($_SESSION['statusMsg']);
+                        ?>
+                    </div>
+                <?php } ?>
 				<div class="row">
 					<div class="col-12">
 						<div class="section-title">
@@ -628,71 +635,7 @@
 	<script src="js/easing.js"></script>
 	<!-- Active JS -->
 	<script src="js/active.js"></script>
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-	<script>
-		$('#searchbtn').click(function() {
-			// Get the values of cat and search
-			var cat = $('#cat').val();
-			var search = $('#search').val();
-			if(cat=='shop'){
-				var url = 'shop.php?search=' + search;
-			}else{
-				var url = 'search.php?cat=' + cat + '&search=' + search;
-			}
-			
-			window.location.href = url;
-		});
-	</script>
-	<script>
-        function likes(productId) {
-			var button = document.getElementById('Like' + productId);
-            $.ajax({
-                url: "ajax_db.php",
-                type: "POST",
-                data: { product_id: productId,function:'addlike' },
-                success: function(response) {
-					if(response==productId){
-					button.innerHTML = '<i class="fa fa-heart"></i><span>ยกเลิกถูกใจสินค้า</span>';
-					button.setAttribute('title', 'ยกเลิกกดถูกใจ');
-					button.setAttribute('onclick', "unlikes('" + productId + "')");
-					}
-                }
-            });
-        }
-		function unlikes(productId) {
-			var button = document.getElementById('Like' + productId);
-            $.ajax({
-                url: "ajax_db.php",
-                type: "POST",
-                data: { product_id: productId,function:'unlike'},
-                success: function(response) {
-					if(response==productId){
-						button.innerHTML = '<i class="ti-heart"></i><span>ถูกใจสินค้า</span>';
-						button.setAttribute('title', 'กดถูกใจ');
-						button.setAttribute('onclick', "likes('" + productId + "')");
-					}
-                }
-            });
-        }
-		function addcart(productId) {
-			var button = document.getElementById('cart' + productId);
-            $.ajax({
-                url: "ajax_db.php",
-                type: "POST",
-                data: { product_id: productId,product_amount: 1,function:'addcart' },
-                success: function(response) {
-					$('#cartcount').text(response); 
-                }
-            });
-        }
-    </script>
-	<script>
-var parsedArray = <?php echo $jsonArray; ?>;
-for (var i = 0; i < parsedArray.length; i++) {
-  console.log(parsedArray[i]);
-}
-</script>
+	<?php include('scriptsearch.php');?>
 </body>
 </html>
 

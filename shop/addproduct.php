@@ -24,12 +24,12 @@
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-light">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-light">
             <!-- Sidebar Toggle-->
             <button class="btn btn-link order-1 order-lg-0 me-4 me-lg-0" style="color:black;" id="sidebarToggle"><i class="fas fa-bars"></i></button>
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-1" style="color:black;" href="index.php">
-                ร้านค้าชุมชนเริงราง
+                <img src="\roengrang\img/logo1.png" alt="logo" height="36"> ร้านค้าชุมชนเริงราง
             </a>
             
             <!-- Navbar Message-->
@@ -70,10 +70,6 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
                                 รีวิวคำสั่งซื้อ และร้านค้า
                             </a>
-                            <a class="nav-link" href="myShop.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
-                                ร้านค้าของฉัน
-                            </a>
                             <a class="nav-link" href="report.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-coins"></i></div>
                                 การเงิน
@@ -91,14 +87,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        ร้าน...
+                    <div class="sb-sidenav-footer text-center">
+                        ร้าน <?=$_SESSION['shop_name']?>
                     </div>
                 </nav>
             </div>
 
             <div id="layoutSidenav_content">
-
 
                 <main>
                     <div class="container px-4 px-lg-5 my-4">

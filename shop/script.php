@@ -15,24 +15,24 @@
                     if (data != st) {
                         switch (parseInt(data)) {
                             case 0:
-                                $('#status').text("กรุณาตอบรับคำสั่งซื้อ");
-                                $('#oparetion').html('<div class="row mb-1"><div><button id="st0" type="button" class="btn btn-outline-primary">ดูรายละเอียด</button></div></div><div class="row mb-1"><div><button id="st0" type="button" class="btn btn-primary">ตอบรับคำสั่งซื้อ</button></div></div><div class="row mb-1"><div><button type="button" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div></div>');
+                                $('#status').text("คำสั่งซื้อใหม่ กรุณาตอบรับคำสั่งซื้อ");
+                                $('#oparetion').html('<div class="row mb-1"><div><button type="button" class="btn btn-outline-primary">ดูรายละเอียด</button></div></div><div class="row mb-1"><div><button id="st0" type="button" class="btn btn-primary">ตอบรับคำสั่งซื้อ</button></div></div><div class="row mb-1"><div><button type="button" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div></div>');
                                 break;
                             case 1:
-                                $('#status').text("รอลูกค้าชำระเงิน และยืนยันคำสั่งซื้อ");
-                                $('#oparetion').html('');
+                                $('#status').html("ตอบรับคำสั่งซื้อแล้ว<br>กรุณาจัดเตรียมสินค้าเพื่อจัดส่ง");
+                                $('#oparetion').html('<div class="row mb-1"><div><button id="st1" type="button" class="btn btn-primary">เริ่มเตรียมสินค้า</button></div></div>');
                                 break;
                             case 2:
-                                $('#status').text("ลูกค้ายืนยันคำสั่งซื้อ กรุณาเตรียมสินค้าแล้วจัดส่ง");
-                                $('#oparetion').html('<div class="row mb-1"><div><button id="st2" type="button" class="btn btn-primary">จัดส่งสินค้า</button></div></div>');
+                                $('#status').html("อยู่ระหว่างเตรียมสินค้า<br>กรุณาจัดส่งสินค้าเมื่อเสร็จสิ้น");
+                                $('#oparetion').html('<div class="row mb-1"><div><button id="st2" type="button" class="btn btn-primary">ส่งสินค้า</button></div></div>');
                                 break;
                             case 3:
-                                $('#status').text("เมื่อเตรียมสินค้าเสร็จแล้ว กรุณาขนส่งสินค้า");
-                                $('#oparetion').html('<div class="row mb-1"><div><button id="st3" type="button" class="btn btn-primary">ส่งสินค้า</button></div></div>');
+                                $('#status').text("อยู่ระหว่างขนส่งสินค้า");
+                                $('#oparetion').html('<div class="row mb-1"><div><button id="st3" type="button" class="btn btn-primary">ส่งสินค้าแล้ว</button></div></div>');
                                 break;
                             case 4:
                                 $('#status').text("จัดส่งสินค้าสำเร็จแล้ว");
-                                $('#oparetion').html('');
+                                $('#oparetion').html('<div class="row mb-1 text-center text-danger">*คำสั่งซื้อนี้จะสำเร็จต่อเมื่อลูกค้าได้รับสินค้าแล้ว</div>');
                                 break;
                             case 5:
                                 $('#status').text("คำสั่งซื้อสำเร็จแล้ว");
@@ -47,24 +47,24 @@
                     }else{
                         switch (parseInt(data)) {
                             case 0:
-                                $('#status').text("กรุณาตอบรับคำสั่งซื้อ");
-                                $('#oparetion').html('<div class="row mb-1"><div><button id="st0" type="button" class="btn btn-outline-primary">ดูรายละเอียด</button></div></div><div class="row mb-1"><div><button id="st0" type="button" class="btn btn-primary">ตอบรับคำสั่งซื้อ</button></div></div><div class="row mb-1"><div><button type="button" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div></div>');
+                                $('#status').text("คำสั่งซื้อใหม่ กรุณาตอบรับคำสั่งซื้อ");
+                                $('#oparetion').html('<div class="row mb-1"><div><button type="button" class="btn btn-outline-primary">ดูรายละเอียด</button></div></div><div class="row mb-1"><div><button id="st0" type="button" class="btn btn-primary">ตอบรับคำสั่งซื้อ</button></div></div><div class="row mb-1"><div><button type="button" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div></div>');
                                 break;
                             case 1:
-                                $('#status').text("รอลูกค้าชำระเงิน และยืนยันคำสั่งซื้อ");
-                                $('#oparetion').html('');
+                                $('#status').html("ตอบรับคำสั่งซื้อแล้ว<br>กรุณาจัดเตรียมสินค้าเพื่อจัดส่ง");
+                                $('#oparetion').html('<div class="row mb-1"><div><button id="st1" type="button" class="btn btn-primary">เริ่มเตรียมสินค้า</button></div></div>');
                                 break;
                             case 2:
-                                $('#status').text("ลูกค้ายืนยันคำสั่งซื้อ กรุณาเตรียมสินค้าแล้วจัดส่ง");
-                                $('#oparetion').html('<div class="row mb-1"><div><button id="st2" type="button" class="btn btn-primary">จัดส่งสินค้า</button></div></div>');
+                                $('#status').html("อยู่ระหว่างเตรียมสินค้า<br>กรุณาจัดส่งสินค้าเมื่อเสร็จสิ้น");
+                                $('#oparetion').html('<div class="row mb-1"><div><button id="st2" type="button" class="btn btn-primary">ส่งสินค้า</button></div></div>');
                                 break;
                             case 3:
-                                $('#status').text("เมื่อเตรียมสินค้าเสร็จแล้ว กรุณาขนส่งสินค้า");
-                                $('#oparetion').html('<div class="row mb-1"><div><button id="st3" type="button" class="btn btn-primary">ส่งสินค้า</button></div></div>');
+                                $('#status').text("อยู่ระหว่างขนส่งสินค้า");
+                                $('#oparetion').html('<div class="row mb-1"><div><button id="st3" type="button" class="btn btn-primary">ส่งสินค้าแล้ว</button></div></div>');
                                 break;
                             case 4:
                                 $('#status').text("จัดส่งสินค้าสำเร็จแล้ว");
-                                $('#oparetion').html('');
+                                $('#oparetion').html('<div class="row mb-1 text-center text-danger">*คำสั่งซื้อนี้จะสำเร็จต่อเมื่อลูกค้าได้รับสินค้าแล้ว</div>');
                                 break;
                             case 5:
                                 $('#status').text("คำสั่งซื้อสำเร็จแล้ว");
@@ -80,7 +80,7 @@
                 },
                 complete: function() {
                     // Schedule the next request when the current one is complete
-                    setTimeout(sendRequest, 15000); // Using setTimeout instead of setInterval
+                    setTimeout(sendRequest, 5000); // Using setTimeout instead of setInterval
                 }
             });
         }
@@ -99,9 +99,8 @@
                 console.log(response);
                 if (response == "1") {
                     $('#st').val(response);
-                    $('#status').text("รอลูกค้าชำระเงิน และยืนยันคำสั่งซื้อ");
-                    $('#oparetion').html('');
-                    
+                    $('#status').html("ตอบรับคำสั่งซื้อแล้ว<br>กรุณาจัดเตรียมสินค้าเพื่อจัดส่ง");
+                    $('#oparetion').html('<div class="row mb-1"><div><button id="st1" type="button" class="btn btn-primary">เริ่มเตรียมสินค้า</button></div></div>');
                 } else {
                     console.log("Failed to fetch the updated order status.");
                 }
@@ -121,8 +120,8 @@
                 console.log(response);
                 if (response == "2") {
                     $('#st').val(response);
-                    $('#status').text("<p>ลูกค้ายืนยันคำสั่งซื้อ กรุณาเตรียมสินค้า</p>แล้วจัดส่งสิ้นค้า<p></p>");
-                    $('#oparetion').html('<div class="row mb-1"><div><button id="st2" type="button" class="btn btn-primary">จัดส่งสินค้า</button></div></div>');
+                    $('#status').html("อยู่ระหว่างเตรียมสินค้า<br>กรุณาจัดส่งสินค้าเมื่อเสร็จสิ้น");
+                    $('#oparetion').html('<div class="row mb-1"><div><button id="st2" type="button" class="btn btn-primary">ส่งสินค้า</button></div></div>');
                 } else {
                     console.log("Failed to fetch the updated order status.");
                 }
@@ -142,8 +141,8 @@
                 console.log(response);
                 if (response == "3") {
                     $('#st').val(response);
-                    $('#status').text("เมื่อเตรียมสินค้าเสร็จแล้ว กรุณาขนส่งสินค้า");
-                    $('#oparetion').html('<div class="row mb-1"><div><button id="st3" type="button" class="btn btn-primary">ส่งสินค้า</button></div></div>');
+                    $('#status').text("อยู่ระหว่างขนส่งสินค้า");
+                    $('#oparetion').html('<div class="row mb-1"><div><button id="st3" type="button" class="btn btn-primary">ส่งสินค้าแล้ว</button></div></div>');
                 } else {
                     console.log("Failed to fetch the updated order status.");
                 }
@@ -164,6 +163,7 @@
                 if (response == "4") {
                     $('#st').val(response);
                     $('#status').text("จัดส่งสินค้าสำเร็จแล้ว");
+                    $('#oparetion').html('<div class="row mb-1 text-center text-danger">*คำสั่งซื้อนี้จะสำเร็จต่อเมื่อลูกค้าได้รับสินค้าแล้ว</div>');
                 } else {
                     console.log("Failed to fetch the updated order status.");
                 }

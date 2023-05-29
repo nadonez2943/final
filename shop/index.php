@@ -33,7 +33,7 @@
             <button class="btn btn-link order-1 order-lg-0 me-4 me-lg-0" style="color:black;" id="sidebarToggle"><i class="fas fa-bars"></i></button>
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-1" style="color:black;" href="index.php">
-                ร้านค้าชุมชนเริงราง
+                <img src="\roengrang\img/logo1.png" alt="logo" height="36"> ร้านค้าชุมชนเริงราง
             </a>
             
             <!-- Navbar Message-->
@@ -74,10 +74,6 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
                                 รีวิวคำสั่งซื้อ และร้านค้า
                             </a>
-                            <a class="nav-link" href="myShop.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
-                                ร้านค้าของฉัน
-                            </a>
                             <a class="nav-link" href="report.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-coins"></i></div>
                                 การเงิน
@@ -95,90 +91,153 @@
                             </div>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        ร้าน...
+                    <div class="sb-sidenav-footer text-center">
+                        ร้าน <?=$_SESSION['shop_name']?>
                     </div>
                 </nav>
             </div>
 
             <div id="layoutSidenav_content">
 
-
+                <?php
+                    $row = $sql->countorder(0,$_SESSION['shop_id']);
+                    $numnew=mysqli_fetch_array($row);
+                    $row = $sql->countorder(1,$_SESSION['shop_id']);
+                    $numdoing=mysqli_fetch_array($row);
+                    $row = $sql->countorder(2,$_SESSION['shop_id']);
+                    $numprepare=mysqli_fetch_array($row);
+                    $row = $sql->countorder(3,$_SESSION['shop_id']);
+                    $numship=mysqli_fetch_array($row);
+                    
+                    $row = $sql->countban($_SESSION['shop_id']);
+                    $countban=mysqli_fetch_array($row);
+                    $row = $sql->countclose($_SESSION['shop_id']);
+                    $countclose=mysqli_fetch_array($row);
+                    $row = $sql->countproducts($_SESSION['shop_id']);
+                    $countproducts=mysqli_fetch_array($row);
+                ?>
                 <main>
                     <div class="container-fluid px-4">
                         <br>
-
                         <div class="card p-2 mb-5">
-
                             <div class="row">
-                                <div class="col-xl-3 col-md-6">
+                                <div class="col-xl-3 col-md-6 text-center" style="cursor:pointer;" onclick="window.location.href = 'order.php'">
                                     <div class="card border-primary mb-4">
-                                        <div class="card-body">รอการตอบรับ</div>
-                                        <div class="card-footer d-flex align-items-center justify-content-between">
-                                            <a class="small stretched-link" href="">ดูรายละเอียด</a>
-                                            <div class="small"><i class="fas fa-angle-right"></i></div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="text text-primary">
+                                                    <h3><?=$numnew['row_count']?></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer bg-primary">
+                                            <div class="row">
+                                                <div class="text text-white">
+                                                    <h5>คำสั่งซื้อใหม่</h5>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-3 col-md-6">
-                                    <div class="card bg-warning text-white mb-4">
-                                        <div class="card-body">ที่ต้องจัดส่ง</div>
-                                        <div class="card-footer d-flex align-items-center justify-content-between">
-                                            <a class="small text-white stretched-link" href="#">ดูรายละเอียด</a>
-                                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                <div class="col-xl-3 col-md-6 text-center" style="cursor:pointer;" onclick="window.location.href = 'order.php'">
+                                    <div class="card border-info mb-4">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="text text-info">
+                                                    <h3><?=$numdoing['row_count']?></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer bg-info">
+                                            <div class="row">
+                                                <div class="text text-white">
+                                                    <h5>ที่ต้องเตรียมสินค้า</h5>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-3 col-md-6">
-                                    <div class="card bg-success text-white mb-4">
-                                        <div class="card-body">ระหว่างจัดส่ง</div>
-                                        <div class="card-footer d-flex align-items-center justify-content-between">
-                                            <a class="small text-white stretched-link" href="#">ดูรายละเอียด</a>
-                                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                <div class="col-xl-3 col-md-6 text-center" style="cursor:pointer;" onclick="window.location.href = 'order.php'">
+                                    <div class="card border-success mb-4">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="text text-success">
+                                                    <h3><?=$numprepare['row_count']?></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer bg-success">
+                                            <div class="row">
+                                                <div class="text text-white">
+                                                    <h5>ที่ต้องจัดส่งสินค้า</h5>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-3 col-md-6">
-                                    <div class="card bg-danger text-white mb-4">
-                                        <div class="card-body">คำขอยกเลิก</div>
-                                        <div class="card-footer d-flex align-items-center justify-content-between">
-                                            <a class="small text-white stretched-link" href="#">ดูรายละเอียด</a>
-                                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                <div class="col-xl-3 col-md-6 text-center" style="cursor:pointer;" onclick="window.location.href = 'order.php'">
+                                    <div class="card border-danger mb-4">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="text text-danger">
+                                                    <h3><?=$numship['row_count']?></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer bg-danger">
+                                            <div class="row">
+                                                <div class="text text-white">
+                                                    <h5>อยู่ระหว่างขนส่ง</h5>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xl-3 col-md-6">
-                                    <div class="card bg-warning text-white">
-                                        <div class="card-body">สินค้าถูกห้ามขาย</div>
-                                        <div class="card-footer d-flex align-items-center justify-content-between">
-                                            <a class="small text-white stretched-link" href="#">ดูรายละเอียด</a>
-                                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                <div class="col-xl-4">
+                                    <div class="card mb-4" style="cursor:pointer;" onclick="window.location.href = 'allproduct.php'">
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <div class="card p-2 bg-warning text-center text-white">
+                                                    สินค้าใกล้หมด
+                                                </div>
+                                            </div>
+                                            <div class="col-3 p-2 text-center">
+                                                <?=$countclose['row_count']?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-3 col-md-6">
-                                    <div class="card bg-success text-white">
-                                        <div class="card-body">สินค้าใกล้หมด</div>
-                                        <div class="card-footer d-flex align-items-center justify-content-between">
-                                            <a class="small text-white stretched-link" href="#">ดูรายละเอียด</a>
-                                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                <div class="col-xl-4">
+                                    <div class="card mb-4" style="cursor:pointer;" onclick="window.location.href = 'allproduct.php'">
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <div class="card p-2 bg-danger text-center text-white">
+                                                    สินค้าที่ถูกระงับ
+                                                </div>
+                                            </div>
+                                            <div class="col-3 p-2 text-center">
+                                                <?=$countban['row_count']?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-3 col-md-6">
-                                    <div class="card bg-danger text-white">
-                                        <div class="card-body">จำนวนสินค้า</div>
-                                        <div class="card-footer d-flex align-items-center justify-content-between">
-                                            <a class="small text-white stretched-link" href="#">ดูรายละเอียด</a>
-                                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                <div class="col-xl-4">
+                                    <div class="card mb-4" style="cursor:pointer;" onclick="window.location.href = 'allproduct.php'">
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <div class="card p-2 bg-primary text-center text-white">
+                                                    สินค้าทั้งหมด
+                                                </div>
+                                            </div>
+                                            <div class="col-3 p-2 text-center">
+                                                <?=$countproducts['row_count']?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
-
                         </div>
 
                         <?php
