@@ -171,7 +171,7 @@
                                         <div class="navbar-collapse">	
                                             <div class="nav-inner">	
                                                 <ul class="nav main-menu menu navbar-nav">
-                                                        <li class="active"><a>หน้าหลัก</a></li>
+                                                        <li><a href="index.php">หน้าหลัก</a></li>
                                                         <li><a href="allproduct.php">สินค้า</a></li>	
                                                         <!-- <li><a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
                                                             <ul class="dropdown">
@@ -185,7 +185,7 @@
                                                             </ul>
                                                         </li> -->
                                                         <li><a href="cart.php">ตะกร้าสินค้า</a></li>
-                                                        <li><a href="allorder.php">รายการสั่งซื้อ</a></li>
+                                                        <li class="active"><a href="allorder.php">รายการสั่งซื้อ</a></li>
                                                     </ul>
                                             </div>
                                         </div>
@@ -350,10 +350,33 @@
 		</section>
 		<!--/ End Checkout -->
 		
+        <div class="modal fade" id="cancleModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 justify-content-center">
+                                <div class="quickview-content justify-content-center">
+                                    <div class="row justify-content-center">
+                                        <h2>เหตุผลในการยกเลิกคำสั่งซื้อ</h2>
+                                    </div>
+                                    <div class="row justify-content-center mt-3">
+                                        <textarea name="cancleReason" cols="30" rows="10" value=""></textarea>
+                                    </div>
+                                    <div class="row justify-content-center mt-3">
+                                        <button id="st6" type="button" class="btn">ยกเลิกคำสั่งซื้อ</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
 
-		
-	
-			
 		<!-- Start Footer Area -->
         <footer class="footer">
 		<!-- Footer Top -->

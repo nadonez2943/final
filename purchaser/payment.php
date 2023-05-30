@@ -173,7 +173,7 @@
                                         <div class="navbar-collapse">	
                                             <div class="nav-inner">	
                                                 <ul class="nav main-menu menu navbar-nav">
-                                                        <li class="active"><a>หน้าหลัก</a></li>
+                                                        <li><a href="index.php">หน้าหลัก</a></li>
                                                         <li><a href="allproduct.php">สินค้า</a></li>	
                                                         <!-- <li><a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
                                                             <ul class="dropdown">
@@ -187,7 +187,7 @@
                                                             </ul>
                                                         </li> -->
                                                         <li><a href="cart.php">ตะกร้าสินค้า</a></li>
-                                                        <li><a href="allorder.php">รายการสั่งซื้อ</a></li>
+                                                        <li class="active"><a>รายการสั่งซื้อ</a></li>
                                                     </ul>
                                             </div>
                                         </div>

@@ -52,7 +52,11 @@
                 success: function(response) {
 					if(response=="shop"){
 						alert("คุณไม่สามารถซื้อสินค้าภายในร้านของคุณได้");
-            		} else {
+            		}
+					if(response=="amount"){
+						alert("จำนวนสินค้าในคลัง ไม่เพียงพอต่อความต้องการของคุณ");
+					}
+					else {
 						$('#cartcount').text(response); 
 					}
                 }
@@ -65,8 +69,15 @@
                 type: "POST",
                 data: { product_id: productId,product_amount: quant,function:'addcart' },
                 success: function(response) {
-					alert(quant);
-					$('#cartcount').text(response); 
+					if(response=="shop"){
+						alert("คุณไม่สามารถซื้อสินค้าภายในร้านของคุณได้");
+            		}
+					if(response=="amount"){
+						alert("จำนวนสินค้าในคลัง ไม่เพียงพอต่อความต้องการของคุณ");
+					}
+					else {
+						$('#cartcount').text(response); 
+					}
                 }
             });
         }

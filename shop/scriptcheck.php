@@ -5,6 +5,20 @@
         checkOrder();
 
         function checkOrder() {
+            var numnew = $('#numnew').val();
+            $.ajax({
+                type: 'POST',
+                url: 'checkorder.php',
+                data: { row:$('#numnew').val(),function: 'numnew' }, 
+                success: function(data) {
+                    if (data == 1) {
+                        location.reload();
+                    } 
+                },
+                complete: function() {
+                    setTimeout(checkOrder, 5000); 
+                }
+            });
             var numdoing = parseInt($('#numdoing').val());
             $.ajax({
                 type: 'POST',
@@ -85,20 +99,6 @@
                     if (data == 1) {
                         location.reload();
                     } 
-                }
-            });
-            var numnew = $('#numnew').val();
-            $.ajax({
-                type: 'POST',
-                url: 'checkorder.php',
-                data: { row:$('#numnew').val(),function: 'numnew' }, 
-                success: function(data) {
-                    if (data == 1) {
-                        location.reload();
-                    } 
-                },
-                complete: function() {
-                    setTimeout(checkOrder, 5000); 
                 }
             });
         }

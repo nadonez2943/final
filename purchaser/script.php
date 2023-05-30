@@ -15,11 +15,11 @@
                         switch (parseInt(data)) {
                             case 0:
                                 $('#status').text("สั่งซื้อสินค้าแล้ว");
-                                $('#oparetion').html('<div><button type="button" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div>');
+                                $('#oparetion').html('<div><button type="button" data-toggle="modal" data-target="#cancleModal" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div>');
                                 break;
                             case 1:
                                 $('#status').text("ร้านค้าตอบรับคำสั่งซื้อแล้ว");
-                                $('#oparetion').html('<div class="row mb-1"><div><button type="button" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div></div>');
+                                $('#oparetion').html('<div class="row mb-1"><div><button type="button" data-toggle="modal" data-target="#cancleModal" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div></div>');
                                 break;
                             case 2:
                                 $('#status').text("ร้านค้ากำลังจัดเตรียมสินค้า");
@@ -47,11 +47,11 @@
                         switch (parseInt(data)) {
                             case 0:
                                 $('#status').text("สั่งซื้อสินค้าแล้ว");
-                                $('#oparetion').html('<div><button type="button" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div>');
+                                $('#oparetion').html('<div><button type="button" data-toggle="modal" data-target="#cancleModal" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div>');
                                 break;
                             case 1:
                                 $('#status').text("ร้านค้าตอบรับคำสั่งซื้อแล้ว");
-                                $('#oparetion').html('<div class="row mb-1"><div><button type="button" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div></div>');
+                                $('#oparetion').html('<div class="row mb-1"><div><button type="button" data-toggle="modal" data-target="#cancleModal" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div></div>');
                                 break;
                             case 2:
                                 $('#status').text("ร้านค้ากำลังจัดเตรียมสินค้า");
@@ -96,6 +96,24 @@
                     $('#st').val(response);
                     $('#status').text("คำสั่งซื้อสำเร็จแล้ว");
                     $('#oparetion').html('<div class="row mb-1"><div><button type="button" class="btn btn-primary">ให้คะแนน และรีวิวสินค้า</button></div></div>');
+                } else {
+                    console.log("Failed to fetch the updated order status.");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $(document).on('click', '#st6', function() {
+        $.ajax({
+            type: 'POST',
+            url: 'update.php',
+            data: { id: $('#id').val(), order_status: 6, function: 'update_order_status' },
+            success: function(response) {
+                console.log(response);
+                if (response == "6") {
+                    location.reload();
                 } else {
                     console.log("Failed to fetch the updated order status.");
                 }

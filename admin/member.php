@@ -344,15 +344,14 @@
                                                 <div>2011/04/25</div>
                                             </td>
                                             <td>
+                                            <a class="text-decoration-none" href="member_detail.php?user_id=<?=$Groupmem['user_id']?>">
+                                                <button type="button" style="width:130px; height:60; font-size:17px;"class="btn btn-outline-primary">ดูเพิ่มเติม</button></a>
+
                                                 <a class="text-decoration-none" href="editmember.php?user_id=<?=$Groupmem['user_id']?>">
                                                 <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-primary">แก้ไขข้อมูล</button></a>
-
-                                                <a class="text-decoration-none" href="#">
-                                                    <button type="button" style="width:130px; height:60; font-size:17px;"class="btn btn-warning">ปิดการใช้งาน</button></a>
-          
-                                                <a class="text-decoration-none" href="#">   
-                                                    <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ลบบัญชี</button></a>
                                                 
+                                                <a class="text-decoration-none" href="delete.php?user_id=<?=$Groupmem['user_id']?>&what=user">   
+                                                <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ลบบัญชี</button></a>
                                             </td>
                                         </tr>
                                         <?php
@@ -419,15 +418,14 @@
                                                 <div>2011/04/25</div>
                                             </td>
                                             <td>
+                                            <a class="text-decoration-none" href="member_detail.php?user_id=<?=$Genmem['user_id']?>">
+                                                <button type="button" style="width:130px; height:60; font-size:17px;"class="btn btn-outline-primary">ดูเพิ่มเติม</button></a>
+
                                                 <a class="text-decoration-none" href="editmember.php?user_id=<?=$Genmem['user_id']?>">
                                                 <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-primary">แก้ไขข้อมูล</button></a>
-
-                                                <a class="text-decoration-none" href="#">
-                                                    <button type="button" style="width:130px; height:60; font-size:17px;"class="btn btn-warning">ปิดการใช้งาน</button></a>
-          
-                                                <a class="text-decoration-none" href="#">   
-                                                    <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ลบบัญชี</button></a>
                                                 
+                                                <a class="text-decoration-none" href="delete.php?user_id=<?=$Genmem['user_id']?>&what=user">   
+                                                <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ลบบัญชี</button></a>
                                             </td>
                                         </tr>
                                         <?php
@@ -494,16 +492,14 @@
                                                 <div>2011/04/25</div>
                                             </td>
                                             <td>
-                                                <a class="text-decoration-none" href="editmember.php?user_id=<?=$Adminmem['user_id']?>">
-                                                    <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-primary">แก้ไขข้อมูล</button>
-                                                </a>
+                                            <a class="text-decoration-none" href="member_detail.php?user_id=<?=$Adminmem['user_id']?>">
+                                                <button type="button" style="width:130px; height:60; font-size:17px;"class="btn btn-outline-primary">ดูเพิ่มเติม</button></a>
 
-                                                <a class="text-decoration-none" href="#">
-                                                    <button type="button" style="width:130px; height:60; font-size:17px;"class="btn btn-warning">ปิดการใช้งาน</button></a>
-          
-                                                <a class="text-decoration-none" href="#">   
-                                                    <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ลบบัญชี</button>
-                                                </a>
+                                                <a class="text-decoration-none" href="editmember.php?user_id=<?=$Adminmem['user_id']?>">
+                                                <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-primary">แก้ไขข้อมูล</button></a>
+                                                
+                                                <a class="text-decoration-none" href="delete.php?user_id=<?=$Adminmem['user_id']?>&what=user">   
+                                                <button type="button" style="width:130px; height:60; font-size:17px;" class="btn btn-danger">ลบบัญชี</button></a>
                                             </td>
                                         </tr>
                                         <?php
