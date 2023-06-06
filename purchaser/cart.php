@@ -218,8 +218,10 @@
 	<!-- End Breadcrumbs -->
 			
 	<!-- Shopping Cart -->
+	
 	<div class="shopping-cart section">
 		<div class="container">
+		<form action="checkouts.php" name="checkouts" method="POST" enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-12">
 					<!-- Shopping Summery -->
@@ -255,6 +257,7 @@
 												<i class="ti-minus"></i>
 											</button>
 										</div>
+										<input hidden name="pro_id[]" id="pro_id" value="<?=$CartTable['pro_id']?>">
 										<input type="text" name="quant[<?=$CartTable['pro_id']?>]" class="input-number"  data-min="1" data-max="100" value="<?=$CartTable['amount']?>">
 										<div class="button plus">
 											<button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[<?=$CartTable['pro_id']?>]">
@@ -297,7 +300,7 @@
 							<div class="col-lg-4 col-md-7 col-12">
 								<div class="right">
 									<div class="button5">
-										<a href="checkout.php" class="btn">ชำระเงิน</a>
+										<button type="submit" name="checkouts" class="btn">ชำระสินค้าทั้งหมด</button>
 										<a href="index.php" class="btn">เลือกซื้อสินค้าต่อ</a>
 									</div>
 								</div>
@@ -336,6 +339,7 @@
 			?>
 			
 		</div>
+		</form>
 	</div>
 	<!--/ End Shopping Cart -->
 			

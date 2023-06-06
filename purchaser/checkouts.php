@@ -1,3 +1,10 @@
+<?php
+    if (isset($_POST['checkouts'])) {
+        $pro_id = $_POST['pro_id'];
+
+        
+    }
+?>
 <?php 
     session_start();
     include_once('functions.php');  
@@ -236,12 +243,15 @@
                                 <div class="checkout-form">
                                     <h2 class="mb-4">รายการสินค้า</h2>
                                     <?php
-                                        $pro_id = $_GET['pro_id'];
-                                        $Pro = $sql->product($pro_id);
+                                    for ($i = 0; $i < count($pro_id); $i++) {
+                                        $product = $pro_id[$i];
+                                        $amount = $_POST['quant'][$product];
+                                    
+                                        $Pro = $sql->product($product);
                                         $pro=mysqli_fetch_array($Pro);
                                     ?>
-                                    <input hidden name="pro_id" id="pro_id" value="<?=$pro_id?>">
-                                    <div class="row">
+                                    <input hidden name="pro_id[]" id="pro_id[]" value="<?=$product?>">
+                                    <div class="row mb-2">
                                         <div class="col-6">
                                             <div class="row">
                                                 <div class="col-4"><a href="product.php?pro_id=<?=$pro['pro_id']?>"><img src="\roengrang\img/<?=$pro['pro_img']?>"></a></div>
@@ -260,7 +270,7 @@
                                                             <i class="ti-minus"></i>
                                                         </button>
                                                     </div>
-                                                    <input type="text" id="quant" name="quant" class="input-number"  data-min="1" data-max="1000" value="1">
+                                                    <input type="text" id="quant[]" name="quant[]" class="input-number"  data-min="1" data-max="1000" value="<?=$amount?>">
                                                     <div class="button plus">
                                                         <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant">
                                                             <i class="ti-plus"></i>
@@ -272,6 +282,10 @@
                                         </div>
 
                                     </div>
+
+                                    <?php
+                                        }
+                                    ?>
                                     <hr>
                                 
                                 </div>
@@ -470,34 +484,48 @@
 	<script src="js/active.js"></script>
     <?php include('scriptsearch.php');?>
 	<script>
-		$(document).ready(function() {
-            var quant= $('#quant').val();
-            var price= parseFloat($('#price').val());
-            var sent = parseFloat($('#sent').val());
-            var sum = quant * price ;
-            var total = sum + sent ;
-            var sum = sum.toFixed(2)
-            var total = total.toFixed(2)
-            document.getElementById("sumprice").innerText = sum+" บาท" ;
-            document.getElementById("sum").value = sum;
-            document.getElementById("totalprice").innerText = total+" บาท" ;
-            document.getElementById("total").value = total;
-            $('#quant').change(function(){
-                var quant= $('#quant').val();
-                var price= parseFloat($('#price').val());
-                var sent = parseFloat($('#sent').val());
-                var sum = quant * price ;
-                var total = sum + sent ;
-                var sum = sum.toFixed(2)
-                var total = total.toFixed(2)
-                document.getElementById("sumprice").innerText = sum+" บาท" ;
-                document.getElementById("sum").value = sum;
-                document.getElementById("totalprice").innerText = total+" บาท" ;
-                document.getElementById("total").value = total;
-            });
+	$(document).ready(function() {
+		var quants = [];
+		var prices = [];
+
+		$('input[name="quant[]"]').each(function() {
+			var quant = $(this).val();
+			quants.push(quant);
 		});
 
-	</script>
+		$('input[name="price"]').each(function() {
+			var price = $(this).val();
+			prices.push(price);
+		});
+
+		var total = calculateTotal(quants, prices);
+
+		$('#sumprice').text(total.toFixed(2) + ' บาท');
+		$('#totalprice').text(total.toFixed(2) + ' บาท');
+
+		$('#sum').val(total.toFixed(2));
+		$('#total').val(total.toFixed(2));
+
+		logSumPrice(quants, prices);
+
+		function calculateTotal(quants, prices) {
+			var sum = 0;
+			for (var i = 0; i < quants.length; i++) {
+				sum += parseFloat(quants[i]) * parseFloat(prices[i]);
+			}
+			return sum;
+		}
+
+		function logSumPrice(quants, prices) {
+			for (var i = 0; i < quants.length; i++) {
+				var sumPrice = parseFloat(quants[i]) * parseFloat(prices[i]);
+				console.log('Sum Price for Product ' + (i + 1) + ': ' + sumPrice.toFixed(2) + ' บาท');
+			}
+		}
+	});
+</script>
+
+
 </body>
 </html>
 

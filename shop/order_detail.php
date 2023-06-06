@@ -64,6 +64,45 @@
             border: none;
             border-top: none;
             }
+
+            .modal {
+            display: none; /* Hide the modal by default */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5); /* Overlay background color */
+            }
+
+            .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%;
+            text-align: center; /* Center the content horizontally */
+            position: relative; /* Add relative positioning */
+            }
+
+            .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute; /* Add absolute positioning */
+            top: 10px; /* Position from the top */
+            right: 10px; /* Position from the right */
+            }
+
+            .close:hover,
+            .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+            }
         </style>
     </head>
     <body class="sb-nav-fixed">
@@ -215,6 +254,11 @@
                                                 </div>
                                                 <div class="row mt-2">
                                                     <div class="col-12">
+                                                        ตำแหน่งที่จัดส่ง : <a href="<?=$Allord['ord_location']?>" target="_blank"><?=$Allord['ord_location']?></a>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-12">
                                                         หมายเหตุ : <?=$Allord['ord_note']?>
                                                     </div>
                                                 </div>
@@ -257,6 +301,7 @@
                                             </p>
                                             <input hidden type="number" id="st" value="<?=$Allord['order_status']?>">
                                             <input hidden type="number" id="id" value="<?=$Allord['id']?>">
+                                            <input hidden type="text" id="Reason" value="<?=$Allord['cancleReason']?>">
                                         </div>
                                         <div class="row mt-3 justify-content-center" >
                                             <div id="oparetion"></div>
@@ -264,6 +309,80 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cancel Modal -->
+                    <div id="cancleModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <h3 class="modal-title">เหตุผลในการยกเลิกคำสั่งซื้อ</h3>
+                            <div class="row justify-content-center mt-3 mb-3">
+                                <textarea name="cancleReason" id="cancleReason" cols="30" rows="10" style="width: 75%;"></textarea>
+                            </div>
+                            <div hidden><button type="button" class="btn" id="cancleModalCloseBtn">Close</button></div>
+                            <div><button id="st6" type="button" class="btn btn-danger">ยกเลิกคำสั่งซื้อ</button></div>
+                        </div>
+                    </div>
+
+                    <!-- Confirmation Modal -->
+                    <div id="confermModal" class="modal">
+                        <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h5 class="modal-title">Confirmation Modal</h5>
+                        <p>Confirmation modal content goes here...</p>
+                        <button type="button" class="btn" id="confermModalCloseBtn">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+
+                    <div id="sentPriceModal" class="modal">
+                        <div class="modal-content">
+                        <span class="close">&times;</span>
+                            <h3 class="modal-title">กรุณาระบุค่าจัดส่งสินค่า</h3>
+                            <div class="row justify-content-center mt-3 mb-3">
+                                <div>ค่าจัดส่ง :</div>
+                                <div><input type="number" class="mt-2" id="sentprice" name="sentprice" value=""></div>
+                            </div>
+                            <p class="text-danger">ถ้าหากยืนยันตอบรับคำสั่งซื้อแล้วจะไม่สามารถเปลี่ยนค่าส่งได้อีก</p>
+                            <div hidden><button type="button" class="btn" id="sentPriceModalCloseBtn">Close</button></div>
+                            <div><button id="st0" type="button" class="btn btn-primary">ยืนยันตอบรับคำสั่งซื้อ</button></div>
+                        </div>
+                    </div>
+
+                    <div id="shipModal" class="modal">
+                        <div class="modal-content">
+                        <span class="close">&times;</span>
+                            <form action="update.php" method="POST" enctype="multipart/form-data">
+                                <input hidden type="number" name="order_status" value="<?=$Allord['order_status']?>">
+                                <input hidden type="number" name="id" value="<?=$Allord['id']?>">
+                                <h3 class="modal-title">อัพโหลดรูปถ่ายหลักฐานการส่งสินค้า</h3>
+                                <div class="row justify-content-center mt-3 mb-3">
+                                    <div><input type="file" class="mt-2" id="file" name="file"></div>
+                                </div>
+                                <div hidden><button type="button" class="btn" id="shipModalCloseBtn">Close</button></div>
+                                <div><button type="submit" name="status2" class="btn btn-primary">ยืนยันตอบรับคำสั่งซื้อ</button></div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="sentModal" class="modal">
+                        <div class="modal-content">
+                        <span class="close">&times;</span>
+                            <form action="update.php" method="POST" enctype="multipart/form-data">
+                                <input hidden type="number" name="order_status" value="<?=$Allord['order_status']?>">
+                                <input hidden type="number" name="id" value="<?=$Allord['id']?>">
+                                <h3 class="modal-title">อัพโหลดรูปถ่ายหลักฐานการส่งสินค้า</h3>
+                                <div class="row justify-content-center mt-3 mb-3">
+                                    <div><input type="file" class="mt-2" id="file1" name="file1"></div>
+                                </div>
+                                <h3 class="modal-title">อัพโหลดรูปถ่ายหลักฐานการรับเงิน</h3>
+                                <div class="row justify-content-center mt-3 mb-3">
+                                    <div><input type="file" class="mt-2" id="file2" name="file2"></div>
+                                </div>
+                                <div hidden><button type="button" class="btn" id="sentModalCloseBtn">Close</button></div>
+                                <div><button type="submit" name="status3" class="btn btn-primary">ยืนยันตอบรับคำสั่งซื้อ</button></div>
+                            </form>
                         </div>
                     </div>
 
@@ -280,7 +399,6 @@
         <script src="js/datatables-simple-demo.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
-        
     </body>
 </html>
 <?php include('script.php');?>

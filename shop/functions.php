@@ -91,6 +91,10 @@
             $allorder = mysqli_query($this->dbcon, "SELECT * FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE shop.shop_id = '$shop_id'");
             return $allorder;
         }
+        public function orderReview($shop_id) {
+            $orderReview = mysqli_query($this->dbcon, "SELECT * FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN users ON orders.user_id = users.user_id WHERE orders.shop_id = '$shop_id' AND review_status='1' " );
+            return $orderReview;
+        }
         public function orders($order_status,$shop_id) {
             $ord = mysqli_query($this->dbcon, "SELECT * FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.order_status = '$order_status' AND shop.shop_id = '$shop_id'");
             return $ord;
@@ -134,6 +138,22 @@
         public function update_product($pro_id, $cat_id, $pro_name, $pro_price, $pro_amount, $pro_detail, $pro_send, $fileName) {
             $update_product = mysqli_query($this->dbcon, "UPDATE products SET cat_id = '$cat_id',pro_name = '$pro_name',pro_price = '$pro_price',pro_amount = '$pro_amount',pro_detail = '$pro_detail',update_date = NOW(),pro_send = '$pro_send',pro_img = '$fileName' WHERE pro_id='$pro_id'");
             return $update_product;
+        }
+        public function update_order_status0($id,$order_status,$sentprice) {
+            $update_order_status0 = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' ,sent_price = '$sentprice',confirm_date = NOW() WHERE orders.id='$id'");
+            return $update_order_status0;
+        }
+        public function update_order_status2($id,$order_status,$ship_img) {
+            $update_order_status2 = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' ,ship_date = NOW() ,ship_img = '$ship_img' WHERE orders.id='$id'");
+            return $update_order_status2;
+        }
+        public function update_order_status3($id,$order_status,$sent_img,$payment_img) {
+            $update_order_status3 = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' ,sent_date = NOW() ,sent_img = '$sent_img',payment_img = '$payment_img',payment_status = '1' WHERE orders.id='$id'");
+            return $update_order_status3;
+        }
+        public function update_order_status6($id,$order_status,$cancleReason) {
+            $update_order_status6 = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' ,cancleReason = '$cancleReason',cancle_date = NOW() WHERE orders.id='$id'");
+            return $update_order_status6;
         }
 
         #การเงิน

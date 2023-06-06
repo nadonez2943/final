@@ -15,7 +15,15 @@
         }
     }
     
-    
+    if (isset($_POST['function']) && $_POST['function'] == 'neworders') {
+        $allord = $sql->countorder(0, $_SESSION['shop_id']);
+        $numnew = mysqli_fetch_array($allord);
+        if ($numnew['row_count'] != $_POST['numnew']) {
+            echo $numnew['row_count'];
+        }else{
+            echo 'now';
+        }
+    }
 
     if (isset($_POST['function']) && $_POST['function'] == 'numdoing') {
         $allord = $sql->countorder(1,$_SESSION['shop_id']);

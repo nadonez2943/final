@@ -126,7 +126,8 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="text text-primary">
-                                                    <h3><?=$numnew['row_count']?></h3>
+                                                    <h3 id="neworder"><?=$numnew['row_count']?></h3>
+                                                    <input hidden type="text" id="neworders" value="<?=$numnew['row_count']?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -253,7 +254,7 @@
                                                 ยอดขายประจำปี พ.ศ.<?=date("Y")+543?>
                                             </div>
                                             <div class="col-6" style="text-align: right;">
-                                                ยอดรวมสุทธิ <?=$yeartotal['total_year']?> บาท
+                                                ยอดรวมสุทธิ <?php if($yeartotal['total_year'] == "") { echo "o"; } else { echo $yeartotal['total_year']; } ?> บาท
                                             </div>
                                         </div>
                                         
@@ -271,7 +272,7 @@
                                                 ยอดขายประจำสัปดาห์
                                             </div>
                                             <div class="col-6" style="text-align: right;">
-                                                ยอดรวมสุทธิ <?=$yeartotal['total_week']?> บาท
+                                                ยอดรวมสุทธิ <?php if($yeartotal['total_week'] == "") { echo "o"; } else { echo $yeartotal['total_week']; } ?> บาท
                                             </div>
                                         </div>
                                     </div>
@@ -388,6 +389,40 @@
                 ];
                 return monthNames[monthNumber - 1];
             }
+
+        </script>
+        <script>
+            $(document).ready(function() {
+
+            sendRequest();
+
+            function sendRequest() {
+                var neworders = $('#neworders').val();
+                $.ajax({
+                    type: 'POST',
+                    url: 'checkorder.php',
+                    data: { numnew: $('#neworders').val(),function: 'neworders' }, // Sending data as an object
+                    success: function(data) {
+                        if (data != neworders) {
+                            $('#neworder').text(data);
+                            $('#neworders').val(data);
+                        }
+                        if (data == "") {
+                            $('#neworder').text("0");
+                            $('#neworders').val(0);
+                        }
+                        if (data == "now") {
+                            $('#neworder').text(neworders);
+                            $('#neworders').val(neworders);
+                        }
+                    },
+                    complete: function() {
+                        // Schedule the next request when the current one is complete
+                        setTimeout(sendRequest, 5000); // Using setTimeout instead of setInterval
+                    }
+                });
+            }
+            });
 
         </script>
     </body>

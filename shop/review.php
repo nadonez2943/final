@@ -140,14 +140,14 @@
 
                 <main>
                 <div class="container px-4 px-lg-5 mt-4">
-                        <h1 class="mt-4">จัดการสินค้า</h1>
+                        <h1 class="mt-4">รีวิวคำสั่งซื้อ</h1>
                         <!-- <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">สำหรับคนในชุมชน กรุณาตรวจสอบข้อมูลของผู้สมัครว่าเป็นจริงหรือไม่</li>
                         </ol> -->
                         <hr>
                         <div class="card">
                         <div class="tab">
-                            <button class="tablinks" onclick="openCity(event, 'all')" id="defaultOpen">รายงานปัญหาสินค้าทั้งหมด</button>
+                            <button class="tablinks" onclick="openCity(event, 'all')" id="defaultOpen">รีวิวคำสั่งซื้อ</button>
                             <button class="tablinks" onclick="openCity(event, 'noread')">รายงานปัญหาสินค้าที่ยังไม่ได้อ่าน</button>
                             <button class="tablinks" onclick="openCity(event, 'read')">รายงานปัญหาสินค้าที่อ่านแล้ว</button>
                         </div>
@@ -157,23 +157,38 @@
                                 <table id="allTable">
                                     <thead>
                                         <tr>
-                                            <th>รูปสินค้า</th>
+                                            <th>เลขที่คำสั่งซื้อ</th>
                                             <th>สินค้า</th>
                                             <th>ผู้รายงาน</th>
                                             <th>เวลา</th>
-                                            <th>การทำงาน</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>รูปสินค้า</th>
+                                            <th>เลขที่คำสั่งซื้อ</th>
                                             <th>สินค้า</th>
                                             <th>ผู้รายงาน</th>
                                             <th>เวลา</th>
-                                            <th>การทำงาน</th>
+                                            <th></th>
                                         </tr>
                                     </tfoot>
-                                    
+                                    <tbody>
+                                    <?php
+                                        $review = $sql->orderReview($_SESSION['shop_id']);
+                                        while($Review=mysqli_fetch_array($review)){
+                                    ?>
+                                        <tr>
+                                            <td><?=$Review['id']?></td>
+                                            <td><img src="\roengrang\img/<?=$Review['pro_img']?>" style="width: 76px;height: 76px;" /> <?=$Review['pro_name']?> </td>
+                                            <td><?=$Review['user_fullname']?> บาท</td>
+                                            <td><?=$Review['review_date']?></td>
+                                            <td><a href="reviewDetail.php?order=<?=$Review['id']?>">ดูเพิ่มเติม</a></td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    ?>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

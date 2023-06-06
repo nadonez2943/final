@@ -24,6 +24,7 @@ if (isset($_POST['checkout'])) {
     $ord_district = $_POST['district'];
     $ord_subdistrict = $_POST['subdistrict'];
     $ord_postID = $_POST['zipcode'];
+    $ord_location = $_POST['location'];
     $ord_note = $_POST['note'];
 
     $users = $sql->usershop($_SESSION['id']);
@@ -39,7 +40,7 @@ if (isset($_POST['checkout'])) {
             $_SESSION['statusMsg'] = "จำนวนสินค้าในคลังคงเหลือ ".$pro['pro_amount']." ไม่เพียงพอต่อความต้องการของคุณ";
             header("Location: checkout.php?pro_id=" . $pro_id);
         }else {
-            $insert = $sql->addorders($pro_id,$user_id,$ord_name,$ord_amount,$sumprice,$sentprice,$totalprice,$ord_tel,$ord_address,$ord_road,$ord_soi,$ord_province,$ord_district,$ord_subdistrict,$ord_postID,$ord_note,$payment);
+            $insert = $sql->addorders($pro_id,$pro['shop_id'],$user_id,$ord_name,$ord_amount,$sumprice,$sentprice,$totalprice,$ord_tel,$ord_location,$ord_address,$ord_road,$ord_soi,$ord_province,$ord_district,$ord_subdistrict,$ord_postID,$ord_note,$payment);
         if ($insert) {
             
             $_SESSION['statusOrders'] = "ส่งคำสั่งซื้อแล้ว กรุณารอร้านค้าตอบรับออร์เดอร์";

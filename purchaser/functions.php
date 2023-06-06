@@ -173,6 +173,10 @@
             $order = mysqli_query($this->dbcon, "SELECT * FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.id = '$ord_id'");
             return $order;
         }
+        public function orderproduct($pro_id) {
+            $orderproduct = mysqli_query($this->dbcon, "SELECT * FROM orders  WHERE orders.pro_id = '$pro_id'");
+            return $orderproduct;
+        }
         public function countallorder($user_id) {
             $countallorder = mysqli_query($this->dbcon, "SELECT COUNT(id) AS row_count FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.user_id = '$user_id'");
             return $countallorder;
@@ -189,11 +193,15 @@
             $ord = mysqli_query($this->dbcon, "SELECT * FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.order_status = '$order_status1' OR orders.order_status = '$order_status2' AND orders.user_id = '$user_id'");
             return $ord;
         }
+        public function point($pro_id) {
+            $point = mysqli_query($this->dbcon, "SELECT AVG(ord_point) as points FROM orders WHERE orders.pro_id='$pro_id'");
+            return $point;
+        }
         
 
         #insert
-        public function addorders($pro_id,$user_id,$ord_name,$ord_amount,$sumprice,$sentprice,$totalprice,$ord_tel,$ord_address,$ord_road,$ord_soi,$ord_province,$ord_district,$ord_subdistrict,$ord_postID,$ord_note,$payment) {
-            $addorders = mysqli_query($this->dbcon, "INSERT INTO orders(pro_id,user_id,ord_name,ord_amount,sum_price,sent_price,total_price,ord_tel,ord_address,ord_road,ord_soi,ord_province,ord_district,ord_subdistrict,ord_postID,ord_note,payment) VALUES('$pro_id','$user_id','$ord_name','$ord_amount','$sumprice','$sentprice','$totalprice','$ord_tel','$ord_address','$ord_road','$ord_soi','$ord_province','$ord_district','$ord_subdistrict','$ord_postID','$ord_note','$payment')");
+        public function addorders($pro_id,$shop_id,$user_id,$ord_name,$ord_amount,$sumprice,$sentprice,$totalprice,$ord_tel,$ord_location,$ord_address,$ord_road,$ord_soi,$ord_province,$ord_district,$ord_subdistrict,$ord_postID,$ord_note,$payment) {
+            $addorders = mysqli_query($this->dbcon, "INSERT INTO orders(pro_id,shop_id,user_id,ord_name,ord_amount,sum_price,sent_price,total_price,ord_tel,ord_location,ord_address,ord_road,ord_soi,ord_province,ord_district,ord_subdistrict,ord_postID,ord_note,payment) VALUES('$pro_id','$shop_id','$user_id','$ord_name','$ord_amount','$sumprice','$sentprice','$totalprice','$ord_tel','$ord_location','$ord_address','$ord_road','$ord_soi','$ord_province','$ord_district','$ord_subdistrict','$ord_postID','$ord_note','$payment')");
             return $addorders;
         }
         public function addlike($pro_id,$user_id) {
@@ -210,9 +218,27 @@
             $update_order_status = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' WHERE orders.id='$id'");
             return $update_order_status;
         }
+        public function update_order_status1($id,$order_status) {
+            $update_order_status1 = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status',doing_date = NOW() WHERE orders.id='$id'");
+            return $update_order_status1;
+        }
+        public function update_order_status6($id,$order_status,$cancleReason) {
+            $update_order_status6 = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' ,cancleReason = '$cancleReason',cancle_date = NOW() WHERE orders.id='$id'");
+            return $update_order_status6;
+        }
         public function updatecart($pro_id,$user_id,$amount) {
             $updatecart = mysqli_query($this->dbcon, "UPDATE cart SET amount = '$amount' WHERE cart.pro_id='$pro_id' AND cart.user_id='$user_id'");
             return $updatecart;
+        }
+        public function update_order_status4($id,$order_status,$receive_imgName,$paymentUser_img) {
+            $update_order_status4 = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' ,receive_date = NOW() ,recieve_img = '$receive_imgName',paymentUser_img = '$paymentUser_img',payment_status = '1' WHERE orders.id='$id'");
+            return $update_order_status4;
+        }
+        public function review($id,$ord_point,$review,$pro_id) {
+            $review = mysqli_query($this->dbcon, "UPDATE orders SET ord_point = '$ord_point' ,review = '$review' ,review_status = '1'WHERE orders.id='$id'");
+            $pro = mysqli_query($this->dbcon, "UPDATE products SET pro_point = '$ord_point' WHERE products.pro_id='$pro_id'");
+            return $review;
+            return $pro;
         }
 
         #delete

@@ -296,6 +296,11 @@
                                                 </div>
                                                 <div class="row mt-2">
                                                     <div class="col-12">
+                                                        ตำแหน่งที่จัดส่ง : <?=$Allord['ord_location']?>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-12">
                                                         หมายเหตุ : <?=$Allord['ord_note']?>
                                                     </div>
                                                 </div>
@@ -337,7 +342,9 @@
                                                 ?>
                                             </p>
                                             <input hidden type="number" id="st" value="<?=$Allord['order_status']?>">
+                                            <input hidden type="number" id="review_status" value="<?=$Allord['review_status']?>">
                                             <input hidden type="number" id="id" value="<?=$Allord['id']?>">
+                                            <input hidden type="text" id="Reason" value="<?=$Allord['cancleReason']?>">
                                         </div>
                                         <div class="row mt-3 justify-content-center" >
                                             <div id="oparetion"></div>
@@ -350,6 +357,98 @@
 		</section>
 		<!--/ End Checkout -->
 		
+        <!-- รับสินค้า st6 -->
+        <div class="modal fade" id="receiveModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 justify-content-center">
+                                <div class="quickview-content justify-content-center">
+                                    <form class="form" action="update.php" method="POST" enctype="multipart/form-data">
+                                        <input hidden type="number" name="order_status" value="<?=$Allord['order_status']?>">
+                                        <input hidden type="number" name="id" value="<?=$Allord['id']?>">
+                                        <div class="row justify-content-center">
+                                            <h2>ได้รับสินค้าแล้วกรุณาอัพโหลดรูปภาพสินค้า</h2>
+                                        </div>
+                                        <div class="row justify-content-center mt-3">
+                                            <div class="col-6 text-right">
+                                                <h5>รูปภาพสินค้า : </h5>
+                                            </div>
+                                            <div class="col-5">
+                                                <input type="file" name="receive_img" id="receive_img" class="text-center center-block file-upload">
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center mt-3">
+                                            <div class="col-6 text-right">
+                                                <h5>รูปภาพหลักฐานการจ่ายเงิน : </h5>
+                                            </div>
+                                            <div class="col-5">
+                                                <input type="file" name="payment_img" id="payment_img" class="text-center center-block file-upload">
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center mt-3">
+                                            <button class="btn btn-lg btn-success" name="receive_order" type="submit">ยืนยัน</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- รีวิว -->
+        <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 justify-content-center">
+                                <div class="quickview-content justify-content-center">
+                                    <form class="form" action="update.php" method="POST" enctype="multipart/form-data">
+                                    <input hidden type="number" name="id" value="<?=$Allord['id']?>">
+                                        <div class="row justify-content-center">
+                                            <h2>ให้คะแนน และรีวิวคำสั่งซื้อ</h2>
+                                        </div>
+                                        <div class="row justify-content-center mt-3">
+                                            <textarea name="review" id="review" cols="30" rows="10" value="" ></textarea>
+                                        </div><br>
+                                            <label class="ml-4 mr-3" > ให้คะแนนคำสั่งซื้อ </label>
+                                            <input type="radio" id="option1" name="radios" value="1">
+                                            <label for="option1"> 1 คะแนน </label>
+
+                                            <input type="radio" id="option2" name="radios" value="2">
+                                            <label for="option2"> 2 คะแนน </label>
+
+                                            <input type="radio" id="option3" name="radios" value="3">
+                                            <label for="option3"> 3 คะแนน </label>
+
+                                            <input type="radio" id="option4" name="radios" value="4">
+                                            <label for="option4"> 4 คะแนน </label>
+
+                                            <input type="radio" id="option5" name="radios" value="5" checked>
+                                            <label for="option5"> 5 คะแนน </label>
+                                        <div class="row justify-content-center mt-3">
+                                            <button class="btn btn-lg btn-success" name="submitreview" type="submit">ยืนยัน</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ยกเลิก st6 -->
         <div class="modal fade" id="cancleModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -364,7 +463,7 @@
                                         <h2>เหตุผลในการยกเลิกคำสั่งซื้อ</h2>
                                     </div>
                                     <div class="row justify-content-center mt-3">
-                                        <textarea name="cancleReason" cols="30" rows="10" value=""></textarea>
+                                        <textarea name="cancleReason" id="cancleReason" cols="30" rows="10" value=""></textarea>
                                     </div>
                                     <div class="row justify-content-center mt-3">
                                         <button id="st6" type="button" class="btn">ยกเลิกคำสั่งซื้อ</button>
@@ -375,7 +474,7 @@
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
 
 		<!-- Start Footer Area -->
         <footer class="footer">
