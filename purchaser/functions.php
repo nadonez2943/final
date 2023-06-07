@@ -1,5 +1,6 @@
 <?php 
 
+    include_once('../cloudinary/index.php');
     define('DB_SERVER', 'localhost'); // Your hostname
     define('DB_USER', 'root'); // Database Username
     define('DB_PASS', ''); // Database Password
@@ -200,9 +201,11 @@
         
 
         #insert
-        public function addorders($pro_id,$shop_id,$user_id,$ord_name,$ord_amount,$sumprice,$sentprice,$totalprice,$ord_tel,$ord_location,$ord_address,$ord_road,$ord_soi,$ord_province,$ord_district,$ord_subdistrict,$ord_postID,$ord_note,$payment) {
+        public function addorders($pro_id,$shop_id,$user_id,$ord_name,$ord_amount,$sumprice,$sentprice,$totalprice,$ord_tel,$ord_location,$ord_address,$ord_road,$ord_soi,$ord_province,$ord_district,$ord_subdistrict,$ord_postID,$ord_note,$payment,$pro_amount,$pro_selled) {
             $addorders = mysqli_query($this->dbcon, "INSERT INTO orders(pro_id,shop_id,user_id,ord_name,ord_amount,sum_price,sent_price,total_price,ord_tel,ord_location,ord_address,ord_road,ord_soi,ord_province,ord_district,ord_subdistrict,ord_postID,ord_note,payment) VALUES('$pro_id','$shop_id','$user_id','$ord_name','$ord_amount','$sumprice','$sentprice','$totalprice','$ord_tel','$ord_location','$ord_address','$ord_road','$ord_soi','$ord_province','$ord_district','$ord_subdistrict','$ord_postID','$ord_note','$payment')");
+            $upamount = mysqli_query($this->dbcon, "UPDATE products SET pro_amount = '$pro_amount',pro_selled = '$pro_selled' WHERE products.pro_id='$pro_id'");
             return $addorders;
+            return $upamount;
         }
         public function addlike($pro_id,$user_id) {
             $addlike = mysqli_query($this->dbcon, "INSERT INTO likes(pro_id,user_id) VALUES('$pro_id','$user_id')");

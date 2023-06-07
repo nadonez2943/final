@@ -60,7 +60,7 @@
     <div class="container-fluid h-custom">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-md-9 col-lg-6 col-xl-5">
-          <img src="img/Logo1.png" width= "90%" height="60%"
+          <img src="https://res.cloudinary.com/dlne5j5ub/image/upload/v1686072817/logo1_fo37mz.png" width= "90%" height="60%"
             class="img-fluid" alt="Sample image">
         </div>
         <div class="col-md-8 col-lg-5 col-xl-3">

@@ -5,9 +5,9 @@ use Cloudinary\Api\Upload\UploadApi;
 
 Configuration::instance([
   'cloud' => [
-    'cloud_name' => 'dctzkxkyd', 
-    'api_key' => '835866618941812', 
-    'api_secret' => 'BUzTejiD9p-_moHhd9jDQhP8aK8'],
+    'cloud_name' => 'dlne5j5ub', 
+    'api_key' => '232327965775433', 
+    'api_secret' => 'jJbI7p20xpDJzI4tPNNf9w8R_zg'],
   'url' => [
     'secure' => true]]);
 
@@ -15,8 +15,10 @@ Configuration::instance([
 //$imageName = $result['public_id'];#ชื่อรูป
 
 //$imageUrl = 'https://res.cloudinary.com/dctzkxkyd/image/upload/' . $imageName;
-$imageUrl = 'https://res.cloudinary.com/dctzkxkyd/image/upload/cld-sample-5';
+
+// $imageUrl = 'https://res.cloudinary.com/dctzkxkyd/image/upload/cld-sample-5';
 // Display the uploaded image
-echo '<img src="' . $imageUrl . '">';
+
+// echo '<img src="' . $imageUrl . '">';
 //echo '<br>'. $imageName ;
 ?>

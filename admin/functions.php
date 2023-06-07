@@ -1,5 +1,6 @@
 <?php 
-     
+    
+    include_once('../cloudinary/index.php'); 
     define('DB_SERVER', 'localhost'); // Your hostname
     define('DB_USER', 'root'); // Database Username
     define('DB_PASS', ''); // Database Password
