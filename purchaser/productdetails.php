@@ -235,18 +235,9 @@
                         <CENTER>
                         <!-- Product Slider -->
                             <div class="product-gallery">
-                                <div class="quickview-slider-active">
+                                <div>
                                     <div class="single-slider">
-                                        <img src="\roengrang\img/<?=$Pro['pro_img']?>" style="width: 469px; height: 478px;" alt="#">
-                                    </div>
-                                    <div class="single-slider">
-                                        <img src="https://via.placeholder.com/569x528" style="width: 469px; height: 478px; alt="#">
-                                    </div>
-                                    <div class="single-slider">
-                                        <img src="https://via.placeholder.com/569x528" style="width: 469px; height: 478px; alt="#">
-                                    </div>
-                                    <div class="single-slider">
-                                        <img src="https://via.placeholder.com/569x528" style="width: 469px; height: 478px; alt="#">
+                                        <img src="<?=$Pro['pro_img']?>" style="width: 469px; height: 478px;" alt="#">
                                     </div>
                                 </div>
                             </div>

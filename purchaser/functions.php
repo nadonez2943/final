@@ -225,8 +225,9 @@
             $update_order_status1 = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status',doing_date = NOW() WHERE orders.id='$id'");
             return $update_order_status1;
         }
-        public function update_order_status6($id,$order_status,$cancleReason) {
+        public function update_order_status6($id,$order_status,$cancleReason,$pro_id,$pro_amount,$pro_selled) {
             $update_order_status6 = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' ,cancleReason = '$cancleReason',cancle_date = NOW() WHERE orders.id='$id'");
+            $pro = mysqli_query($this->dbcon, "UPDATE products SET pro_amount = '$pro_amount',pro_selled = '$pro_selled' WHERE products.pro_id='$pro_id'");
             return $update_order_status6;
         }
         public function updatecart($pro_id,$user_id,$amount) {

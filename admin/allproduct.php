@@ -148,10 +148,9 @@
                                     <thead>
                                         <tr>
                                             <th>ชื่อ</th>
-                                            <th>รูปสินค้า</th>
+                                            <th>ร้านค้า</th>
                                             <th>ราคา</th>
-                                            <th>จำนวนคงเหลือ</th>
-                                            <th>เวลา</th>
+                                            <th>หมวดหมู่</th>
                                             <th>สถานะ</th>
                                             <th>การทำงาน</th>
                                             <!--<th>ลบสินค้า</th>-->
@@ -160,10 +159,9 @@
                                     <tfoot>
                                         <tr>
                                             <th>ชื่อ</th>
-                                            <th>รูปสินค้า</th>
+                                            <th>ร้านค้า</th>
                                             <th>ราคา</th>
-                                            <th>จำนวนคงเหลือ</th>
-                                            <th>เวลา</th>
+                                            <th>หมวดหมู่</th>
                                             <th>สถานะ</th>
                                             <th>การทำงาน</th>
                                             <!--<th>ลบสินค้า</th>-->
@@ -175,16 +173,10 @@
                                         while($Allpro=mysqli_fetch_array($allpro)){
                                     ?>
                                         <tr>
-                                            <td><?=$Allpro['pro_name']?></td>
-                                            <td><img class="card-img" src="\roengrang\img/<?=$Allpro['pro_img']?>" style="width: 75px;hieght: 75px;"  /></td>
+                                            <td><img class="card-img" src="\roengrang\img/<?=$Allpro['pro_img']?>" style="width: 75px;hieght: 75px;"  /> <?=$Allpro['pro_name']?></td>
+                                            <td><?=$Allpro['shop_name']?></td>
                                             <td><?=$Allpro['pro_price']?> บาท</td>
-                                            <td><?=$Allpro['pro_amount']?></td>
-                                            <td>
-                                                <div>เวลาสร้างสินค้า</div>
-                                                <div><?=$Allpro['add_date']?></div>
-                                                <div>เวลาแก้ไขสินค้า</div>
-                                                <div>2011/04/25</div>
-                                            </td>
+                                            <td><?=$Allpro['cat_name']?></td>
                                             <td>
                                                 <label class="switch">
                                                     <input type="checkbox" class="chk" id="id_chk<?=$Allpro['pro_id']?>" onclick="status(<?=$Allpro['pro_id']?>,<?=$Allpro['pro_ban']?>)" <?php echo($Allpro['pro_ban'] != 0)?'checked':''; ?>>

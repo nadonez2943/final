@@ -414,7 +414,7 @@
                             <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 justify-content-center">
                                 <div class="quickview-content justify-content-center">
                                     <form class="form" action="update.php" method="POST" enctype="multipart/form-data">
-                                    <input hidden type="number" name="id" value="<?=$Allord['id']?>">
+                                        <input hidden type="number" name="id" value="<?=$Allord['id']?>">
                                         <div class="row justify-content-center">
                                             <h2>ให้คะแนน และรีวิวคำสั่งซื้อ</h2>
                                         </div>

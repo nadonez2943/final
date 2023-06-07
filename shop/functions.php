@@ -1,4 +1,6 @@
 <?php 
+
+    include_once('../cloudinary/index.php'); 
     define('DB_SERVER', 'localhost'); // Your hostname
     define('DB_USER', 'root'); // Database Username
     define('DB_PASS', ''); // Database Password
@@ -111,6 +113,10 @@
             $countallorder = mysqli_query($this->dbcon, "SELECT COUNT(id) AS row_count FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE shop.shop_id = '$shop_id'");
             return $countallorder;
         }
+        public function orderb($ord_id) {
+            $order = mysqli_query($this->dbcon, "SELECT * FROM orders LEFT JOIN products ON orders.pro_id = products.pro_id LEFT JOIN shop ON products.shop_id = shop.shop_id WHERE orders.id = '$ord_id'");
+            return $order;
+        }
 
 
         #การนับ
@@ -151,8 +157,9 @@
             $update_order_status3 = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' ,sent_date = NOW() ,sent_img = '$sent_img',payment_img = '$payment_img',payment_status = '1' WHERE orders.id='$id'");
             return $update_order_status3;
         }
-        public function update_order_status6($id,$order_status,$cancleReason) {
+        public function update_order_status6($id,$order_status,$cancleReason,$pro_id,$pro_amount,$pro_selled) {
             $update_order_status6 = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' ,cancleReason = '$cancleReason',cancle_date = NOW() WHERE orders.id='$id'");
+            $pro = mysqli_query($this->dbcon, "UPDATE products SET pro_amount = '$pro_amount',pro_selled = '$pro_selled' WHERE products.pro_id='$pro_id'");
             return $update_order_status6;
         }
 

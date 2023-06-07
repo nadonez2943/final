@@ -130,6 +130,7 @@
                                         <div class="row">
                                             <div class="text text-primary">
                                                 <h3><?=$countrequest['countrequest']?></h3>
+                                                <input hidden type="number" id="newuser" value="<?=$countrequest['countrequest']?>">
                                             </div>
                                         </div>
                                     </div>
@@ -478,6 +479,31 @@
                 ];
                 return monthNames[monthNumber - 1];
             }
+
+        </script>
+        <script>
+            $(document).ready(function() {
+
+            sendRequest();
+
+            function sendRequest() {
+                var newuser = $('#newuser').val();
+                $.ajax({
+                    type: 'POST',
+                    url: 'checkst.php',
+                    data: { numnew: $('#newuser').val(),function: 'newuser' }, // Sending data as an object
+                    success: function(data) {
+                        if (data == 1) {
+                            location.reload();
+                        }
+                    },
+                    complete: function() {
+                        // Schedule the next request when the current one is complete
+                        setTimeout(sendRequest, 5000); // Using setTimeout instead of setInterval
+                    }
+                });
+            }
+            });
 
         </script>
     </body>

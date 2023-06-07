@@ -42,7 +42,13 @@
         }
     }
     if (isset($_POST['function']) && $_POST['function'] == 'update_order_status6') {
-        $update = $sql->update_order_status6($_POST['id'], $_POST['order_status'],$_POST['cancleReason']);
+        $orders = $sql->orderb($_POST['id']);
+        $orders = mysqli_fetch_array($orders);
+
+        $pro_amount = $orders['pro_amount'] + $orders['ord_amount'];
+        $pro_selled = $orders['pro_selled'] - $orders['ord_amount'];
+
+        $update = $sql->update_order_status6($_POST['id'], $_POST['order_status'],$_POST['cancleReason'],$orders['pro_id'],$pro_amount,$pro_selled);
         
         if ($update) {
             $order_status = $sql->checkst($_POST['id']);

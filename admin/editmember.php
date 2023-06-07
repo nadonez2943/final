@@ -120,7 +120,7 @@
                                     <div class="col">
                                         <CENTER>
                                         <div class="col-md-9">
-                                            <img class="card-img mb-5 mb-md-0" id="blah" src="\roengrang\img/<?=$Mem['user_img']?>" alt="avatar" width="200" height="200"/>
+                                            <img class="card-img mb-5 mb-md-0" id="blah" src="<?=$Mem['user_img']?>" alt="avatar" width="200" height="200"/>
                                         </div>
                                         </CENTER>
                                         <CENTER>

@@ -206,7 +206,7 @@
 
         #เรียกสินค้า
         public function allproduct() {
-            $allpro = mysqli_query($this->dbcon, "SELECT * FROM products ");
+            $allpro = mysqli_query($this->dbcon, "SELECT * FROM products LEFT JOIN shop ON products.shop_id=shop.shop_id LEFT JOIN catagory ON products.cat_id=catagory.id ");
             return $allpro;
         }
         public function products($pro_id) {
@@ -290,11 +290,11 @@
 
         #counting
         public function countrequest() {
-            $countrequest = mysqli_query($this->dbcon, "SELECT COUNT(user_id) AS countrequest FROM users WHERE users.user_status = '4';");
+            $countrequest = mysqli_query($this->dbcon, "SELECT COUNT(user_id) AS countrequest FROM users WHERE users.user_role = '4';");
             return $countrequest;
         }
         public function countuser() {
-            $countuser = mysqli_query($this->dbcon, "SELECT COUNT(user_id) AS countuser FROM users WHERE users.user_status != '4';");
+            $countuser = mysqli_query($this->dbcon, "SELECT COUNT(user_id) AS countuser FROM users WHERE users.user_role != '4';");
             return $countuser;
         }
         public function countshop() {
@@ -353,7 +353,7 @@
             return $bestshop;
         }
         public function bestproducts() {
-            $bestproducts = mysqli_query($this->dbcon, "SELECT @row_number := @row_number + 1 AS `No.`, pro_id, pro_name, pro_selled, total_price_sum FROM ( SELECT orders.pro_id AS pro_id,pro_name,pro_selled, SUM(total_price) AS total_price_sum FROM orders INNER JOIN products ON orders.pro_id=products.pro_id GROUP BY orders.pro_id ORDER BY total_price_sum DESC ) AS ranked, (SELECT @row_number := 0) AS x;");
+            $bestproducts = mysqli_query($this->dbcon, "SELECT @row_number := @row_number + 1 AS `No.`, pro_id, pro_name, pro_selled, total_price_sum FROM ( SELECT orders.pro_id AS pro_id,pro_name,pro_selled, SUM(total_price) AS total_price_sum FROM orders INNER JOIN products ON orders.pro_id=products.pro_id WHERE products.pro_selled > '0' GROUP BY orders.pro_id ORDER BY total_price_sum DESC ) AS ranked, (SELECT @row_number := 0) AS x");
             return $bestproducts;
         }
     }

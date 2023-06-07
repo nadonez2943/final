@@ -148,14 +148,14 @@
             $.ajax({
             type: 'POST',
             url: 'update.php',
-            data: { id: $('#id').val(), order_status: 6,cancleReason: cancleReason, function: 'update_order_status6' },
+            data: { id: $('#id').val(), order_status: 6,cancleReason: $('#cancleReason').val(), function: 'update_order_status6' },
             success: function(response) {
-                console.log(response);
-                if (response == "6") {
+                // console.log(response);
+                // if (response == "6") {
                     location.reload();
-                } else {
-                    console.log("Failed to fetch the updated order status.");
-                }
+                // } else {
+                //     console.log(response);
+                // }
             },
             error: function(xhr, status, error) {
                 console.error(error);

@@ -5,6 +5,17 @@
 
     $sql = new DB_con();
 
+    require '../cloudinary/vendor/autoload.php';
+    use Cloudinary\Configuration\Configuration;
+    use Cloudinary\Api\Upload\UploadApi;
+
+    Configuration::instance([
+        'cloud' => [
+            'cloud_name' => 'dlne5j5ub',
+            'api_key' => '232327965775433',
+            'api_secret' => 'jJbI7p20xpDJzI4tPNNf9w8R_zg'],
+        'url' => ['secure' => true]]);
+
     // File upload path
     $targetDir = "../img/";
 
@@ -24,59 +35,37 @@
 
         if($user_role=='1'){ #แอดมิน
             if (!empty($_FILES["file"]["name"])) {
-                $tmp = $_FILES['file']['tmp_name'];
-                $namefile = $_FILES['file']['name'];
-                $fileBasame = basename($_FILES["file"]["name"]);
-                $fileType = pathinfo($fileBasame, PATHINFO_EXTENSION);
-                $fileName = md5(time().$namefile.$tmp).'.'.$fileType;
-                $targetFilePath = $targetDir . $fileName;
-    
-                // Allow certain file formats
-                $allowTypes = array('jpg', 'png');
-                if (in_array($fileType, $allowTypes)) {
-                    if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFilePath)) {
-                        $insert = $sql->addmember($user_email,$user_password,$user_fullname,$user_tel,$user_address,$user_road,$user_soi,$user_subdistrict,$user_role,$fileName);
-                        if ($insert) {
-                            $id = $sql->searchid($user_email);
-                            $user=mysqli_fetch_array($id);
-                            $sub = $sql->address($user_subdistrict);
-                            $address=mysqli_fetch_array($sub);
-                            $insertaddress = $sql->insertaddress($user['user_id'],$user['user_fullname'],$user['user_tel'],$user['user_address'],$user['user_road'],$user['user_soi'],$user_provinces,$user_district,$user_subdistrict,$address['provinces_name'],$address['district_name'],$address['subdistrict_name'],$address['zip_code']);
-                            if ($insertaddress) {
-                                $_SESSION['statusMsg'] = "ลงทะเบียนสำเร็จกรุณาเข้าสู่ระบบ";
-                                header("location: member.php"); 
-                            }
-                        } else {
-                            $_SESSION['statusMsg'] = "File upload failed, please try again.";
-                            header("location: addmember.php");
-                        }
-                    } else {
-                        $_SESSION['statusMsg'] = "ยังๆ";
-                        header("location: addmember.php");
+                $tempPath = $_FILES['file']['tmp_name'];
+                $result = (new UploadApi())->upload($tempPath);
+                $imageName = $result['public_id'];
+                $fileName = 'https://res.cloudinary.com/dlne5j5ub/image/upload/' . $imageName;
+                $insert = $sql->addmember($user_email,$user_password,$user_fullname,$user_tel,$user_address,$user_road,$user_soi,$user_subdistrict,$user_role,$fileName);
+                if ($insert) {
+                    $id = $sql->searchid($user_email);
+                    $user=mysqli_fetch_array($id);
+                    $sub = $sql->address($user_subdistrict);
+                    $address=mysqli_fetch_array($sub);
+                    $insertaddress = $sql->insertaddress($user['user_id'],$user['user_fullname'],$user['user_tel'],$user['user_address'],$user['user_road'],$user['user_soi'],$user_provinces,$user_district,$user_subdistrict,$address['provinces_name'],$address['district_name'],$address['subdistrict_name'],$address['zip_code']);
+                    if ($insertaddress) {
+                        $_SESSION['statusMsg'] = "ลงทะเบียนสำเร็จกรุณาเข้าสู่ระบบ";
+                        header("location: member.php"); 
                     }
                 } else {
-                    $_SESSION['statusMsg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed to upload.";
+                    $_SESSION['statusMsg'] = "File upload failed, please try again.";
                     header("location: addmember.php");
                 }
             } else {
-                $_SESSION['statusMsg'] = "Please select a file to upload.";
+                $_SESSION['statusMsg'] = "ยังๆ";
                 header("location: addmember.php");
             }
         }
         elseif($user_role=='2'){ #คนใน
             if($user_subdistrict=='191010'){
                 if (!empty($_FILES["file"]["name"])) {
-                    $tmp = $_FILES['file']['tmp_name'];
-                    $namefile = $_FILES['file']['name'];
-                    $fileBasame = basename($_FILES["file"]["name"]);
-                    $fileType = pathinfo($fileBasame, PATHINFO_EXTENSION);
-                    $fileName = md5(time().$namefile.$tmp).'.'.$fileType;
-                    $targetFilePath = $targetDir . $fileName;
-        
-                    // Allow certain file formats
-                    $allowTypes = array('jpg', 'png');
-                    if (in_array($fileType, $allowTypes)) {
-                        if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFilePath)) {
+                    $tempPath = $_FILES['file']['tmp_name'];
+                    $result = (new UploadApi())->upload($tempPath);
+                    $imageName = $result['public_id'];
+                    $fileName = 'https://res.cloudinary.com/dlne5j5ub/image/upload/' . $imageName;
                             $insert = $sql->addmember($user_email,$user_password,$user_fullname,$user_tel,$user_address,$user_road,$user_soi,$user_subdistrict,$user_role,$fileName);
                             if ($insert) {
                                 $id = $sql->searchid($user_email);
@@ -100,53 +89,30 @@
                         $_SESSION['statusMsg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed to upload.";
                         header("location: addmember.php");
                     }
-                } else {
-                    $_SESSION['statusMsg'] = "Please select a file to upload.";
-                    header("location: addmember.php");
-                }
-            }else {
-                $_SESSION['statusMsg'] = "บุคคลนี่ไม่ได้อยู่ในชุมชน";
-                header("location: addmember.php");
-            }
         }
         elseif($user_role=='3'){ #คนนอก
             if (!empty($_FILES["file"]["name"])) {
-                $tmp = $_FILES['file']['tmp_name'];
-                $namefile = $_FILES['file']['name'];
-                $fileBasame = basename($_FILES["file"]["name"]);
-                $fileType = pathinfo($fileBasame, PATHINFO_EXTENSION);
-                $fileName = md5(time().$namefile.$tmp).'.'.$fileType;
-                $targetFilePath = $targetDir . $fileName;
-    
-                // Allow certain file formats
-                $allowTypes = array('jpg', 'png');
-                if (in_array($fileType, $allowTypes)) {
-                    if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFilePath)) {
-                        $insert = $sql->addmember($user_email,$user_password,$user_fullname,$user_tel,$user_address,$user_road,$user_soi,$user_subdistrict,$user_role,$fileName);
-                        if ($insert) {
-                            $id = $sql->searchid($user_email);
-                            $user=mysqli_fetch_array($id);
-                            $sub = $sql->address($user_subdistrict);
-                            $address=mysqli_fetch_array($sub);
-                            $insertaddress = $sql->insertaddress($user['user_id'],$user['user_fullname'],$user['user_tel'],$user['user_address'],$user['user_road'],$user['user_soi'],$user_provinces,$user_district,$user_subdistrict,$address['provinces_name'],$address['district_name'],$address['subdistrict_name'],$address['zip_code']);
-                            if ($insertaddress) {
-                                $_SESSION['statusMsg'] = "ลงทะเบียนสำเร็จกรุณาเข้าสู่ระบบ";
-                                header("location: member.php"); 
-                            }
-                        } else {
-                            $_SESSION['statusMsg'] = "File upload failed, please try again.";
-                            header("location: addmember.php");
-                        }
-                    } else {
-                        $_SESSION['statusMsg'] = "ยังๆ";
-                        header("location: addmember.php");
+                $tempPath = $_FILES['file']['tmp_name'];
+                $result = (new UploadApi())->upload($tempPath);
+                $imageName = $result['public_id'];
+                $fileName = 'https://res.cloudinary.com/dlne5j5ub/image/upload/' . $imageName;
+                $insert = $sql->addmember($user_email,$user_password,$user_fullname,$user_tel,$user_address,$user_road,$user_soi,$user_subdistrict,$user_role,$fileName);
+                if ($insert) {
+                    $id = $sql->searchid($user_email);
+                    $user=mysqli_fetch_array($id);
+                    $sub = $sql->address($user_subdistrict);
+                    $address=mysqli_fetch_array($sub);
+                    $insertaddress = $sql->insertaddress($user['user_id'],$user['user_fullname'],$user['user_tel'],$user['user_address'],$user['user_road'],$user['user_soi'],$user_provinces,$user_district,$user_subdistrict,$address['provinces_name'],$address['district_name'],$address['subdistrict_name'],$address['zip_code']);
+                    if ($insertaddress) {
+                        $_SESSION['statusMsg'] = "ลงทะเบียนสำเร็จกรุณาเข้าสู่ระบบ";
+                        header("location: member.php"); 
                     }
                 } else {
-                    $_SESSION['statusMsg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed to upload.";
+                    $_SESSION['statusMsg'] = "File upload failed, please try again.";
                     header("location: addmember.php");
                 }
             } else {
-                $_SESSION['statusMsg'] = "Please select a file to upload.";
+                $_SESSION['statusMsg'] = "ยังๆ";
                 header("location: addmember.php");
             }
         }
@@ -169,17 +135,10 @@
         $user_id = $_POST['user_id'];
 
         if (!empty($_FILES["file"]["name"])) {
-            $tmp = $_FILES['file']['tmp_name'];
-            $namefile = $_FILES['file']['name'];
-            $fileBasame = basename($_FILES["file"]["name"]);
-            $fileType = pathinfo($fileBasame, PATHINFO_EXTENSION);
-            $fileName = md5(time().$namefile.$tmp).'.'.$fileType;
-            $targetFilePath = $targetDir . $fileName;
-
-            // Allow certain file formats
-            $allowTypes = array('jpg', 'png');
-            if (in_array($fileType, $allowTypes)) {
-                if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFilePath)) {
+            $tempPath = $_FILES['file']['tmp_name'];
+            $result = (new UploadApi())->upload($tempPath);
+            $imageName = $result['public_id'];
+            $fileName = 'https://res.cloudinary.com/dlne5j5ub/image/upload/' . $imageName;
                     $insert = $sql->update_user($user_email,$user_password,$user_fullname,$user_tel,$user_address,$user_road,$user_soi,$user_subdistrict,$user_role,$fileName,$user_id);
                     if ($insert) {
                         $sub = $sql->address($user_subdistrict);
@@ -196,14 +155,6 @@
                         $_SESSION['statusMsg'] = "มีบางอย่างผิดพลาด กรุณาลองใหม่อีกครั้ง";
                         header("location: editmember.php?user_id=".$user_id);
                     }
-                } else {
-                    $_SESSION['statusMsg'] = "ยังๆ";
-                    header("location: editmember.php?user_id=".$user_id);
-                }
-            } else {
-                $_SESSION['statusMsg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed to upload.";
-                header("location: editmember.php?user_id=".$user_id);
-            }
         } else {
             $insert = $sql->update_user($user_email,$user_password,$user_fullname,$user_tel,$user_address,$user_road,$user_soi,$user_subdistrict,$user_role,$img_name,$user_id);
             if ($insert) {

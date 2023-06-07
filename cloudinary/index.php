@@ -14,9 +14,9 @@ Configuration::instance([
 //$result = (new UploadApi())->upload('unnamed.jpg');#เพิ่มรูป
 //$imageName = $result['public_id'];#ชื่อรูป
 
-//$imageUrl = 'https://res.cloudinary.com/dctzkxkyd/image/upload/' . $imageName;
+//$imageUrl = 'https://res.cloudinary.com/dlne5j5ub/image/upload/' . $imageName;
 
-// $imageUrl = 'https://res.cloudinary.com/dctzkxkyd/image/upload/cld-sample-5';
+// $imageUrl = 'https://res.cloudinary.com/dlne5j5ub/image/upload/cld-sample-5';
 // Display the uploaded image
 
 // echo '<img src="' . $imageUrl . '">';
