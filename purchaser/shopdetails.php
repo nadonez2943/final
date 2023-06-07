@@ -225,7 +225,7 @@
 									</h4>
 								</div>
 								<div class="row mt-2">
-										<a style="font-size:18px;">ร้านค้า</a>
+								<button type="button" data-toggle="modal" data-target="#report" class="btn btn-danger">รายงานสินค้า</button>
 								</div>
 							</div>
 							<div class="col-2">
@@ -295,6 +295,53 @@
 			</div>
 		</div>
 	</section>
+
+	<div class="modal fade" id="report" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
+				</div>
+				<div class="modal-body">
+					<div class="row justify-content-center">
+						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 justify-content-center">
+							<div class="quickview-content justify-content-center">
+								<form class="form" action="update.php" method="POST" enctype="multipart/form-data">
+									<input hidden type="text" name="shop_id" value="<?=$_GET['shop_id']?>">
+									<input hidden type="text" name="user_id" value="<?=$_SESSION['id']?>">
+									<div class="row justify-content-center">
+										<h2>รายงานปัญหาเกี่ยวกับร้านค้าและบริการที่ท่านได้รับ</h2>
+									</div>
+									<div class="row  mt-3">
+										<div class="col-3">
+											<h6>หัวข้อปัญหา </h6>
+										</div>
+										<br>
+										<div class="col-7">
+										<input type="text" class="form-control" name="topic" id="topic"  placeholder="กรุณาระบุหัวข้อของปัญหา">
+										</div>
+									</div>
+									<div class="row mt-3">
+										<div class="col-7">
+											<h6>รายละเอียดปัญหาที่ท่านพบเจอ</h6>
+										</div>
+									</div>
+									<div class="row mt-9">
+											<textarea name="detail" id="detail" cols="30" rows="10"></textarea>
+										</div>
+									</div>
+									<div class="row justify-content-center mt-3">
+									<button type="submit" name="reportshop" class="btn btn-primary">รายงาน</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 			
 	<!-- End Product Area -->
 	

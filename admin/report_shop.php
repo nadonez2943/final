@@ -194,7 +194,7 @@
                                             </td>
                                             <td>
                                                 <div>
-                                                <a class="text-decoration-none" href="report_detail.php">
+                                                <a class="text-decoration-none" href="report_shopdetail.php?id=<?=$RepShop['id']?>">
                                                 <button type="button" style="width:110px; height:70; font-size:17px;" class="btn btn-primary mb-1">อ่านรายงาน</button></a>
                                                 </div>
                                             </td>
@@ -212,7 +212,7 @@
                                 <table id="noTable">
                                     <thead>
                                         <tr>
-                                            <th>รูปสินค้า</th>
+                                            <th>รูปร้านค้า</th>
                                             <th>สินค้า</th>
                                             <th>ผู้รายงาน</th>
                                             <th>เวลา</th>
@@ -221,7 +221,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>รูปสินค้า</th>
+                                            <th>รูปร้านค้า</th>
                                             <th>สินค้า</th>
                                             <th>ผู้รายงาน</th>
                                             <th>เวลา</th>
@@ -250,7 +250,7 @@
                                             </td>
                                             <td>
                                                 <div>
-                                                <a class="text-decoration-none" href="report_detail.php">
+                                                <a class="text-decoration-none" href="report_shopdetail.php?id=<?=$RepShopN['id']?>">
                                                 <button type="button" style="width:110px; height:70; font-size:17px;" class="btn btn-primary mb-1">อ่านรายงาน</button></a>
                                             </div>
                                             </td>
@@ -268,7 +268,7 @@
                                 <table id="readTable">
                                     <thead>
                                         <tr>
-                                            <th>รูปสินค้า</th>
+                                            <th>รูปร้านค้า</th>
                                             <th>สินค้า</th>
                                             <th>ผู้รายงาน</th>
                                             <th>เวลา</th>
@@ -277,7 +277,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>รูปสินค้า</th>
+                                            <th>รูปร้านค้า</th>
                                             <th>สินค้า</th>
                                             <th>ผู้รายงาน</th>
                                             <th>เวลา</th>
@@ -306,7 +306,7 @@
                                             </td>
                                             <td>
                                                 <div>
-                                                <a class="text-decoration-none" href="report_detail.php">
+                                                <a class="text-decoration-none" href="report_shopdetail.php?id=<?=$RepShopR['id']?>">
                                                 <button type="button" style="width:110px; height:70; font-size:17px;" class="btn btn-primary mb-1">อ่านรายงาน</button></a>
 
                                                 <a class="text-decoration-none" href="#">   

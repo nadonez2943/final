@@ -196,7 +196,7 @@
                                             </td>
                                             <td>
                                                 <div>
-                                                <a class="text-decoration-none" href="report_detailpro.php?id=<?=$RepPro['id']?>">
+                                                <a class="text-decoration-none" href="report_prodetail.php?id=<?=$RepPro['id']?>">
                                                     <button type="button" style="width:110px; height:70; font-size:17px;" class="btn btn-primary mb-1">อ่านรายงาน</button></a>
                                                 </div>
                                             </td>
@@ -256,7 +256,7 @@
                                             </td>
                                             <td>
                                                 <div>
-                                                    <a class="text-decoration-none" href="report_detailpro.php">
+                                                    <a class="text-decoration-none" href="report_prodetail.php?id=<?=$RepProN['id']?>">
                                                     <button type="button" style="width:110px; height:70; font-size:17px;" class="btn btn-primary mb-1">อ่านรายงาน</button></a>
                                                 </div>
                                             </td>
@@ -317,7 +317,7 @@
                                             </td>
                                             <td>
                                                 <div>
-                                                <a class="text-decoration-none" href="report_detailpro.php">
+                                                <a class="text-decoration-none" href="report_prodetail.php?id=<?=$RepProR['id']?>">
                                                     <button type="button" style="width:110px; height:70; font-size:17px;" class="btn btn-primary mb-1">อ่านรายงาน</button></a>
                                                 
                                                     <a class="text-decoration-none" href="#">   

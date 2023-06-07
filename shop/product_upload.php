@@ -58,31 +58,19 @@
         $img_name = $_POST['img_name'];
 
         if (!empty($_FILES["file"]["name"])) {
-            $tmp = $_FILES['file']['tmp_name'];
-            $namefile = $_FILES['file']['name'];
-            $fileBasame = basename($_FILES["file"]["name"]);
-            $fileType = pathinfo($fileBasame, PATHINFO_EXTENSION);
-            $fileName = md5(time().$namefile.$tmp).'.'.$fileType;
-            $targetFilePath = $targetDir . $fileName;
-
-            // Allow certain file formats
-            $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'pdf');
-            if (in_array($fileType, $allowTypes)) {
-                if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFilePath)) {
-                    $insert = $sql->update_product($pro_id,$cat_id, $pro_name, $pro_price, $pro_amount, $pro_detail, $pro_send, $fileName);
-                    if ($insert) {
-                        $_SESSION['statusMsg'] = "แก้ไขสินค้าสำเร็จ";
-                        header("location: editproduct.php?pro_id=".$pro_id); 
-                    } else {
-                        $_SESSION['statusMsg'] = "อัพโหลดสินค้าผิดพลาดกรุณาลองใหม่อีครั้ง";
-                        header("location: editproduct.php");
-                    }
-                }else{
-                    echo "1";
-                }
-            }else{
-                echo "2";
+            $tempPath = $_FILES['file']['tmp_name'];
+            $result = (new UploadApi())->upload($tempPath);
+            $imageName = $result['public_id'];
+            $fileName = 'https://res.cloudinary.com/dlne5j5ub/image/upload/' . $imageName;
+            $insert = $sql->update_product($pro_id,$cat_id, $pro_name, $pro_price, $pro_amount, $pro_detail, $pro_send, $fileName);
+            if ($insert) {
+                $_SESSION['statusMsg'] = "แก้ไขสินค้าสำเร็จ";
+                header("location: editproduct.php?pro_id=".$pro_id); 
+            } else {
+                $_SESSION['statusMsg'] = "อัพโหลดสินค้าผิดพลาดกรุณาลองใหม่อีครั้ง";
+                header("location: editproduct.php");
             }
+               
         }else{
            $insert = $sql->update_product($pro_id,$cat_id, $pro_name, $pro_price, $pro_amount, $pro_detail, $pro_send, $img_name);
             if ($insert) {

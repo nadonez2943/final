@@ -235,9 +235,18 @@
                         <CENTER>
                         <!-- Product Slider -->
                             <div class="product-gallery">
-                                <div>
+                                <div class="quickview-slider-active">
                                     <div class="single-slider">
-                                        <img src="<?=$Pro['pro_img']?>" style="width: 469px; height: 478px;" alt="#">
+                                        <img src="\roengrang\img/<?=$Pro['pro_img']?>" style="width: 469px; height: 478px;" alt="#">
+                                    </div>
+                                    <div class="single-slider">
+                                        <img src="https://via.placeholder.com/569x528" style="width: 469px; height: 478px; alt="#">
+                                    </div>
+                                    <div class="single-slider">
+                                        <img src="https://via.placeholder.com/569x528" style="width: 469px; height: 478px; alt="#">
+                                    </div>
+                                    <div class="single-slider">
+                                        <img src="https://via.placeholder.com/569x528" style="width: 469px; height: 478px; alt="#">
                                     </div>
                                 </div>
                             </div>
@@ -247,6 +256,7 @@
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                         <div class="quickview-content">
                             <h1><?=$Pro['pro_name']?></h1>
+                            <B>ร้าน <?=$Pro['shop_name']?></B>
                             <div class="quickview-ratting-review">
                                 <div class="quickview-ratting-wrap">
                                     <div class="quickview-ratting">
@@ -329,6 +339,9 @@
                                             </button>
                                         </div>
                                     </div>
+
+                                    &emsp;&emsp;<button type="button" data-toggle="modal" data-target="#report" class="btn btn-danger">รายงานสินค้า</button>
+                                    
                                     <!--/ End Input Order -->
                                 </div><br>
                                 <div class="add-to-cart mt-3">
@@ -470,99 +483,94 @@
             </div>
         </section>
         <!--/ End Blog Single -->
+        
+        <div class="modal fade" id="report" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 justify-content-center">
+                                <div class="quickview-content justify-content-center">
+                                    <form class="form" action="update.php" method="POST" enctype="multipart/form-data">
+                                        <input hidden type="text" name="pro_id" value="<?=$_GET['pro_id']?>">
+                                        <input hidden type="text" name="user_id" value="<?=$_SESSION['id']?>">
+                                        <div class="row justify-content-center">
+                                            <h2>รายงานปัญหาเกี่ยวกับสินค้าที่ท่านได้รับ</h2>
+                                        </div>
+                                        <div class="row  mt-3">
+                                            <div class="col-3">
+                                                <h6>หัวข้อปัญหา </h6>
+                                            </div>
+                                            <br>
+                                            <div class="col-7">
+                                            <input type="text" class="form-control" name="topic" id="topic"  placeholder="กรุณาระบุหัวข้อของปัญหา">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-7">
+                                                <h6>รายละเอียดปัญหาที่ท่านพบเจอ</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-9">
+                                                <textarea name="detail" id="detail" cols="30" rows="10"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center mt-3">
+                                        <button type="submit" name="reportproduct" class="btn btn-primary">รายงาน</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
             
         <!-- Start Footer Area -->
-    <footer class="footer">
-        <!-- Footer Top -->
-        <div class="footer-top section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5 col-md-6 col-12">
-                        <!-- Single Widget -->
-                        <div class="single-footer about">
-                            <div class="logo">
-                                <a href="index.html"><img src="images/logo2.png" alt="#"></a>
-                            </div>
-                            <p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue,  magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
-                            <p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">+0123 456 789</a></span></p>
-                        </div>
-                        <!-- End Single Widget -->
-                    </div>
-                    <div class="col-lg-2 col-md-6 col-12">
-                        <!-- Single Widget -->
-                        <div class="single-footer links">
-                            <h4>Information</h4>
-                            <ul>
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Faq</a></li>
-                                <li><a href="#">Terms & Conditions</a></li>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Help</a></li>
-                            </ul>
-                        </div>
-                        <!-- End Single Widget -->
-                    </div>
-                    <div class="col-lg-2 col-md-6 col-12">
-                        <!-- Single Widget -->
-                        <div class="single-footer links">
-                            <h4>Customer Service</h4>
-                            <ul>
-                                <li><a href="#">Payment Methods</a></li>
-                                <li><a href="#">Money-back</a></li>
-                                <li><a href="#">Returns</a></li>
-                                <li><a href="#">Shipping</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                            </ul>
-                        </div>
-                        <!-- End Single Widget -->
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-12">
-                        <!-- Single Widget -->
-                        <div class="single-footer social">
-                            <h4>Get In Tuch</h4>
-                            <!-- Single Widget -->
-                            <div class="contact">
-                                <ul>
-                                    <li>NO. 342 - London Oxford Street.</li>
-                                    <li>012 United Kingdom.</li>
-                                    <li>info@eshop.com</li>
-                                    <li>+032 3456 7890</li>
-                                </ul>
-                            </div>
-                            <!-- End Single Widget -->
-                            <ul>
-                                <li><a href="#"><i class="ti-facebook"></i></a></li>
-                                <li><a href="#"><i class="ti-twitter"></i></a></li>
-                                <li><a href="#"><i class="ti-flickr"></i></a></li>
-                                <li><a href="#"><i class="ti-instagram"></i></a></li>
-                            </ul>
-                        </div>
-                        <!-- End Single Widget -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Footer Top -->
-        <div class="copyright">
-            <div class="container">
-                <div class="inner">
-                    <div class="row">
-                        <div class="col-lg-6 col-12">
-                            <div class="left">
-                                <p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-12">
-                            <div class="right">
-                                <img src="images/payments.png" alt="#">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- /End Footer Area -->
+        <footer class="footer">
+		<!-- Footer Top -->
+
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 col-md-4 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer about">
+							<div class="logo">
+								<a href="index.php"><img src="images/Logo1.png" width= "20%" height="10%"></a>
+							</div>
+							<p class="text">เว็บแอปพลิเคชันร้านค้าชุมชนเริงราง จัดทำขึ้นเนื่องด้วยวัตถุประสงค์เพื่อพัฒนาชุมชนเริงรางให้มีวิธีจัดจําหน่ายสินค้าหัตถกรรมที่เป็นเอกลักษณ์เพื่อให้สมาชิกภายใน
+                                ชุมชนสามารถซื้อขายสินค้าภายในชุมชน สามารถส่งออกผ่านทางออนไลน์ และวัตถุประสงค์สําคัญเพื่อให้ชาวบ้านมี
+                                รายได้เพิ่มเข้ามาหมุนเวียนภายในชุมชนมากขึ้น</p>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+					
+				</div>
+			</div>
+
+		<!-- End Footer Top -->
+		<div class="copyright">
+			<div class="container">
+				<div class="inner">
+					<div class="row">
+						<div class="col-lg-6 col-12">
+							<div class="left">
+								<p>โดยนักศึกษาคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี</p>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- /End Footer Area -->
     
     <!-- Jquery -->
     <script src="js/jquery.min.js"></script>

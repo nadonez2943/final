@@ -139,36 +139,41 @@
                 <main>
 
                     <div class="container px-4 px-lg-5 mt-5">
-                        <h1 class="mt-4">รายงานปัญหาร้านค้า</h1>
+                        <h1 class="mt-4">รายงานปัญหาสินค้า</h1>
                         <!-- <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">สำหรับคนในชุมชน กรุณาตรวจสอบข้อมูลของผู้สมัครว่าเป็นจริงหรือไม่</li>
                         </ol> -->
                         <hr>
-                        
+                        <?php       
+                            $repPro = $sql->report_pro($_GET['id']);
+                            $RepPro=mysqli_fetch_array($repPro)
+                        ?>
 
                         <div class="card">
                                 <div class="card-body">
-                                <p align ="right">วัน/เดือน/ปี</p>
+                                
                                     <div class="row">
-                                        <div class="col-2">
-                                            <p>&emsp;
-                                            <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="rounded-circle" alt="Cinque Terre"
-                                            width= "80%" height="80%">
+                                        <div class="col-3">
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    <center>
+                                                    <img class="card-img" src="\roengrang\img/<?=$RepPro['pro_img']?>" width="200" height="200">
+                                                    </center>
+                                                </div>
+                                            </div>
                                         </div>
-                                        
-                             
-                                        <div class="col-8">
+                                        <div class="col-9">
                                             <br>
                                             <br>
-                                            <label>ชื่อผู้รายงาน</label><label></label><br>
-                                            <label>เวลารายงาน</label>
+                                            <label>ชื่อผู้รายงาน</label>&nbsp;<label><B><?=$RepPro['user_fullname']?></B></label><br>
+                                            <label>เวลารายงาน</label>&nbsp;<label><B><?=$RepPro['report_date']?></B></label>
                                         </div>
                                     </div>
                                         
                                     <div class="row">
                                     <div class="col-8">
                                         <br>
-                                            <h4>&emsp;หัวข้อเรื่อง&emsp;<></h4>
+                                            <h5>&emsp;หัวข้อเรื่อง&emsp;<&nbsp;<B><?=$RepPro['topic']?></B>&nbsp;></h5>
                                             
                                         </div>
                                     </div>
@@ -177,14 +182,14 @@
                                             <div class="card-body">
                                             <div class="row">
                                     <div class="col-8">
-                                                <p>&emsp;รายละเอียดรายงาน</p>
+                                                <p>&emsp;<?=$RepPro['detail']?></p>
                                         <br>
                                     </div>
                                 </div>
                         </div>
         </div>
                                     <br>
-                                    <p align ="right"><a class="btn btn-outline-success text-decoration-none">&emsp;<i class="fa-solid fa-check"></i>&nbsp;รับทราบ&emsp;</a>
+                                    <p align ="right">
                                     <a class="btn btn-outline-primary text-decoration-none">&nbsp;&nbsp;<i class="fa-solid fa-envelope-circle-check"></i>&nbsp;อ่านแล้ว&nbsp;&nbsp;</a></p>
                     
             </div>

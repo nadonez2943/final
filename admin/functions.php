@@ -89,6 +89,14 @@
             $repShopN = mysqli_query($this->dbcon, "SELECT * FROM report_shop LEFT JOIN users ON report_shop.user_id=users.user_id LEFT JOIN shop ON report_shop.shop_id=shop.shop_id WHERE report_status=0");
             return $repShopN;
         }
+        public function reportdetailshop() {
+            $repShopN = mysqli_query($this->dbcon, "SELECT * FROM report_shop LEFT JOIN users ON report_shop.user_id=users.user_id LEFT JOIN shop ON report_shop.shop_id=shop.shop_id WHERE report_status=0");
+            return $repShopN;
+        }
+        public function reportshopdetail($id) {
+            $repShopN = mysqli_query($this->dbcon, "SELECT * FROM report_shop LEFT JOIN users ON report_shop.user_id=users.user_id LEFT JOIN shop ON report_shop.shop_id=shop.shop_id WHERE id = '$id'");
+            return $repShopN;
+        }
 
         // --------------------------------------------------------------------------------------------------------------------------------------
 
@@ -356,5 +364,7 @@
             $bestproducts = mysqli_query($this->dbcon, "SELECT @row_number := @row_number + 1 AS `No.`, pro_id, pro_name, pro_selled, total_price_sum FROM ( SELECT orders.pro_id AS pro_id,pro_name,pro_selled, SUM(total_price) AS total_price_sum FROM orders INNER JOIN products ON orders.pro_id=products.pro_id WHERE products.pro_selled > '0' GROUP BY orders.pro_id ORDER BY total_price_sum DESC ) AS ranked, (SELECT @row_number := 0) AS x");
             return $bestproducts;
         }
+
+        
     }
 ?>

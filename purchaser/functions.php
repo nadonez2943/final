@@ -215,6 +215,14 @@
             $addcart = mysqli_query($this->dbcon, "INSERT INTO cart(pro_id,user_id,amount) VALUES('$pro_id','$user_id','$amount')");
             return $addcart;
         }
+        public function reportproduct($user_id,$topic,$detail,$pro_id) {
+            $reportproduct = mysqli_query($this->dbcon, "INSERT INTO report_pro(user_id, topic, detail, pro_id) VALUES('$user_id', '$topic', '$detail', '$pro_id')");
+            return $reportproduct;
+        }
+        public function reportshop($user_id,$topic,$detail,$shop_id) {
+            $reportshop = mysqli_query($this->dbcon, "INSERT INTO report_shop(user_id, topic, detail, shop_id) VALUES('$user_id', '$topic', '$detail', '$shop_id')");
+            return $reportshop;
+        }
 
         #update
         public function update_order_status($id,$order_status) {

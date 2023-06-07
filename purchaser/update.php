@@ -1,5 +1,16 @@
 <?php
     include_once('functions.php'); 
+
+    require '../cloudinary/vendor/autoload.php';
+    use Cloudinary\Configuration\Configuration;
+    use Cloudinary\Api\Upload\UploadApi;
+
+    Configuration::instance([
+        'cloud' => [
+            'cloud_name' => 'dlne5j5ub',
+            'api_key' => '232327965775433',
+            'api_secret' => 'jJbI7p20xpDJzI4tPNNf9w8R_zg'],
+        'url' => ['secure' => true]]);
         
     $sql = new DB_con();
 
@@ -67,40 +78,21 @@
     }
     if (isset($_POST['receive_order'])) {
         if (!empty($_FILES["receive_img"]["name"]) && !empty($_FILES["payment_img"]["name"])) {
-            $receive_imgTmp = $_FILES['receive_img']['tmp_name'];
-            $payment_imgTmp = $_FILES['payment_img']['tmp_name'];
-    
-            $receive_imgName = $_FILES['receive_img']['name'];
-            $payment_imgName = $_FILES['payment_img']['name'];
-    
-            $receive_imgBaseName = basename($_FILES["receive_img"]["name"]);
-            $payment_imgBaseName = basename($_FILES["payment_img"]["name"]);
-    
-            $receive_imgType = pathinfo($receive_imgBaseName, PATHINFO_EXTENSION);
-            $payment_imgType = pathinfo($payment_imgBaseName, PATHINFO_EXTENSION);
-    
-            $receive_imgName = md5(time() . $receive_imgName . $receive_imgTmp) . '.' . $receive_imgType;
-            $payment_imgName = md5(time() . $payment_imgName . $payment_imgTmp) . '.' . $payment_imgType;
-    
-            $targetFilePath1 = $targetDir . $receive_imgName;
-            $targetFilePath2 = $targetDir . $payment_imgName;
-    
-            // Allow certain file formats
-            $allowTypes = array('jpg', 'png');
-    
             $receive_imgUploaded = false;
             $payment_imgUploaded = false;
-    
-            if (in_array($receive_imgType, $allowTypes)) {
-                if (move_uploaded_file($receive_imgTmp, $targetFilePath1)) {
-                    $receive_imgUploaded = true;
-                }
+            if (!empty($_FILES["receive_img"]["name"])) {
+                $tempPath = $_FILES['receive_img']['tmp_name'];
+                $result = (new UploadApi())->upload($tempPath);
+                $imageName = $result['public_id'];
+                $receive_imgName = 'https://res.cloudinary.com/dlne5j5ub/image/upload/' . $imageName;
+                $receive_imgUploaded = true;
             }
-    
-            if (in_array($payment_imgType, $allowTypes)) {
-                if (move_uploaded_file($payment_imgTmp, $targetFilePath2)) {
-                    $payment_imgUploaded = true;
-                }
+            if (!empty($_FILES["payment_img"]["name"])) {
+                $tempPath = $_FILES['payment_img']['tmp_name'];
+                $result = (new UploadApi())->upload($tempPath);
+                $imageName = $result['public_id'];
+                $payment_imgName = 'https://res.cloudinary.com/dlne5j5ub/image/upload/' . $imageName;
+                $payment_imgUploaded = true;
             }
     
             if ($receive_imgUploaded && $payment_imgUploaded) {
@@ -150,8 +142,18 @@
         $update = $sql->review($_POST['id'], $points,$_POST['review'],$allord['pro_id']);
 
         header("location: order_detail.php?id=" . $_POST['id']);
-    } else {
-        echo "Incomplete form submission.";
+    }
+    if (isset($_POST['reportproduct'])) {
+
+        $product = $sql->reportproduct($_POST['user_id'],$_POST['topic'],$_POST['detail'],$_POST['pro_id']);
+        echo '<script>alert("รายงานสินค้าสำเร็จแล้ว");</script>';
+        echo '<script>window.location.href = "productdetails.php?pro_id=' . $_POST['pro_id'] . '";</script>';
+  
+    }
+    if (isset($_POST['reportshop'])) {
+        $product = $sql->reportshop($_POST['user_id'],$_POST['topic'],$_POST['detail'],$_POST['shop_id']);
+        echo '<script>alert("รายงานร้านค้าสำเร็จแล้ว");</script>';
+        echo '<script>window.location.href = "shopdetails.php?shop_id=' . $_POST['shop_id'] . '";</script>';
     }
 
 
