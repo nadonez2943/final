@@ -50,7 +50,7 @@
             return $zip_code;
         }
         public function address($sub_id) {
-            $address = mysqli_query($this->dbcon, "SELECT subdistrict.name_th as subdistrict_name,district.name_th  as district_name,provinces.name_th  as provinces_name,zip_code FROM subdistrict  LEFT JOIN district ON subdistrict.district_code=district.code LEFT JOIN provinces ON district.province_code=provinces.code WHERE subdistrict.code='$sub_id'");
+            $address = mysqli_query($this->dbcon, "SELECT subdistrict.name_th as subdistrict_name,subdistrict.code as subdistrict_id,district.name_th  as district_name,district.code  as district_id,provinces.name_th  as provinces_name,provinces.code  as provinces_id,zip_code FROM subdistrict  LEFT JOIN district ON subdistrict.district_code=district.code LEFT JOIN provinces ON district.province_code=provinces.code WHERE subdistrict.code='$sub_id'");
             return $address;
         }
         public function useraddress($user_id) {

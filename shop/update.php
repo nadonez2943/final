@@ -36,7 +36,12 @@
         }
     }
     if (isset($_POST['function']) && $_POST['function'] == 'update_order_status0') {
-        $update = $sql->update_order_status0($_POST['id'], $_POST['order_status'],$_POST['sentprice']);
+        $orders = $sql->orderb($_POST['id']);
+        $orders = mysqli_fetch_array($orders);
+
+        $total_price = $orders['sum_price'] + $_POST['sentprice'];
+
+        $update = $sql->update_order_status0($_POST['id'], $_POST['order_status'],$_POST['sentprice'],$total_price);
         
         if ($update) {
             $order_status = $sql->checkst($_POST['id']);

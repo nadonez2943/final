@@ -145,8 +145,8 @@
             $update_product = mysqli_query($this->dbcon, "UPDATE products SET cat_id = '$cat_id',pro_name = '$pro_name',pro_price = '$pro_price',pro_amount = '$pro_amount',pro_detail = '$pro_detail',update_date = NOW(),pro_send = '$pro_send',pro_img = '$fileName' WHERE pro_id='$pro_id'");
             return $update_product;
         }
-        public function update_order_status0($id,$order_status,$sentprice) {
-            $update_order_status0 = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' ,sent_price = '$sentprice',confirm_date = NOW() WHERE orders.id='$id'");
+        public function update_order_status0($id,$order_status,$sentprice,$total_price) {
+            $update_order_status0 = mysqli_query($this->dbcon, "UPDATE orders SET order_status = '$order_status' ,sent_price = '$sentprice',total_price = '$total_price',confirm_date = NOW() WHERE orders.id='$id'");
             return $update_order_status0;
         }
         public function update_order_status2($id,$order_status,$ship_img) {

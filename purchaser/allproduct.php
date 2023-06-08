@@ -29,7 +29,7 @@
 	<!-- Title Tag  -->
     <title>Roengrang Shop</title>
 	<!-- Favicon -->
-	<link rel="icon" type="image/png" href="images/Logo3.png">
+	<link rel="icon" type="image/png" href="https://res.cloudinary.com/dlne5j5ub/image/upload/v1686199830/Logo3_daw4ft.png">
 	<!-- Web Font -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 	
@@ -119,7 +119,7 @@
                         <div class="col-lg-2 col-md-2 col-12">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="index.php"><img src="images/Logo4.png" alt="logo" hieght=""></a>
+                                <a href="index.php"><img src="https://res.cloudinary.com/dlne5j5ub/image/upload/v1686199831/logo4_eulu4l.png" alt="logo" hieght=""></a>
                             </div>
                             <!--/ End Logo -->
                         </div>
@@ -257,7 +257,7 @@
 						<!-- Single Widget -->
 						<div class="single-footer about">
 							<div class="logo">
-								<a href="index.php"><img src="images/Logo1.png" width= "20%" height="10%"></a>
+								<a href="index.php"><img src="https://res.cloudinary.com/dlne5j5ub/image/upload/v1686072817/logo1_fo37mz.png" width= "20%" height="10%"></a>
 							</div>
 							<p class="text">
 								เว็บแอปพลิเคชันร้านค้าชุมชนเริงราง จัดทำขึ้นเนื่องด้วยวัตถุประสงค์เพื่อพัฒนาชุมชนเริงรางให้มีวิธีจัดจําหน่ายสินค้าหัตถกรรมที่เป็นเอกลักษณ์เพื่อให้สมาชิกภายใน

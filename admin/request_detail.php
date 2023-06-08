@@ -165,6 +165,7 @@
                         <?php } ?>
                         <hr>
                         <div class="card">
+                            <form class="form" action="update_request.php" method="post" enctype="multipart/form-data">
                                 <div class="card-body">
                                 <?php
                                     $Mem = $sql->requestdetail($_GET['user_id']);
@@ -189,6 +190,7 @@
                                                     <label class="form-label">อีเมล :</label>
                                                     <div>
                                                         <label class="form-label"><?=$mem['user_email']?></label>
+                                                        <input hidden type="text" class="form-control" name="user_email" id="email" value="<?=$mem['user_email']?>">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -241,6 +243,7 @@
                                                     <label for="subdistrict" class="form-label">ตำบล/แขวง :</label>
                                                     <div>
                                                         <label class="form-label"><?=$Address['subdistrict_name']?></label>
+                                                        <input hidden type="text" class="form-control" name="subdistrict" id="subdistrict" value="<?=$mem['user_subdistrict']?>">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -255,12 +258,12 @@
                                 <br>
                                 
                                 <p align ="right">
-                                    <a class="btn btn-outline-success text-decoration-none" href="update_request.php?user_id=<?=$_GET['user_id']?>&status=2">&emsp;<i class="fa-solid fa-check"></i>&nbsp;ตอบรับ&emsp;</a>&emsp;
-                                    <a class="btn btn-outline-danger text-decoration-none" href="update_request.php?user_id=<?=$_GET['user_id']?>&status=5">&emsp;<i class="fa-sharp fa-solid fa-xmark"></i>&nbsp;ปฏิเสธ&emsp;</a>&emsp;
+                                    <button class="btn btn-outline-success text-decoration-none" name="update_request" type="submit"><i class="fa-solid fa-check"></i>ตอบรับ</button>
+                                    <button class="btn btn-outline-danger text-decoration-none" name="update_request5" type="submit"><i class="fa-sharp fa-solid fa-xmark"></i>ปฏิเสธ</button>
                                 </p>
 
                                 </div>
-                           
+                            </form>
                         </div>
                                 
                     </div>

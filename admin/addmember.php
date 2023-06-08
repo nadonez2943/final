@@ -30,7 +30,7 @@
             <!-- Navbar Brand-->
             
             <a class="navbar-brand ps-1" href="index.php">
-                <img src="\roengrang\img/logo1.png" alt="logo" height="36"> ร้านค้าชุมชนเริงราง
+                <img src="https://res.cloudinary.com/dlne5j5ub/image/upload/v1686072817/logo1_fo37mz.png" alt="logo" height="36"> ร้านค้าชุมชนเริงราง
             </a>
             <!-- Navbar Message-->
             <button class="d-none d-md-inline-block btn btn-link ms-auto me-3 me-lg-0" id="sidebarToggle" href="#"><i class="fas fa-message"></i></button>
